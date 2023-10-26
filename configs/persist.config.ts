@@ -2,13 +2,14 @@ import { defineConfig } from "vite";
 
 export default defineConfig({
   build: {
-    outDir: "dist/",
+    outDir: "dist/modules/persist/",
     lib: {
-      entry: "./src/",
-      name: "NeuronGSM",
+      entry: "./src/persist.ts",
+      name: "Persist",
       fileName: "index",
     },
     rollupOptions: {
+      external: ["../../core"],
       output: {},
     },
   },

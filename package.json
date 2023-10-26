@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build:Core": "tsc && vite build  --config configs/Core.config",
+    "build": "tsc && vite build",
+    "build:Core": "tsc && vite build --config configs/core.config && vite build --config configs/persist.config && vite build --config configs/slices.config && vite build --config configs/react.config",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
