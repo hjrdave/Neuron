@@ -13,7 +13,7 @@ export default defineConfig({
       fileName: "index",
     },
     rollupOptions: {
-      external: ["../core", "../slices", "react"],
+      external: ["../core", "../slices", "react", "react/jsx-runtime"],
       output: {
         globals: {
           react: "React",
@@ -21,5 +21,5 @@ export default defineConfig({
       },
     },
   },
-  plugins: [react({ jsxRuntime: "classic" })],
+  plugins: [react()],
 });
