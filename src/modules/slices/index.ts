@@ -1,4 +1,4 @@
-import { Module, SelectorKey, Store, Payload } from "../../core";
+import { Module, SelectorKey, Store, Payload } from "../../vanilla";
 
 export type Selector<State = { [key: string]: any }, T = any> = (
   store: State

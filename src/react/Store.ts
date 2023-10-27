@@ -1,11 +1,11 @@
-import { Store as CoreStore, SelectorKey, Module as IModule } from "../core";
-import { Selector } from "../slices";
+import { Store as CoreStore, SelectorKey, Module as IModule } from "../vanilla";
+import { Selector } from "../modules/slices";
 import State, { StateProps } from "./State";
 import Module, { ModuleProps } from "./Module";
 import useNeuron from "./useNeuron";
 import useDispatch from "./useDispatch";
 import useStore from "./useStore";
-import { StateType } from "../core/Core.interfaces";
+import { StateType } from "../vanilla/vanilla.interfaces";
 
 export default class Store<S = { [key: string]: unknown }, M = unknown> {
   private Core: CoreStore<S>;

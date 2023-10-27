@@ -1,12 +1,12 @@
 import React from "react";
-import { Store as CoreStore, SelectorKey } from "../core";
+import { Store as CoreStore, SelectorKey } from "../vanilla";
 import {
   Selector,
   getSlice,
   setSlice,
   updateStateWithSlice,
   convertSelector,
-} from "../slices";
+} from "../modules/slices";
 
 export type UseNeuron<S = { [key: string]: unknown }> = <T, A>(
   selector: SelectorKey<S> | Selector<S, T>

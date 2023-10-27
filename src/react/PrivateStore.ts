@@ -1,6 +1,6 @@
 import React, { useContext, createContext } from "react";
-import { default as Core, Module, DispatchMutator } from "../core";
-import { Selector } from "../slices";
+import { default as Core, Module, DispatchMutator } from "../vanilla";
+import { Selector } from "../modules/slices";
 import Store from "./Store";
 import Private from "./Private";
 import { UseStore } from "./useStore";

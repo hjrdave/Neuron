@@ -1,4 +1,4 @@
-import { Module as IModule, Store } from "../core";
+import { Module as IModule, Store } from "../vanilla";
 export interface ModuleProps<S = { [key: string]: unknown }> {
   use: IModule<unknown, S>;
 }

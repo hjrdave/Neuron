@@ -4,7 +4,7 @@ import {
   StateType,
   StoreProps,
   DispatchMutator,
-} from "./Core.interfaces";
+} from "./vanilla.interfaces";
 
 export interface Params<T = StateType, S = StoreProps, D = DataProps> {
   name: string;

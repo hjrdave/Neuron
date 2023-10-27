@@ -1,4 +1,4 @@
-import NeuronGSM from "../../../core";
+import NeuronGSM from "../../../vanilla";
 import Slices, { getSlice, setSlice, convertSelector } from "..";
 
 interface Person {

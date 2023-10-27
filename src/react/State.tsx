@@ -1,4 +1,4 @@
-import { Store, SelectorKey, Actions, DispatchMutator } from "../core";
+import { Store, SelectorKey, Actions, DispatchMutator } from "../vanilla";
 
 export interface StateProps<
   T = unknown,

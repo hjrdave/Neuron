@@ -6,7 +6,7 @@ import NeuronGSM, {
   Actions,
   DispatchMutator,
   DispatchPayload,
-} from "./vanilla";
+} from "./vanilla/index";
 
 export type { SelectorKey, Payload, Actions, DispatchMutator, DispatchPayload };
 export { Store, Module };

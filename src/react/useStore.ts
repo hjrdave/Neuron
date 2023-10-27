@@ -1,5 +1,5 @@
 import React from "react";
-import { Store as CoreStore } from "../core";
+import { Store as CoreStore } from "../vanilla";
 
 export type UseStore<State = { [key: string]: unknown }> = (
   Store: CoreStore<State>

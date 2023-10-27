@@ -11,7 +11,7 @@ import {
   SetState,
   GetStore,
   ResetState,
-} from "./Core.interfaces";
+} from "./vanilla.interfaces";
 export interface Params<T = StateType, S = StoreProps, D = DataProps> {
   key: SelectorKey<S>;
   prevState?: T;

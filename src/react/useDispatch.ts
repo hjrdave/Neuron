@@ -1,4 +1,9 @@
-import { SelectorKey, Store, DispatchPayload, DispatchMutator } from "../core";
+import {
+  SelectorKey,
+  Store,
+  DispatchPayload,
+  DispatchMutator,
+} from "../vanilla";
 
 export type UseDispatch<S = { [key: string]: unknown }> = DispatchPayload<S>;
 

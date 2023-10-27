@@ -1,4 +1,4 @@
-import NeuronGSM from "../../core";
+import NeuronGSM from "../../vanilla";
 
 export enum StorageTypes {
   SESSION = "session",

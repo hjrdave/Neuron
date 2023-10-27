@@ -1,7 +1,7 @@
 import { default as ReactStore } from "./Store";
 import { default as ReactPrivateStore } from "./PrivateStore";
-import { Module } from "../core";
-import Slices from "../slices";
+import { Module } from "../vanilla";
+import Slices from "../modules/slices";
 
 const DefaultModules = [Slices] as any[];
 namespace NeuronGSM {
