@@ -13,41 +13,43 @@ export default defineConfig({
     lib: {
       entry: "./src/vanilla.ts",
       name: "NeuronGSM",
-      fileName: "vanilla",
+      fileName: "index",
     },
     rollupOptions: {
       output: [
         {
           dir: "./dist/",
           name: "vanilla",
-          entryFileNames: "vanilla.js",
+          entryFileNames: "index.js",
         },
         {
           dir: "./dist/umd/",
           name: "vanilla",
           format: "umd",
-          entryFileNames: "vanilla.js",
+          entryFileNames: "index.js",
         },
         {
           dir: "./dist/esm/",
           name: "vanilla",
           format: "esm",
-          entryFileNames: "vanilla.js",
+          entryFileNames: "index.js",
         },
         {
           dir: "./dist/iife/",
           name: "vanilla",
           format: "iife",
-          entryFileNames: "vanilla.js",
+          entryFileNames: "index.js",
         },
         {
           dir: "./dist/system/",
           name: "vanilla",
           format: "system",
-          entryFileNames: "vanilla.js",
+          entryFileNames: "index.js",
         },
       ],
     },
   },
-  plugins: [],
+  plugins: [
+    dts({ exclude: ["./src/vanilla/tests", "./src/modules/slices/tests"] }),
+  ],
 });

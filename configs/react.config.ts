@@ -20,8 +20,8 @@ export default defineConfig({
       external: ["react", "react-dom"],
       output: [
         {
-          dir: "./dist",
-          name: "vanilla",
+          dir: "./dist/",
+          name: "react",
           entryFileNames: "[name].js",
           globals: {
             react: "React",
@@ -29,8 +29,8 @@ export default defineConfig({
           },
         },
         {
-          dir: "./dist",
-          name: "vanilla",
+          dir: "./dist/",
+          name: "react",
           format: "umd",
           entryFileNames: "[name].js",
           globals: {
@@ -39,8 +39,8 @@ export default defineConfig({
           },
         },
         {
-          dir: "./dist/esm",
-          name: "vanilla",
+          dir: "./dist/esm/",
+          name: "react",
           format: "esm",
           entryFileNames: "[name].js",
           globals: {
@@ -49,8 +49,8 @@ export default defineConfig({
           },
         },
         {
-          dir: "./dist/iife",
-          name: "vanilla",
+          dir: "./dist/iife/",
+          name: "react",
           format: "iife",
           entryFileNames: "[name].js",
           globals: {
@@ -59,8 +59,8 @@ export default defineConfig({
           },
         },
         {
-          dir: "./dist/system",
-          name: "vanilla",
+          dir: "./dist/system/",
+          name: "react",
           format: "system",
           entryFileNames: "[name].js",
           globals: {
@@ -71,5 +71,5 @@ export default defineConfig({
       ],
     },
   },
-  plugins: [react({ jsxRuntime: "classic" }), dts()],
+  plugins: [react({ jsxRuntime: "classic" })],
 });

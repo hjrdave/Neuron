@@ -1,17 +1,54 @@
 import { defineConfig } from "vite";
+import dts from "vite-plugin-dts";
 
 export default defineConfig({
+  define: {
+    "process.env.NODE_ENV": '"production"',
+  },
   build: {
-    outDir: "dist/modules/persist/",
+    minify: true,
+    emptyOutDir: false,
+    outDir: "dist/",
+    sourcemap: true,
     lib: {
-      entry: "./src/persist.ts",
+      entry: "./src/modules/persist",
       name: "Persist",
-      fileName: "index",
+      fileName: "persist",
     },
     rollupOptions: {
-      external: ["../../core"],
-      output: {},
+      external: ["../../vanilla"],
+      output: [
+        {
+          dir: "./dist/modules/persist",
+          name: "persist",
+          entryFileNames: "[name].js",
+        },
+        {
+          dir: "./dist/umd/modules/persist",
+          name: "persist",
+          format: "umd",
+          entryFileNames: "[name].js",
+        },
+        {
+          dir: "./dist/esm/modules/persist",
+          name: "persist",
+          format: "esm",
+          entryFileNames: "[name].js",
+        },
+        {
+          dir: "./dist/iife/modules/persist",
+          name: "persist",
+          format: "iife",
+          entryFileNames: "[name].js",
+        },
+        {
+          dir: "./dist/system/modules/persist",
+          name: "persist",
+          format: "system",
+          entryFileNames: "[name].js",
+        },
+      ],
     },
   },
-  //plugins: [react()],
+  plugins: [],
 });

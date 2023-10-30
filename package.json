@@ -1,15 +1,60 @@
 {
-  "name": "neuron-gsm",
+  "name": "neuron",
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "sideEffects": false,
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "scripts": {
-    "build": "tsc && vite build --config configs/vanilla.config && vite build --config configs/react.config",
+    "build": "tsc && vite build --config configs/index.config && vite build --config configs/vanilla.config && vite build --config configs/react.config && vite build --config configs/modules.config && vite build --config configs/persist.config && vite build --config configs/slices.config",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "publish:dry": "npm publish --dry-run"
   },
+  "browserslist": [
+    ">0.2%",
+    "not dead"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "module": "./dist/index.js",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs",
+      "default": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist/*",
+    "README.md",
+    "LICENSE",
+    "CONTRIBUTING.md"
+  ],
+  "keywords": [
+    "npm",
+    "module",
+    "node",
+    "javascript",
+    "typescript",
+    "global-state-management",
+    "state-manager",
+    "global",
+    "neuron",
+    "neuronjs",
+    "@sandstack",
+    "@neuron",
+    "sandstack"
+  ],
+  "author": "David A. Sanders <dsanders@mediafish.io>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hjrdave/NeuronGSM/issues"
+  },
+  "homepage": "https://github.com/hjrdave/NeuronGSM#readme",
   "dependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
