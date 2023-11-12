@@ -24,6 +24,12 @@ export default defineConfig({
           entryFileNames: "[name].js",
         },
         {
+          dir: "./dist/modules/persist",
+          name: "persist",
+          format: "cjs",
+          entryFileNames: "[name].cjs",
+        },
+        {
           dir: "./dist/umd/modules/persist",
           name: "persist",
           format: "umd",

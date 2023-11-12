@@ -1,3 +1,4 @@
+import React from "react";
 import { Store, SelectorKey, Actions, DispatchMutator } from "../vanilla";
 
 export interface StateProps<
@@ -47,5 +48,5 @@ export default function State<
     },
   });
 
-  return <></>;
+  return <React.Fragment></React.Fragment>;
 }

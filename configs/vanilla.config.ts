@@ -23,6 +23,12 @@ export default defineConfig({
           entryFileNames: "vanilla.js",
         },
         {
+          dir: "./dist/",
+          name: "vanilla",
+          format: "cjs",
+          entryFileNames: "vanilla.cjs",
+        },
+        {
           dir: "./dist/umd/",
           name: "vanilla",
           format: "umd",

@@ -24,6 +24,12 @@ export default defineConfig({
           entryFileNames: "[name].js",
         },
         {
+          dir: "./dist/modules/slices",
+          name: "slices",
+          format: "cjs",
+          entryFileNames: "[name].cjs",
+        },
+        {
           dir: "./dist/umd/modules/slices",
           name: "slices",
           format: "umd",

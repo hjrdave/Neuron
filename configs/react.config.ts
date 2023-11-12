@@ -17,7 +17,7 @@ export default defineConfig({
       fileName: "react",
     },
     rollupOptions: {
-      external: ["react", "react-dom"],
+      external: ["react"],
       output: [
         {
           dir: "./dist/",
@@ -25,7 +25,15 @@ export default defineConfig({
           entryFileNames: "[name].js",
           globals: {
             react: "React",
-            "react-dom": "ReactDOM",
+          },
+        },
+        {
+          dir: "./dist/",
+          name: "react",
+          format: "cjs",
+          entryFileNames: "[name].cjs",
+          globals: {
+            react: "React",
           },
         },
         {
@@ -35,7 +43,6 @@ export default defineConfig({
           entryFileNames: "[name].js",
           globals: {
             react: "React",
-            "react-dom": "ReactDOM",
           },
         },
         {
@@ -45,7 +52,6 @@ export default defineConfig({
           entryFileNames: "[name].js",
           globals: {
             react: "React",
-            "react-dom": "ReactDOM",
           },
         },
         {
@@ -55,7 +61,6 @@ export default defineConfig({
           entryFileNames: "[name].js",
           globals: {
             react: "React",
-            "react-dom": "ReactDOM",
           },
         },
         {
@@ -65,7 +70,6 @@ export default defineConfig({
           entryFileNames: "[name].js",
           globals: {
             react: "React",
-            "react-dom": "ReactDOM",
           },
         },
       ],

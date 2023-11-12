@@ -1,17 +1,17 @@
 {
-  "name": "neuron",
-  "private": true,
+  "name": "@sandstack/neuron",
   "version": "0.0.0",
-  "type": "module",
+  "description": "A framework agnostic javascript global state manager.",
   "sideEffects": false,
+  "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
     "build": "tsc && vite build --config configs/index.config && vite build --config configs/vanilla.config && vite build --config configs/react.config && vite build --config configs/modules.config && vite build --config configs/persist.config && vite build --config configs/slices.config",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build",
+    "storybook:run": "storybook dev -p 6006",
+    "storybook:clean-cache": "rimraf node_modules/.cache/storybook",
     "publish:dry": "npm publish --dry-run"
   },
   "browserslist": [
@@ -21,10 +21,33 @@
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "module": "./dist/index.js",
-      "import": "./dist/index.js",
       "require": "./dist/index.cjs",
       "default": "./dist/index.js"
+    },
+    "./vanilla": {
+      "types": "./dist/vanilla.d.ts",
+      "require": "./dist/vanilla.cjs",
+      "default": "./dist/vanilla.js"
+    },
+    "./react": {
+      "types": "./dist/react.d.ts",
+      "require": "./dist/react.cjs",
+      "default": "./dist/react.js"
+    },
+    "./modules": {
+      "types": "./dist/modules.d.ts",
+      "require": "./dist/modules.cjs",
+      "default": "./dist/modules.js"
+    },
+    "./modules/persist": {
+      "types": "./dist/modules/persist/index.d.ts",
+      "require": "./dist/modules/persist/index.cjs",
+      "default": "./dist/modules/persist/index.js"
+    },
+    "./modules/slices": {
+      "types": "./dist/modules/slices/index.d.ts",
+      "require": "./dist/modules/slices/index.cjs",
+      "default": "./dist/modules/slices/index.js"
     },
     "./package.json": "./package.json"
   },
@@ -49,17 +72,14 @@
     "@neuron",
     "sandstack"
   ],
-  "author": "David A. Sanders <dsanders@mediafish.io>",
+  "author": "David A. Sanders <dsanders_m633@outlook.com>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/hjrdave/NeuronGSM/issues"
   },
   "homepage": "https://github.com/hjrdave/NeuronGSM#readme",
-  "dependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
-  },
   "devDependencies": {
+    "@sandstack/neuron": "file:sandstack-neuron-0.0.0.tgz",
     "@storybook/addon-essentials": "^7.5.1",
     "@storybook/addon-interactions": "^7.5.1",
     "@storybook/addon-links": "^7.5.1",
@@ -74,13 +94,17 @@
     "@typescript-eslint/eslint-plugin": "^6.0.0",
     "@typescript-eslint/parser": "^6.0.0",
     "@vitejs/plugin-react": "^4.0.3",
+    "@vitejs/plugin-react-swc": "^3.4.1",
     "eslint": "^8.45.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.3",
     "eslint-plugin-storybook": "^0.6.15",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "storybook": "^7.5.1",
     "typescript": "^5.0.2",
     "vite": "^4.4.5",
-    "vite-plugin-dts": "^3.6.1"
+    "vite-plugin-dts": "^3.6.1",
+    "vite-tsconfig-paths": "^4.2.1"
   }
 }
