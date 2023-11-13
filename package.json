@@ -12,7 +12,8 @@
     "preview": "vite preview",
     "storybook:run": "storybook dev -p 6006",
     "storybook:clean-cache": "rimraf node_modules/.cache/storybook",
-    "publish:dry": "npm publish --dry-run"
+    "publish:dry": "npm publish --dry-run",
+    "npm:pack": "npm pack --production"
   },
   "browserslist": [
     ">0.2%",

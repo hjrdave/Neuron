@@ -11,16 +11,22 @@ const { State, useNeuron } = NeuronGSM.Store();
 const ReactStore = () => {
   return (
     <>
-      <State name={"foo"} state={"foobar"} />
+      <State
+        name={"foo"}
+        state={{
+          foo: "",
+          fee: "",
+        }}
+      />
     </>
   );
 };
 
 const ChildComp = () => {
-  const [foo, setFoo] = useNeuron("foo");
+  const [, setFoo] = useNeuron<string>("foo");
   return (
     <>
-      <p>Foo: {foo as any}</p>
+      <p>Foo: </p>
       <button onClick={() => setFoo("Foo Bar Choo Choo")}>Foo</button>
     </>
   );
