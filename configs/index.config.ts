@@ -5,6 +5,9 @@ export default defineConfig({
   define: {
     "process.env.NODE_ENV": '"production"',
   },
+  optimizeDeps: {
+    exclude: ["stories"],
+  },
   build: {
     minify: true,
     emptyOutDir: false,
