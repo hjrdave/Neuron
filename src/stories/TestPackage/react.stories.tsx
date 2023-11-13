@@ -1,4 +1,3 @@
-//import React from "react";
 import { StoryFn, Meta } from "@storybook/react";
 import NeuronGSM from "@sandstack/neuron/react";
 
@@ -40,5 +39,5 @@ const ReactTemplate: StoryFn = () => {
     </>
   );
 };
-export const React = ReactTemplate.bind({});
+export const NeuronReact = ReactTemplate.bind({});
 ReactTemplate.args = {};

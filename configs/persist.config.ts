@@ -1,13 +1,9 @@
 import { defineConfig } from "vite";
 import dts from "vite-plugin-dts";
+import { topConfig } from "./baseConfigs";
 
 export default defineConfig({
-  define: {
-    "process.env.NODE_ENV": '"production"',
-  },
-  optimizeDeps: {
-    exclude: ["stories"],
-  },
+  ...topConfig,
   build: {
     minify: true,
     emptyOutDir: false,
