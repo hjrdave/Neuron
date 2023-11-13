@@ -95,7 +95,7 @@ export default class Store<S = StoreProps> implements IStore<S> {
   };
 
   /**
-   * Includes modules into store. Modules can be used to extend NeuronGSM stores, with new features and functionality. Modules should be included above store item add methods.
+   * Includes modules into store. Modules can be used to extend Neuron stores, with new features and functionality. Modules should be included above store item add methods.
    * @param {Module} module - imported module object
    */
   readonly use = (module: IModule<StateType, S>) =>

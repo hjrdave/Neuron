@@ -10,16 +10,16 @@ import {
 } from "./vanilla.interfaces";
 import { default as ModuleInstance, Params, IModule } from "./Module";
 import { IPayload } from "./Payload";
-namespace NeuronGSM {
+namespace Neuron {
   /**
-   * Creates a NeuronGSM store instance. Stores are globally accessible.
+   * Creates a Neuron store instance. Stores are globally accessible.
    * @param {Options} options - Store options
    */
   export function Store<S = { [key: string]: unknown }>(options?: Options<S>) {
     return new StoreInstance<S>(options);
   }
   /**
-   * Creates a NeuronGSM module. These can be passed to Store.use to extend store instance.
+   * Creates a Neuron module. These can be passed to Store.use to extend store instance.
    * @param {Params} params - imported module object
    */
   export function Module<T = unknown, S = { [key: string]: unknown }>(
@@ -70,7 +70,7 @@ export type DispatchMutator<
 export type DispatchPayload<S = StoreProps> = TDispatchPayload<S>;
 
 /**
- * Creates a NeuronGSM store instance. Stores are globally accessible.
+ * Creates a Neuron store instance. Stores are globally accessible.
  * @param {Options} options - Store options
  */
 export function Store<S = { [key: string]: unknown }>(options?: Options<S>) {
@@ -78,7 +78,7 @@ export function Store<S = { [key: string]: unknown }>(options?: Options<S>) {
 }
 
 /**
- * Creates a NeuronGSM module. These can be passed to Store.use to extend store instance.
+ * Creates a Neuron module. These can be passed to Store.use to extend store instance.
  * @param {Params} params - imported module object
  */
 export function Module<T = unknown, S = { [key: string]: unknown }>(
@@ -87,4 +87,4 @@ export function Module<T = unknown, S = { [key: string]: unknown }>(
   return new ModuleInstance<T, S>(params);
 }
 
-export default NeuronGSM;
+export default Neuron;

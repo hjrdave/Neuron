@@ -4,7 +4,7 @@ import { Module } from "../vanilla";
 import Slices from "../modules/slices";
 
 const DefaultModules = [Slices] as any[];
-namespace NeuronGSM {
+namespace Neuron {
   export function Store<S = { [key: string]: unknown }, M = unknown>(options?: {
     modules?: Module<unknown, S>[];
   }) {
@@ -48,4 +48,4 @@ export function PrivateStore<
   });
 }
 
-export default NeuronGSM;
+export default Neuron;

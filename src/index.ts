@@ -1,4 +1,4 @@
-import NeuronGSM, {
+import Neuron, {
   Store,
   Module,
   SelectorKey,
@@ -10,4 +10,4 @@ import NeuronGSM, {
 
 export type { SelectorKey, Payload, Actions, DispatchMutator, DispatchPayload };
 export { Store, Module };
-export default NeuronGSM;
+export default Neuron;

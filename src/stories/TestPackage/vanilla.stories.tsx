@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { StoryFn, Meta } from "@storybook/react";
-import NeuronGSM from "@sandstack/neuron";
+import Neuron from "@sandstack/neuron";
 
-const store = NeuronGSM.Store();
+const store = Neuron.Store();
 store.add({
   key: "foo",
   state: "foo bar choo",

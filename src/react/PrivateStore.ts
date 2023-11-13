@@ -46,7 +46,7 @@ export default class PrivateStore<S = { [key: string]: unknown }, M = unknown> {
     } catch (err) {
       console.error(
         console.error(
-          `NeuronGSM: Protected store hooks cannot be called outside of protected store scope.`
+          `Neuron: Protected store hooks cannot be called outside of protected store scope.`
         ),
         err
       );
@@ -63,7 +63,7 @@ export default class PrivateStore<S = { [key: string]: unknown }, M = unknown> {
     } catch (err) {
       console.error(
         console.error(
-          `NeuronGSM: Protected store hooks cannot be called outside of scope.`
+          `Neuron: Protected store hooks cannot be called outside of scope.`
         ),
         err
       );
@@ -77,7 +77,7 @@ export default class PrivateStore<S = { [key: string]: unknown }, M = unknown> {
     } catch (err) {
       console.error(
         console.error(
-          `NeuronGSM: Protected store hooks cannot be called outside of scope.`
+          `Neuron: Protected store hooks cannot be called outside of scope.`
         ),
         err
       );

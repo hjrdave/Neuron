@@ -1,4 +1,4 @@
-import NeuronGSM from "../../../vanilla";
+import Neuron from "../../../vanilla";
 import Slices, { getSlice, setSlice, convertSelector } from "..";
 
 interface Person {
@@ -26,7 +26,7 @@ const StateValues: State = {
     },
   },
 };
-const Store = NeuronGSM.Store<State>();
+const Store = Neuron.Store<State>();
 
 Store.use(Slices as any);
 

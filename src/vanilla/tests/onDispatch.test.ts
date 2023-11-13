@@ -1,4 +1,4 @@
-import NeuronGSM from "../index";
+import Neuron from "../index";
 
 interface State {
   fruit: string;
@@ -9,7 +9,7 @@ enum StateKeys {
 enum StateValues {
   Fruit = "Apple",
 }
-const Store = NeuronGSM.Store<State>();
+const Store = Neuron.Store<State>();
 
 Store.add<string>({
   key: StateKeys.Fruit,

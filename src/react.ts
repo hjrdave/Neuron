@@ -1,4 +1,4 @@
-import NeuronGSM, { Store, PrivateStore } from "./react/index";
+import Neuron, { Store, PrivateStore } from "./react/index";
 
 export { Store, PrivateStore };
-export default NeuronGSM;
+export default Neuron;
