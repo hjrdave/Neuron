@@ -76,9 +76,9 @@
   "author": "David A. Sanders <dsanders_m633@outlook.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/hjrdave/NeuronGSM/issues"
+    "url": "https://github.com/hjrdave/Neuron/issues"
   },
-  "homepage": "https://github.com/hjrdave/NeuronGSM#readme",
+  "homepage": "https://github.com/hjrdave/Neuron#readme",
   "devDependencies": {
     "@storybook/addon-essentials": "^7.5.1",
     "@storybook/addon-interactions": "^7.5.1",

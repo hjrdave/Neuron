@@ -1,13 +1,13 @@
-[![npm version](https://badge.fury.io/js/@neurongsm%2Fcore.svg)](https://badge.fury.io/js/@neurongsm%2Fcore)
-[![NeuronGSM Package](https://github.com/hjrdave/NeuronGSM.Core/actions/workflows/npm-publish.yml/badge.svg)](https://github.com/hjrdave/NeuronGSM.Core/actions/workflows/npm-publish.yml)
-![Package](https://badgen.net/bundlephobia/minzip/@neurongsm/core)
+<!-- [![npm version](https://badge.fury.io/js/@neurongsm%2Fcore.svg)](https://badge.fury.io/js/@neurongsm%2Fcore)
+[![Neuron Package](https://github.com/hjrdave/Neuron.Core/actions/workflows/npm-publish.yml/badge.svg)](https://github.com/hjrdave/Neuron.Core/actions/workflows/npm-publish.yml)
+![Package](https://badgen.net/bundlephobia/minzip/@neurongsm/core) -->
 
 <!-- <div><img src='https://hjrdave.github.io/get-treble-gsm/static/bd3520df0df3356f8a53c4588b0b285c/f3583/banner-readme.png' /></div>
 <p>&nbsp;</p> -->
 
-# Neuron Global State Manager (Core)
+# Neuron Global State Manager
 
-NeuronGSM Core is a small, bare bones, framework agnostic library for building framework specific global state managers. The goal is to allow devs to create small, scalable, and advanced state managers that fit their respective framework needs. See [Neuron](https://www.npmjs.com/package/@neurongsm/react) as an example.
+Neuron Core is a small, bare bones, framework agnostic library for building framework specific global state managers. The goal is to allow devs to create small, scalable, and advanced state managers that fit their respective framework needs. See [Neuron](https://www.npmjs.com/package/@neurongsm/react) as an example.
 
 <div style="background-color: #fff3cd; border: 1px solid #ffeeba; padding: 1em;">
   <strong>Warning:</strong> This library is still experimental and is not ready for production.
@@ -18,9 +18,9 @@ NeuronGSM Core is a small, bare bones, framework agnostic library for building f
 ### Create a new Store
 
 ```javascript
-import NeuronGSM from "@neurongsm/core";
+import Neuron from "@sandstack/neuron";
 
-export const Store = NeuronGSM.Store();
+export const Store = Neuron.Store();
 ```
 
 ### Add initial state to Store
@@ -89,7 +89,7 @@ Each of these methods have access to the `payload` object. You can manipulate di
 - `reset` - Method that resets store item to it's initial state by key. **Note: If no key is passed then it will reset all store items to initial.** state.
 
 ```javascript
-const Store = NeuronGSM.Store();
+const Store = Neuron.Store();
 
 Store.add({
   key: "trainer",
@@ -139,14 +139,14 @@ Store.dispatch("trainer", (payload) => {
 });
 ```
 
-### Extend NeuronGSM with Modules
+### Extend Neuron with Modules
 
-Modules like Persist allow you to extend NeuronGSM features. In this case (only works in browser) state will be persisted between page refreshes. Modules must be applied by the `use` method on the `Store`. They must be set before any `add` methods.
+Modules like Persist allow you to extend Neuron features. In this case (only works in browser) state will be persisted between page refreshes. Modules must be applied by the `use` method on the `Store`. They must be set before any `add` methods.
 
 ```javascript
-import Persist from @neurongsm/persist;
+import Persist from @sandstack/modules/persist;
 
-const Store = NeuronGSM.Store();
+const Store = Neuron.Store();
 
 Store.use(Persist);
 
