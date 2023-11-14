@@ -80,6 +80,7 @@
   },
   "homepage": "https://github.com/hjrdave/Neuron#readme",
   "devDependencies": {
+    "@sandstack/neuron": "file:sandstack-neuron-0.0.0.tgz",
     "@storybook/addon-essentials": "^7.5.1",
     "@storybook/addon-interactions": "^7.5.1",
     "@storybook/addon-links": "^7.5.1",

@@ -22,3 +22,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# NPM Pack
+
+sandstack-neuron-0.0.0.tgz
