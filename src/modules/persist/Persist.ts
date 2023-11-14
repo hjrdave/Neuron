@@ -9,7 +9,7 @@ export interface ModuleProps {
   persist?: StorageTypes.LOCAL | StorageTypes.SESSION | boolean;
 }
 
-const moduleName = `@Neuron/persist`; //need a unique id that is passed by store
+const moduleName = `@sandstack/neuron/persist`; //need a unique id that is passed by store
 
 const saveStateToStorage = (payload: Neuron.Payload<string, any>) => {
   const isEnabled = (payload?.features as any)?.persist;

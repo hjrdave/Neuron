@@ -30,7 +30,7 @@ export interface Params<S = StoreProps> {
   modules?: IModule<StateType, S>[];
 }
 export interface IStore<S = StoreProps> {
-  readonly use: UseModule<S>;
+  readonly use: UseModule;
   readonly getStore: GetStore<unknown, S>;
   readonly add: AddState<S>;
   readonly get: GetState<S>;
@@ -98,8 +98,8 @@ export default class Store<S = StoreProps> implements IStore<S> {
    * Includes modules into store. Modules can be used to extend Neuron stores, with new features and functionality. Modules should be included above store item add methods.
    * @param {Module} module - imported module object
    */
-  readonly use = (module: IModule<StateType, S>) =>
-    this.moduleInventory.set(module.name, module);
+  readonly use = (module: IModule) =>
+    this.moduleInventory.set(module.name, module as any);
 
   /**
    * Returns an array of store items.
@@ -237,6 +237,6 @@ export default class Store<S = StoreProps> implements IStore<S> {
     this.actionsInventory = new Map();
     this.moduleInventory = new Map();
     this.dispatcher = new Dispatcher();
-    params?.modules?.forEach((module) => this.use(module));
+    params?.modules?.forEach((module) => this.use(module as any));
   }
 }

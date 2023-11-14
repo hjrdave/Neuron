@@ -1,8 +1,8 @@
 import { Module as IModule, Store } from "../vanilla";
-export interface ModuleProps<S = { [key: string]: unknown }> {
-  use: IModule<unknown, S>;
+export interface ModuleProps {
+  use: IModule;
 }
-interface Props<S = { [key: string]: unknown }> extends ModuleProps<S> {
+interface Props<S = { [key: string]: unknown }> extends ModuleProps {
   Store: Store<S>;
 }
 
