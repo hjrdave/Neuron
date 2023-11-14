@@ -1,6 +1,6 @@
 import Neuron from "../index";
 
-import { expect, test } from "vitest";
+import { expect, test, it } from "vitest";
 interface State {
   fruit: string;
 }
@@ -36,7 +36,7 @@ Store.add<string, FruitActions>({
 
 const fruitActions = Store.getActions<FruitActions>("fruit");
 
-describe("Test action methods.", () => {
+test("Test action methods.", () => {
   it("Update state with actions", () => {
     expect(Store.get("fruit")).toBe("Apple");
     fruitActions.changeFruitToKiwi();

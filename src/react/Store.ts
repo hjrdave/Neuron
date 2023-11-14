@@ -10,7 +10,7 @@ import { StateType } from "../vanilla/vanilla.interfaces";
 export default class Store<S = { [key: string]: unknown }, M = unknown> {
   private Core: CoreStore<S>;
 
-  Module = (props: ModuleProps<S>) =>
+  Module = (props: ModuleProps) =>
     Module({ ...props, ...{ Store: this.Core } });
 
   State = <T = unknown, A = { [key: string]: unknown }>(

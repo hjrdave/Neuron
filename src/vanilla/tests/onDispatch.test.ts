@@ -1,3 +1,4 @@
+import { expect, test, it } from "vitest";
 import Neuron from "../index";
 
 interface State {
@@ -16,7 +17,7 @@ Store.add<string>({
   state: StateValues.Fruit,
 });
 
-describe("Make sure initial state is correct.", () => {
+test("Make sure initial state is correct.", () => {
   it("Makes sure onDispatch doesn't throw error", () => {
     Store.onDispatch((payload) => {
       expect(payload.state).toBe(StateValues.Fruit);

@@ -1,3 +1,4 @@
+import { expect, test, it } from "vitest";
 import Neuron from "../index";
 
 interface State {
@@ -32,7 +33,7 @@ Store.add<string>({
   state: StateValues.Car,
 });
 
-describe("Reset Store State.", () => {
+test("Reset Store State.", () => {
   it("Entire store resets", () => {
     Store.set(StateKeys.Fruit, "Fooberry");
     Store.set(StateKeys.Car, "Ford");

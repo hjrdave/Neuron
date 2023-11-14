@@ -1,3 +1,5 @@
+import { expect, test, it } from "vitest";
+
 import Neuron from "../index";
 
 interface State {
@@ -33,7 +35,7 @@ Store.add<string>({
   state: StateValues.Car,
 });
 
-describe("Make sure initial state is correct.", () => {
+test("Make sure initial state is correct.", () => {
   it("Check State 1.", () => {
     expect(Store.get("fruit")).toBe(StateValues.Fruit);
   });
@@ -45,7 +47,7 @@ describe("Make sure initial state is correct.", () => {
   });
 });
 
-describe("Make sure getStore methods work as expected.", () => {
+test("Make sure getStore methods work as expected.", () => {
   it("Check getStore.", () => {
     const storeItem = Store.getStore()[0];
     const expectedValue = {

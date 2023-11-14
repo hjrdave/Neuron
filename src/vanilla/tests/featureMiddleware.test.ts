@@ -1,3 +1,4 @@
+import { expect, test, it } from "vitest";
 import Neuron from "../index";
 
 interface State {
@@ -26,7 +27,7 @@ enum StateValues {
 }
 const Store = Neuron.Store<State>();
 
-describe("Check OnRun Feature Middleware.", () => {
+test("Check OnRun Feature Middleware.", () => {
   it("Check Payload properties", () => {
     Store.add<string>({
       key: StateKeys.Fruit,
@@ -71,7 +72,7 @@ describe("Check OnRun Feature Middleware.", () => {
   });
 });
 
-describe("Check OnLoad Feature Middleware.", () => {
+test("Check OnLoad Feature Middleware.", () => {
   it("Check Payload properties", () => {
     Store.add<string>({
       key: StateKeys.Animal,
@@ -101,7 +102,7 @@ describe("Check OnLoad Feature Middleware.", () => {
   });
 });
 
-describe("Check OnLoad Feature Middleware.", () => {
+test("Check OnLoad Feature Middleware.", () => {
   it("Check Payload properties", () => {
     Store.add<string>({
       key: StateKeys.Animal,
@@ -131,7 +132,7 @@ describe("Check OnLoad Feature Middleware.", () => {
   });
 });
 
-describe("Check OnCallback Feature Middleware.", () => {
+test("Check OnCallback Feature Middleware.", () => {
   it("Check Payload properties", () => {
     Store.add<string>({
       key: StateKeys.Car,

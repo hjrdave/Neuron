@@ -1,3 +1,4 @@
+import { expect, test, it } from "vitest";
 import Neuron from "../index";
 
 interface State {
@@ -14,7 +15,7 @@ enum StateValues {
 }
 const Store = Neuron.Store<State>();
 
-const TestModule = Neuron.Module<unknown, State>({
+const TestModule = {
   name: "testModule",
   onLoad: (payload) => {
     payload.state = `OnLoad ${payload.state}`;
@@ -28,14 +29,14 @@ const TestModule = Neuron.Module<unknown, State>({
       set(StateKeys.Car, "OnCallback");
     }
   },
-});
+};
 
-const TestModule2 = Neuron.Module<unknown, State>({
+const TestModule2 = {
   name: "testModule2",
   onLoad: (payload) => {
     payload.state = `Module2 ${payload.state}`;
   },
-});
+};
 
 Store.use(TestModule);
 Store.use(TestModule2);
@@ -50,7 +51,7 @@ Store.add<string>({
   state: StateValues.Car,
 });
 
-describe("Modules fire correctly.", () => {
+test("Modules fire correctly.", () => {
   it("Module onload transforms fruit initial state.", () => {
     expect(Store.get(StateKeys.Fruit)).toBe("Module2 OnLoad Apple");
   });

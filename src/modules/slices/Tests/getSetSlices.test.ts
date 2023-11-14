@@ -1,3 +1,4 @@
+import { expect, test, it } from "vitest";
 import Neuron from "../../../vanilla";
 import Slices, { getSlice, setSlice, convertSelector } from "..";
 
@@ -35,7 +36,7 @@ Store.add<typeof StateValues.person>({
   state: StateValues.person,
 });
 
-describe("Get Slice from state item.", () => {
+test("Get Slice from state item.", () => {
   it("Can get non slice", () => {
     const person = getSlice<Person, State>((store) => store.person, Store);
     expect(person.name).toBe(StateValues.person.name);
