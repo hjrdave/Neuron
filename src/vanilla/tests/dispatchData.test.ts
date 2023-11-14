@@ -24,11 +24,9 @@ Store.add<string, { foo: string }>({
 });
 
 test("Make sure dispatch data is passed.", () => {
-  it("Fruit state should be updated", () => {
-    expect(Store.get(StateKeys.Fruit)).toBe(StateValues.Fruit);
-    Store.dispatch<string, { foo: string }>("fruit", (payload) => {
-      payload.data = { foo: "Big" };
-    });
-    expect(Store.get(StateKeys.Fruit)).toBe("Big Apple");
+  expect(Store.get(StateKeys.Fruit)).toBe(StateValues.Fruit);
+  Store.dispatch<string, { foo: string }>("fruit", (payload) => {
+    payload.data = { foo: "Big" };
   });
+  expect(Store.get(StateKeys.Fruit)).toBe("Big Apple");
 });

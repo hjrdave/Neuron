@@ -37,11 +37,9 @@ Store.add<string, FruitActions>({
 const fruitActions = Store.getActions<FruitActions>("fruit");
 
 test("Test action methods.", () => {
-  it("Update state with actions", () => {
-    expect(Store.get("fruit")).toBe("Apple");
-    fruitActions.changeFruitToKiwi();
-    expect(Store.get("fruit")).toBe("Apple Kiwi");
-    fruitActions.changeFruitToOrange();
-    expect(Store.get("fruit")).toBe("Orange");
-  });
+  expect(Store.get("fruit")).toBe("Apple");
+  fruitActions.changeFruitToKiwi();
+  expect(Store.get("fruit")).toBe("Apple Kiwi");
+  fruitActions.changeFruitToOrange();
+  expect(Store.get("fruit")).toBe("Orange");
 });

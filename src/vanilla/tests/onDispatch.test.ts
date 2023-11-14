@@ -18,9 +18,7 @@ Store.add<string>({
 });
 
 test("Make sure initial state is correct.", () => {
-  it("Makes sure onDispatch doesn't throw error", () => {
-    Store.onDispatch((payload) => {
-      expect(payload.state).toBe(StateValues.Fruit);
-    });
+  Store.onDispatch((payload) => {
+    expect(payload.state).toBe(StateValues.Fruit);
   });
 });

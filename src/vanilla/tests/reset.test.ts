@@ -34,29 +34,25 @@ Store.add<string>({
 });
 
 test("Reset Store State.", () => {
-  it("Entire store resets", () => {
-    Store.set(StateKeys.Fruit, "Fooberry");
-    Store.set(StateKeys.Car, "Ford");
-    Store.set(StateKeys.Person, "Tom");
+  Store.set(StateKeys.Fruit, "Fooberry");
+  Store.set(StateKeys.Car, "Ford");
+  Store.set(StateKeys.Person, "Tom");
 
-    Store.reset();
+  Store.reset();
 
-    expect(Store.get(StateKeys.Fruit)).toBe(StateValues.Fruit);
-    expect(Store.get(StateKeys.Car)).toBe(StateValues.Car);
-    expect(Store.get(StateKeys.Person)).toBe(StateValues.Person);
-  });
+  expect(Store.get(StateKeys.Fruit)).toBe(StateValues.Fruit);
+  expect(Store.get(StateKeys.Car)).toBe(StateValues.Car);
+  expect(Store.get(StateKeys.Person)).toBe(StateValues.Person);
 
-  it("Individual store items reset", () => {
-    Store.set(StateKeys.Fruit, "Fooberry");
-    Store.set(StateKeys.Car, "Ford");
-    Store.set(StateKeys.Person, "Tom");
+  Store.set(StateKeys.Fruit, "Fooberry");
+  Store.set(StateKeys.Car, "Ford");
+  Store.set(StateKeys.Person, "Tom");
 
-    Store.reset("fruit");
-    Store.reset("car");
-    Store.reset("person");
+  Store.reset("fruit");
+  Store.reset("car");
+  Store.reset("person");
 
-    expect(Store.get(StateKeys.Fruit)).toBe(StateValues.Fruit);
-    expect(Store.get(StateKeys.Car)).toBe(StateValues.Car);
-    expect(Store.get(StateKeys.Person)).toBe(StateValues.Person);
-  });
+  expect(Store.get(StateKeys.Fruit)).toBe(StateValues.Fruit);
+  expect(Store.get(StateKeys.Car)).toBe(StateValues.Car);
+  expect(Store.get(StateKeys.Person)).toBe(StateValues.Person);
 });

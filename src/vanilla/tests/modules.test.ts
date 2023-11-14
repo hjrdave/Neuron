@@ -52,15 +52,11 @@ Store.add<string>({
 });
 
 test("Modules fire correctly.", () => {
-  it("Module onload transforms fruit initial state.", () => {
-    expect(Store.get(StateKeys.Fruit)).toBe("Module2 OnLoad Apple");
-  });
-  it("Module onRun transforms fruit on dispatch.", () => {
-    expect(Store.get(StateKeys.Fruit)).toBe("Module2 OnLoad Apple");
-    Store.set(StateKeys.Fruit, "Pineapple");
-    expect(Store.get(StateKeys.Fruit)).toBe("OnRun Pineapple");
-  });
-  it("Module onCallback sets car state.", () => {
-    expect(Store.get(StateKeys.Car)).toBe("OnRun OnCallback");
-  });
+  expect(Store.get(StateKeys.Fruit)).toBe("Module2 OnLoad Apple");
+
+  expect(Store.get(StateKeys.Fruit)).toBe("Module2 OnLoad Apple");
+  Store.set(StateKeys.Fruit, "Pineapple");
+  expect(Store.get(StateKeys.Fruit)).toBe("OnRun Pineapple");
+
+  expect(Store.get(StateKeys.Car)).toBe("OnRun OnCallback");
 });

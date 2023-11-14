@@ -36,28 +36,22 @@ Store.add<string>({
 });
 
 test("Make sure initial state is correct.", () => {
-  it("Check State 1.", () => {
-    expect(Store.get("fruit")).toBe(StateValues.Fruit);
-  });
-  it("Check State 2.", () => {
-    expect(Store.get("person")).toBe(StateValues.Person);
-  });
-  it("Check State 3.", () => {
-    expect(Store.get("car")).toBe(StateValues.Car);
-  });
+  expect(Store.get("fruit")).toBe(StateValues.Fruit);
+
+  expect(Store.get("person")).toBe(StateValues.Person);
+
+  expect(Store.get("car")).toBe(StateValues.Car);
 });
 
 test("Make sure getStore methods work as expected.", () => {
-  it("Check getStore.", () => {
-    const storeItem = Store.getStore()[0];
-    const expectedValue = {
-      key: "fruit",
-      state: StateValues.Fruit,
-      type: "string",
-      features: undefined,
-    };
-    expect(storeItem.key).toBe(expectedValue.key);
-    expect(storeItem.state).toBe(expectedValue.state);
-    expect(storeItem.features).toBe(expectedValue.features);
-  });
+  const storeItem = Store.getStore()[0];
+  const expectedValue = {
+    key: "fruit",
+    state: StateValues.Fruit,
+    type: "string",
+    features: undefined,
+  };
+  expect(storeItem.key).toBe(expectedValue.key);
+  expect(storeItem.state).toBe(expectedValue.state);
+  expect(storeItem.features).toBe(expectedValue.features);
 });

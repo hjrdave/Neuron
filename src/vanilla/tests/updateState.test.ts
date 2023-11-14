@@ -34,16 +34,14 @@ Store.add<string>({
 });
 
 test("Make sure initial state is correct.", () => {
-  it("Fruit state should be updated", () => {
-    const currentState = Store.get(StateKeys.Fruit);
-    expect(currentState).toBe(StateValues.Fruit);
+  const currentState = Store.get(StateKeys.Fruit);
+  expect(currentState).toBe(StateValues.Fruit);
 
-    Store.set(StateKeys.Fruit, "Orange");
-    const nextState = Store.get(StateKeys.Fruit);
-    expect(nextState).toBe("Orange");
+  Store.set(StateKeys.Fruit, "Orange");
+  const nextState = Store.get(StateKeys.Fruit);
+  expect(nextState).toBe("Orange");
 
-    Store.set(StateKeys.Fruit, "PineApple");
-    const nextState2 = Store.get(StateKeys.Fruit);
-    expect(nextState2).toBe("PineApple");
-  });
+  Store.set(StateKeys.Fruit, "PineApple");
+  const nextState2 = Store.get(StateKeys.Fruit);
+  expect(nextState2).toBe("PineApple");
 });
