@@ -1,6 +1,6 @@
 import Neuron from "../index";
 
-import { expect, test, it } from "vitest";
+import { expect, test } from "vitest";
 interface State {
   fruit: string;
 }

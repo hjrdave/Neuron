@@ -1,4 +1,4 @@
-import { expect, test, it } from "vitest";
+import { expect, test } from "vitest";
 
 import Neuron from "../index";
 
