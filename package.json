@@ -6,7 +6,7 @@
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
-    "build": "tsc && vite build --config configs/index.config.ts && vite build --config configs/vanilla.config.ts && vite build --config configs/react.config.ts && vite build --config configs/modules.config.ts && vite build --config configs/persist.config.ts && vite build --config configs/slices.config.ts",
+    "build": "tsc && vite build --config configs/index.config.ts && vite build --config configs/vanilla.config.ts && vite build --config configs/react.config.ts && vite build --config configs/modules.config.ts && vite build --config configs/persist.config.ts && vite build --config configs/slices.config.ts && copyfiles package.json dist && copyfiles CONTRIBUTING.md dist && copyfiles README.md dist",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "storybook:run": "storybook dev -p 6006",
@@ -23,112 +23,113 @@
   ],
   "exports": {
     "./package.json": "./package.json",
+    "./CONTRIBUTING.md": "./CONTRIBUTING.md",
     ".": {
       "require": {
-        "types": "./dist/index.d.ts",
-        "default": "./dist/index.cjs"
+        "types": "./index.d.ts",
+        "default": "./index.cjs"
       },
       "import": {
-        "types": "./dist/index.d.ts",
-        "default": "./dist/index.js"
+        "types": "./index.d.ts",
+        "default": "./index.js"
       },
       "module": {
-        "types": "./dist/index.d.ts",
-        "default": "./dist/index.js"
+        "types": "./index.d.ts",
+        "default": "./index.js"
       },
       "default": {
-        "types": "./dist/index.d.ts",
-        "default": "./dist/index.js"
+        "types": "./index.d.ts",
+        "default": "./index.js"
       }
     },
     "./vanilla": {
       "require": {
-        "types": "./dist/vanilla.d.ts",
-        "default": "./dist/vanilla.cjs"
+        "types": "./vanilla.d.ts",
+        "default": "./vanilla.cjs"
       },
       "import": {
-        "types": "./dist/vanilla.d.ts",
-        "default": "./dist/vanilla.js"
+        "types": "./vanilla.d.ts",
+        "default": "./vanilla.js"
       },
       "module": {
-        "types": "./dist/vanilla.d.ts",
-        "default": "./dist/vanilla.js"
+        "types": "./vanilla.d.ts",
+        "default": "./vanilla.js"
       },
       "default": {
-        "types": "./dist/vanilla.d.ts",
-        "default": "./dist/vanilla.js"
+        "types": "./vanilla.d.ts",
+        "default": "./vanilla.js"
       }
     },
     "./react": {
       "require": {
-        "types": "./dist/react.d.ts",
-        "default": "./dist/react.cjs"
+        "types": "./react.d.ts",
+        "default": "./react.cjs"
       },
       "import": {
-        "types": "./dist/react.d.ts",
-        "default": "./dist/react.js"
+        "types": "./react.d.ts",
+        "default": "./react.js"
       },
       "module": {
-        "types": "./dist/react.d.ts",
-        "default": "./dist/react.js"
+        "types": "./react.d.ts",
+        "default": "./react.js"
       },
       "default": {
-        "types": "./dist/react.d.ts",
-        "default": "./dist/react.js"
+        "types": "./react.d.ts",
+        "default": "./react.js"
       }
     },
     "./modules": {
       "require": {
-        "types": "./dist/module.d.ts",
-        "default": "./dist/module.cjs"
+        "types": "./module.d.ts",
+        "default": "./module.cjs"
       },
       "import": {
-        "types": "./dist/module.d.ts",
-        "default": "./dist/module.js"
+        "types": "./module.d.ts",
+        "default": "./module.js"
       },
       "module": {
-        "types": "./dist/module.d.ts",
-        "default": "./dist/module.js"
+        "types": "./module.d.ts",
+        "default": "./module.js"
       },
       "default": {
-        "types": "./dist/module.d.ts",
-        "default": "./dist/module.js"
+        "types": "./module.d.ts",
+        "default": "./module.js"
       }
     },
     "./modules/persist": {
       "require": {
-        "types": "./dist/modules/persist/index.d.ts",
-        "default": "./dist/modules/persist/index.cjs"
+        "types": "./modules/persist/index.d.ts",
+        "default": "./modules/persist/index.cjs"
       },
       "import": {
-        "types": "./dist/modules/persist/index.d.ts",
-        "default": "./dist/modules/persist/index.js"
+        "types": "./modules/persist/index.d.ts",
+        "default": "./modules/persist/index.js"
       },
       "module": {
-        "types": "./dist/modules/persist/index.d.ts",
-        "default": "./dist/modules/persist/index.js"
+        "types": "./modules/persist/index.d.ts",
+        "default": "./modules/persist/index.js"
       },
       "default": {
-        "types": "./dist/modules/persist/index.d.ts",
-        "default": "./dist/modules/persist/index.js"
+        "types": "./modules/persist/index.d.ts",
+        "default": "./modules/persist/index.js"
       }
     },
     "./modules/slices": {
       "require": {
-        "types": "./dist/modules/slices/index.d.ts",
-        "default": "./dist/modules/slices/index.cjs"
+        "types": "./modules/slices/index.d.ts",
+        "default": "./modules/slices/index.cjs"
       },
       "import": {
-        "types": "./dist/modules/slices/index.d.ts",
-        "default": "./dist/modules/slices/index.js"
+        "types": "./modules/slices/index.d.ts",
+        "default": "./modules/slices/index.js"
       },
       "module": {
-        "types": "./dist/modules/slices/index.d.ts",
-        "default": "./dist/modules/slices/index.js"
+        "types": "./modules/slices/index.d.ts",
+        "default": "./modules/slices/index.js"
       },
       "default": {
-        "types": "./dist/modules/slices/index.d.ts",
-        "default": "./dist/modules/slices/index.js"
+        "types": "./modules/slices/index.d.ts",
+        "default": "./modules/slices/index.js"
       }
     }
   },
@@ -173,6 +174,7 @@
     "@vitejs/plugin-react": "^4.1.1",
     "@vitejs/plugin-react-swc": "^3.4.1",
     "bootstrap": "^5.3.2",
+    "copyfiles": "^2.4.1",
     "eslint": "^8.45.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.3",
@@ -183,6 +185,7 @@
     "storybook": "^7.5.1",
     "typescript": "^5.0.2",
     "vite": "^4.4.5",
+    "vite-plugin-copy": "^0.1.6",
     "vite-plugin-dts": "^3.6.1",
     "vite-tsconfig-paths": "^4.2.1",
     "vitest": "^0.34.6"

@@ -45,7 +45,7 @@ jobs:
         run: npm install
       - name: Building Package
         run: npm run build
-      - name: Publishing to NPM
-        run: npm version ${{ env.VERSION }} --no-git-tag-version && npm publish --access public
+      - name: Publishing to
+        run: cd dist && npm version ${{ env.VERSION }} --no-git-tag-version && npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_AUTH_TOKEN}}
