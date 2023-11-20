@@ -133,10 +133,7 @@
     }
   },
   "files": [
-    "dist/*",
-    "README.md",
-    "LICENSE",
-    "CONTRIBUTING.md"
+    "**"
   ],
   "keywords": [
     "npm",
