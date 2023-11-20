@@ -7,7 +7,7 @@ export interface StateProps<
   S = { [key: string]: unknown }
 > {
   name: SelectorKey<S>;
-  state?: T;
+  state: T;
   actions?: Actions<A, T, S>;
   onLoad?: DispatchMutator<T, S>;
   onRun?: DispatchMutator<T, S>;

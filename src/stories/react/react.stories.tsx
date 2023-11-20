@@ -1,7 +1,7 @@
 import React from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import { StoryFn, Meta } from "@storybook/react";
-import Store, { useNeuron } from "./Store";
+import Store, { useNeuron, ScoreActions } from "./Store";
 import "../../../node_modules/bootstrap/dist/css/bootstrap.css";
 export default {
   title: "Tests/React",
@@ -126,17 +126,20 @@ export const PersistedState = PersistedStateTemplate.bind({});
 PersistedState.args = {};
 
 const ActionsComp = () => {
-  const [score, , scoreActions] = useNeuron("score");
+  const [score, , { increment, decrement }] = useNeuron<number, ScoreActions>(
+    "score"
+  );
+
   return (
     <>
       <Container>
         <Row>
           <Col>
-            <Button className={"me-2"} onClick={() => scoreActions.increment()}>
-              Increment
-            </Button>
-            <Button className={"me-2"} onClick={() => scoreActions.decrement()}>
+            <Button className={"me-2"} onClick={() => decrement()}>
               Decrement
+            </Button>
+            <Button className={"me-2"} onClick={() => increment()}>
+              Increment
             </Button>
           </Col>
         </Row>

@@ -15,6 +15,17 @@ interface IState {
   userName: string;
 }
 
+interface Person {
+  name: string;
+  gender: string;
+  jobTitle: string;
+}
+
+export interface ScoreActions {
+  increment: () => void;
+  decrement: () => void;
+}
+
 const { State, Module, ..._Store } = Neuron.Store<IState, PersistProps>();
 
 export const useNeuron = _Store.useNeuron;
@@ -23,48 +34,33 @@ export default function Store() {
   return (
     <>
       <Module use={Persist} />
-      <State
-        name={"fruit"}
-        state={"apple"}
-        // actions={(dispatch) => ({
-        //   reset: () => dispatch((payload) => payload.reset()),
-        // })}
-      />
-      <State name={"carList"} state={["toyota", "ford", "chevy"]} />
-      <State name={"isLoading"} state={false} />
-      <State
+      <State<string> name={"fruit"} state={"apple"} />
+      <State<string[]> name={"carList"} state={["toyota", "ford", "chevy"]} />
+      <State<boolean> name={"isLoading"} state={false} />
+      <State<Person>
         name={"person"}
         state={{
           name: "Bob",
           gender: "male",
           jobTitle: "Developer",
         }}
-        actions={(dispatch) => ({
-          reset: () => dispatch((payload) => payload.reset()),
-        })}
       />
       {/**Persisted State */}
-      <State<number, { decrement: () => void; increment: () => void }>
+      <State<number, ScoreActions>
         name={"score"}
         state={1000}
         actions={(dispatch) => ({
-          decrement: () =>
-            dispatch((payload) => {
-              const current = payload.state;
-              if (current !== undefined) {
-                payload.state = current + 1000;
-              }
-            }),
           increment: () =>
             dispatch((payload) => {
-              const current = payload.state;
-              if (current !== undefined) {
-                payload.state = current - 1000;
-              }
+              payload.state = payload.prevState + 10;
+            }),
+          decrement: () =>
+            dispatch((payload) => {
+              payload.state = payload.prevState - 10;
             }),
         })}
       />
-      <State name={"userName"} state={"Captain Foo"} />
+      <State<string> name={"userName"} state={"Captain Foo"} />
     </>
   );
 }

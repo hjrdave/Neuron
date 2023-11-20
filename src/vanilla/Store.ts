@@ -214,7 +214,7 @@ export default class Store<S = StoreProps> implements IStore<S> {
   ) => {
     const payload = this.createPayload<T, D>({
       key: key,
-    });
+    } as { key: SelectorKey<S>; state: T });
     mutator(payload);
     this.dispatchPayload<T, D>(payload);
   };

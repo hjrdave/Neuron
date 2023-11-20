@@ -14,8 +14,8 @@ import {
 } from "./vanilla.interfaces";
 export interface Params<T = StateType, S = StoreProps, D = DataProps> {
   key: SelectorKey<S>;
-  prevState?: T;
-  state?: T;
+  prevState: T;
+  state: T;
   features?: Features<T, S>;
   data?: D;
   get: GetState<S>;
@@ -27,8 +27,8 @@ export interface Params<T = StateType, S = StoreProps, D = DataProps> {
 export interface IPayload<T = StateType, S = StoreProps, D = DataProps> {
   readonly key: SelectorKey<S>;
   readonly features?: Features<T, S>;
-  readonly prevState?: T;
-  state?: T;
+  readonly prevState: T;
+  state: T;
   data?: D;
   readonly get: GetState<S>;
   readonly set: SetState<S>;
@@ -43,8 +43,8 @@ export default class Payload<T = StateType, S = StoreProps, D = DataProps>
 {
   readonly key: SelectorKey<S>;
   readonly features?: Features<T, S>;
-  readonly prevState?: T;
-  state?: T;
+  readonly prevState: T;
+  state: T;
   data?: D;
   private dispatchCancelled = false;
   readonly get: GetState<S>;

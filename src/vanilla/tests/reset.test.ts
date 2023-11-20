@@ -52,7 +52,7 @@ test("Reset Store State.", () => {
   Store.reset("car");
   Store.reset("person");
 
-  expect(Store.get(StateKeys.Fruit)).toBe(StateValues.Car);
+  expect(Store.get(StateKeys.Fruit)).toBe(StateValues.Fruit);
   expect(Store.get(StateKeys.Car)).toBe(StateValues.Car);
   expect(Store.get(StateKeys.Person)).toBe(StateValues.Person);
 });
