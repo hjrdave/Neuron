@@ -1,5 +1,5 @@
 import React from "react";
-import Neuron from "@sandstack/neuron/react";
+//import Neuron from "@sandstack/neuron/react";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import { StoryFn, Meta } from "@storybook/react";
 import Store, { useNeuron, ScoreActions } from "./Store";
