@@ -6,7 +6,7 @@
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
-    "build": "tsc && vite build --config configs/index.config && vite build --config configs/vanilla.config && vite build --config configs/react.config && vite build --config configs/modules.config && vite build --config configs/persist.config && vite build --config configs/slices.config",
+    "build": "tsc && vite build --config configs/index.config.ts && vite build --config configs/vanilla.config.ts && vite build --config configs/react.config.ts && vite build --config configs/modules.config.ts && vite build --config configs/persist.config.ts && vite build --config configs/slices.config.ts",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "storybook:run": "storybook dev -p 6006",
