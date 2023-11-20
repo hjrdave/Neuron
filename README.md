@@ -172,7 +172,7 @@ Neuron Global State Manager for React.js. This is a React.js specific global sta
 1. Create a new `Store`
 
 ```jsx
-import Neuron from "@sandstack/react";
+import Neuron from "@sandstack/neuron/react";
 
 export const { State, useNeuron } = Neuron.Store();
 
@@ -401,8 +401,8 @@ The payload object is used by middleware to manipulate the dispatch process. Bel
 Modules are a way to hook into store middleware and extend Neuron with features like state persistance and dev tools. Below is an example of extending a Neuron store with state persistence by using the `Persist` module. You can use the `Store.Use` component to inject a module into your store. Each module works different and might have a different api. In the case below, the `Persist` module is instantiated and the feature flag `persist` is set on the store items that you want to run the module on.
 
 ```jsx
-import Neuron from "@sandstack/react";
-import Persist from "@sandstack/persist";
+import Neuron from "@sandstack/neuron/react";
+import Persist from "@sandstack/neuron/persist";
 
 export const { State, Module, useNeuron } = Neuron.Store();
 
@@ -433,8 +433,8 @@ By default Neuron stores are globally instantiated. This means that any componen
 ### Create Private Store
 
 ```jsx
-import Neuron from "@sandstack/react";
-import Persist from "@sandstack/persist";
+import Neuron from "@sandstack/neuron/react";
+import Persist from "@sandstack/neuron/persist";
 
 // Private store must be instantiated outside of Store component;
 export const { usePrivateStore, Private } = Neuron.PrivateStore();
