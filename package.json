@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "description": "A framework agnostic javascript global state manager.",
   "sideEffects": false,
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "main": "./index.js",
+  "types": "./index.d.ts",
   "scripts": {
     "build": "tsc && vite build --config configs/index.config.ts && vite build --config configs/vanilla.config.ts && vite build --config configs/react.config.ts && vite build --config configs/modules.config.ts && vite build --config configs/persist.config.ts && vite build --config configs/slices.config.ts && copyfiles package.json dist && copyfiles CONTRIBUTING.md dist && copyfiles README.md dist",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
