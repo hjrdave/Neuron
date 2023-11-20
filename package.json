@@ -23,37 +23,91 @@
     "not dead"
   ],
   "exports": {
+    "./package.json": "./package.json",
     ".": {
-      "types": "./dist/index.d.ts",
-      "require": "./dist/index.cjs",
-      "default": "./dist/index.js"
+      "require": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.cjs"
+      },
+      "module": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "default": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      }
     },
     "./vanilla": {
-      "types": "./dist/vanilla.d.ts",
-      "require": "./dist/vanilla.cjs",
-      "default": "./dist/vanilla.js"
+      "require": {
+        "types": "./dist/vanilla.d.ts",
+        "default": "./dist/vanilla.cjs"
+      },
+      "module": {
+        "types": "./dist/vanilla.d.ts",
+        "default": "./dist/vanilla.js"
+      },
+      "default": {
+        "types": "./dist/vanilla.d.ts",
+        "default": "./dist/vanilla.js"
+      }
     },
     "./react": {
-      "types": "./dist/react.d.ts",
-      "require": "./dist/react.cjs",
-      "default": "./dist/react.js"
+      "require": {
+        "types": "./dist/react.d.ts",
+        "default": "./dist/react.cjs"
+      },
+      "module": {
+        "types": "./dist/react.d.ts",
+        "default": "./dist/react.js"
+      },
+      "default": {
+        "types": "./dist/react.d.ts",
+        "default": "./dist/react.js"
+      }
     },
     "./modules": {
-      "types": "./dist/modules.d.ts",
-      "require": "./dist/modules.cjs",
-      "default": "./dist/modules.js"
+      "require": {
+        "types": "./dist/module.d.ts",
+        "default": "./dist/module.cjs"
+      },
+      "module": {
+        "types": "./dist/module.d.ts",
+        "default": "./dist/module.js"
+      },
+      "default": {
+        "types": "./dist/module.d.ts",
+        "default": "./dist/module.js"
+      }
     },
     "./modules/persist": {
-      "types": "./dist/modules/persist/index.d.ts",
-      "require": "./dist/modules/persist/index.cjs",
-      "default": "./dist/modules/persist/index.js"
+      "require": {
+        "types": "./dist/modules/persist/index.d.ts",
+        "default": "./dist/modules/persist/index.cjs"
+      },
+      "module": {
+        "types": "./dist/modules/persist/index.d.ts",
+        "default": "./dist/modules/persist/index.js"
+      },
+      "default": {
+        "types": "./dist/modules/persist/index.d.ts",
+        "default": "./dist/modules/persist/index.js"
+      }
     },
     "./modules/slices": {
-      "types": "./dist/modules/slices/index.d.ts",
-      "require": "./dist/modules/slices/index.cjs",
-      "default": "./dist/modules/slices/index.js"
-    },
-    "./package.json": "./package.json"
+      "require": {
+        "types": "./dist/modules/slices/index.d.ts",
+        "default": "./dist/modules/slices/index.cjs"
+      },
+      "module": {
+        "types": "./dist/modules/slices/index.d.ts",
+        "default": "./dist/modules/slices/index.js"
+      },
+      "default": {
+        "types": "./dist/modules/slices/index.d.ts",
+        "default": "./dist/modules/slices/index.js"
+      }
+    }
   },
   "files": [
     "dist/*",
