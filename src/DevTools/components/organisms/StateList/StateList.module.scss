@@ -1,0 +1,33 @@
+$base-font-size: 0.7rem;
+.stateList {
+  :global(.accordion) {
+    background-color: none;
+    border-bottom: 1px solid black;
+  }
+  :global(.accordion-header) {
+    background-color: none;
+    border: none !important;
+    font-family: "Fira Code";
+    font-weight: 300;
+  }
+  :global(.accordion-item, .accordion-button) {
+    background-color: rgba(0, 0, 0, 0) !important;
+    color: white !important;
+    border: none !important;
+    font-size: $base-font-size;
+    box-shadow: none !important;
+  }
+  :global(.accordion-button) {
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+    padding-left: 1rem;
+    font-size: $base-font-size;
+  }
+
+  :global(.accordion-button::after) {
+    display: none;
+  }
+  :global(.accordion-button:not(.collapsed)::after) {
+    display: none;
+  }
+}

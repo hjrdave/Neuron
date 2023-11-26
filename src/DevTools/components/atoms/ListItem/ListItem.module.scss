@@ -1,0 +1,13 @@
+.listItem {
+  :global(.list-group-item) {
+    border-radius: 0 !important;
+    background-color: rgba(0, 0, 0, 0) !important;
+    color: white;
+    border: none;
+    font-family: "Fira Code";
+  }
+
+  :global(.active) {
+    background-color: grey !important;
+  }
+}
