@@ -1,8 +1,8 @@
 import React from "react";
 import { Button } from "react-bootstrap";
-
-import BreadCrumbs from "../../atoms/BreadCrumbs";
-import ViewerTabs, { TabNames } from "../../atoms/ViewerTabs";
+import { CrumbTypes } from "../../atoms/Crumb";
+import BreadCrumbs from "../../molecules/BreadCrumbs";
+import ViewerTabs from "../../molecules/ViewerTabs";
 import styles from "./StateViewer.module.scss";
 
 interface Props {
@@ -18,13 +18,13 @@ export default function StateViewer({ stateKey, storeName }: Props) {
     features?: boolean;
     actions?: boolean;
   }>({ stateKey: stateKey, state: true });
-  const handleBreadCrumbs = (activeTab: TabNames) => {
+  const handleBreadCrumbs = (activeTab: CrumbTypes) => {
     let props = {
       stateKey: stateKey,
-      state: activeTab === TabNames.State,
-      payload: activeTab === TabNames.Payload,
-      features: activeTab === TabNames.Features,
-      actions: activeTab === TabNames.Actions,
+      state: activeTab === CrumbTypes.State,
+      payload: activeTab === CrumbTypes.Payload,
+      features: activeTab === CrumbTypes.Features,
+      actions: activeTab === CrumbTypes.Actions,
     };
     setBreadCrumbProps(props);
   };

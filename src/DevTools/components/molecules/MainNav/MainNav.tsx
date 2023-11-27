@@ -1,5 +1,5 @@
 import React from "react";
-import { Nav } from "react-bootstrap";
+import Nav from "react-bootstrap/Nav";
 import styles from "./MainNav.module.scss";
 
 export default function MainNav() {

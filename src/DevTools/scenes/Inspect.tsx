@@ -10,7 +10,7 @@ export default function Inspect({}: Props) {
   return (
     <>
       <Scene>
-        <Col sm={"4"} className={"p-3"}>
+        <Col sm={"3"} className={"p-3"}>
           <p className={""}>
             <i className="fa-solid fa-cubes text-success pe-2"></i>
             <span className={"text-white"}>{storeData[0].storeName}</span>

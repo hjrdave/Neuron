@@ -1,8 +1,9 @@
-import React from "react"
-import { Col, Row } from "react-bootstrap"
+import React from "react";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
 
-import MainNav from "../../molecules/MainNav"
-import SelectStore from "../../molecules/SelectStore"
+import MainNav from "../../molecules/MainNav";
+import SelectStore from "../../molecules/SelectStore";
 
 export default function Header() {
   return (
@@ -14,5 +15,5 @@ export default function Header() {
         <SelectStore />
       </Col>
     </Row>
-  )
+  );
 }

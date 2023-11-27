@@ -1,8 +1,9 @@
-import React from "react"
-import { Col, Row } from "react-bootstrap"
+import React from "react";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
 
 interface Props {
-  children: JSX.Element | JSX.Element[]
+  children: JSX.Element | JSX.Element[];
 }
 export default function Scene({ children }: Props) {
   return (
@@ -11,5 +12,5 @@ export default function Scene({ children }: Props) {
         <Row className={"h-100"}>{children}</Row>
       </Col>
     </>
-  )
+  );
 }
