@@ -12,7 +12,7 @@ export default function DevTools() {
             <Card
               className={"shadow-md"}
               data-bs-theme="dark"
-              style={{ borderRadius: "0px" }}
+              style={{ borderRadius: ".25rem" }}
             >
               <Card.Body className={"p-0"}>
                 <Container fluid>

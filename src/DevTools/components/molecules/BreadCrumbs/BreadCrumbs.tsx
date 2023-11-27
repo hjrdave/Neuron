@@ -24,7 +24,6 @@ export default function BreadCrumbs({
     <>
       <Button
         variant="none"
-        disabled
         size="sm"
         className={`me-2 border-0 ${styles.compContainer}`}
       >

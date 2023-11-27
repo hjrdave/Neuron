@@ -2,6 +2,7 @@
   .navLink {
     border-radius: 0px !important;
     border-bottom: 2px solid rgba(0, 0, 0, 0);
+    font-size: 0.85rem;
 
     &:global(.active) {
       background-color: rgba(0, 0, 0, 0) !important;

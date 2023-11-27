@@ -1,4 +1,5 @@
 import React from "react";
+import styles from "./Crumb.module.scss";
 
 export enum CrumbTypes {
   Store = "store",
@@ -16,7 +17,7 @@ interface Props {
 export default function Crumb({ label, type, hideArrow }: Props) {
   return (
     <>
-      <span className={"text-white px-2"}>
+      <span className={`${styles.compContainer} text-white px-2`}>
         <i
           className={`fa-solid ${
             type === CrumbTypes.Store

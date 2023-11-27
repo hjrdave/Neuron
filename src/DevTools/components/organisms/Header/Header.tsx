@@ -1,9 +1,7 @@
 import React from "react";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-
 import MainNav from "../../molecules/MainNav";
-// import SelectStore from "../../molecules/SelectStore";
 
 export default function Header() {
   return (

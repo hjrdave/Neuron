@@ -34,15 +34,15 @@ export default function StateViewer({ stateKey, storeName }: Props) {
   return (
     <>
       <Row className={"m-0"}>
-        <Col sm={5} className={"border-bottom d-flex align-items-center p-0"}>
+        <Col sm={5} className={"d-flex align-items-center p-0 bg-black"}>
           <BreadCrumbs storeName={storeName} {...breadCrumbProps} />
         </Col>
-        <Col className={"border-bottom p-0"}>
+        <Col className={" p-0 bg-black"}>
           <Row>
-            <Col className={"p-0"}>
+            <Col className={"p-0 pe-1"}>
               <SelectStore placeHolder="Store" />
             </Col>
-            <Col className={"p-0"}>
+            <Col className={"p-0 pe-1"}>
               <SelectStore placeHolder="State" />
             </Col>
 
@@ -51,7 +51,11 @@ export default function StateViewer({ stateKey, storeName }: Props) {
             </Col>
           </Row>
         </Col>
-        <Col sm={12} className={"bg-black p-3"}>
+        <Col
+          sm={12}
+          className={"bg-black p-3"}
+          style={{ borderRadius: "0px 0px .25rem .25rem" }}
+        >
           <ReactJson
             name={"fruit"}
             src={["foo", "fee"]}

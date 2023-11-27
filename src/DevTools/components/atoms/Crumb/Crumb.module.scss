@@ -1,0 +1,11 @@
+.compContainer {
+  font-family: "Fira Code", monospace;
+  font-size: 0.75rem;
+}
+
+@supports (font-variation-settings: normal) {
+  .compContainer {
+    font-family: "Fira Code VF", monospace;
+    font-size: 0.75rem;
+  }
+}
