@@ -32,16 +32,20 @@ export default function StateViewer({ stateKey, storeName }: Props) {
     <>
       <div
         className={
-          "d-flex justify-content-start bg-dark p-2 border-start border-bottom"
+          "d-flex justify-content-between bg-dark border-start border-bottom"
         }
       >
         <BreadCrumbs storeName={storeName} {...breadCrumbProps} />
+        <ViewerTabs onChange={handleBreadCrumbs} />
       </div>
-      <div
+      {/* <div
         className={
           "d-flex align-items-center justify-content-between bg-dark p-2 border-start border-bottom"
         }
       >
+        
+      </div> */}
+      <div className={`py-2 px-3 bg-black border-start ${styles.stateViewer}`}>
         <div className={"pe-3"}>
           <Button variant="outline-secondary" size="sm" className={"me-2"}>
             Tree
@@ -50,10 +54,7 @@ export default function StateViewer({ stateKey, storeName }: Props) {
             Raw
           </Button>
         </div>
-        <ViewerTabs onChange={handleBreadCrumbs} />
-      </div>
-      <div className={`p-3 bg-black border-start ${styles.stateViewer}`}>
-        <p className={"text-white"}>state</p>
+        <p className={"text-white pt-3"}>state</p>
       </div>
     </>
   );

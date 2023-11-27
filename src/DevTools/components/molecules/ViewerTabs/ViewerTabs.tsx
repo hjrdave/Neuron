@@ -16,13 +16,13 @@ export default function ViewerTabs({ onChange }: Props) {
 
   return (
     <>
-      <ButtonGroup size="sm">
+      <ButtonGroup size="sm" className={""}>
         <Button
           onClick={() => setActive(CrumbTypes.State)}
           variant={
             active === CrumbTypes.State ? "secondary" : "outline-secondary"
           }
-          className={"text-white"}
+          className={"text-white border-0 rounded-0 py-2"}
         >
           <i
             className={`fa-solid fa-database pe-2 ${
@@ -36,7 +36,7 @@ export default function ViewerTabs({ onChange }: Props) {
           variant={
             active === CrumbTypes.Payload ? "secondary" : "outline-secondary"
           }
-          className={"text-white"}
+          className={"text-white border-0 rounded-0"}
         >
           <i
             className={`fa-solid fa-box-open pe-2 ${
@@ -50,7 +50,7 @@ export default function ViewerTabs({ onChange }: Props) {
           variant={
             active === CrumbTypes.Features ? "secondary" : "outline-secondary"
           }
-          className={"text-white"}
+          className={"text-white border-0 rounded-0"}
         >
           <i
             className={`fa-solid fa-gears pe-1 ${
@@ -64,7 +64,7 @@ export default function ViewerTabs({ onChange }: Props) {
           variant={
             active === CrumbTypes.Actions ? "secondary" : "outline-secondary"
           }
-          className={"text-white"}
+          className={"text-white border-0 rounded-0"}
         >
           <i
             className={`fa-solid fa-bolt pe-1 ${

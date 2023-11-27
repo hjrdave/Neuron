@@ -3,7 +3,7 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 
 import MainNav from "../../molecules/MainNav";
-import SelectStore from "../../molecules/SelectStore";
+// import SelectStore from "../../molecules/SelectStore";
 
 export default function Header() {
   return (
@@ -11,9 +11,7 @@ export default function Header() {
       <Col className={"px-0"}>
         <MainNav />
       </Col>
-      <Col sm={4} className={"px-0"}>
-        <SelectStore />
-      </Col>
+      <Col sm={4} className={"px-0"}></Col>
     </Row>
   );
 }
