@@ -14,12 +14,13 @@ export default function SelectStore({ placeHolder, className }: Props) {
           placeholder={placeHolder}
           className={className}
           styles={{
+            indicatorSeparator: () => ({
+              border: "none",
+            }),
             control: (baseStyles) => ({
               ...baseStyles,
               backgroundColor: "black",
               border: "none",
-
-              //border: "3px solid black",
               borderRadius: "0",
             }),
           }}

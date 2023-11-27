@@ -10,7 +10,7 @@ export default function DevTools() {
         <Row>
           <Col>
             <Card
-              className={"shadow-md"}
+              className={"shadow"}
               data-bs-theme="dark"
               style={{ borderRadius: ".25rem" }}
             >

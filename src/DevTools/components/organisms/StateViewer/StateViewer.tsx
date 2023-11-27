@@ -34,19 +34,22 @@ export default function StateViewer({ stateKey, storeName }: Props) {
   return (
     <>
       <Row className={"m-0"}>
-        <Col sm={5} className={"d-flex align-items-center p-0 bg-black"}>
+        <Col
+          sm={5}
+          className={"d-flex align-items-center p-0 bg-black border-bottom"}
+        >
           <BreadCrumbs storeName={storeName} {...breadCrumbProps} />
         </Col>
-        <Col className={" p-0 bg-black"}>
+        <Col className={"bg-black"}>
           <Row>
-            <Col className={"p-0 pe-1"}>
+            <Col className={"p-0 border-bottom border-start"}>
               <SelectStore placeHolder="Store" />
             </Col>
-            <Col className={"p-0 pe-1"}>
+            <Col className={"p-0 border-bottom border-start"}>
               <SelectStore placeHolder="State" />
             </Col>
 
-            <Col className={"ps-0"}>
+            <Col className={"ps-0 pe-0 border-bottom border-start"}>
               <SelectStore placeHolder="Type" />
             </Col>
           </Row>
