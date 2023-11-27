@@ -1,8 +1,11 @@
 import React from "react";
-import { Button } from "react-bootstrap";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
 import { CrumbTypes } from "../../atoms/Crumb";
 import BreadCrumbs from "../../molecules/BreadCrumbs";
 import ViewerTabs from "../../molecules/ViewerTabs";
+import ReactJson from "react-json-view";
+import SelectStore from "../../molecules/SelectStore";
 import styles from "./StateViewer.module.scss";
 
 interface Props {
@@ -30,32 +33,39 @@ export default function StateViewer({ stateKey, storeName }: Props) {
   };
   return (
     <>
-      <div
-        className={
-          "d-flex justify-content-between bg-dark border-start border-bottom"
-        }
-      >
-        <BreadCrumbs storeName={storeName} {...breadCrumbProps} />
-        <ViewerTabs onChange={handleBreadCrumbs} />
-      </div>
-      {/* <div
-        className={
-          "d-flex align-items-center justify-content-between bg-dark p-2 border-start border-bottom"
-        }
-      >
-        
-      </div> */}
-      <div className={`py-2 px-3 bg-black border-start ${styles.stateViewer}`}>
-        <div className={"pe-3"}>
-          <Button variant="outline-secondary" size="sm" className={"me-2"}>
-            Tree
-          </Button>
-          <Button variant="outline-secondary" size="sm" className={"me-2"}>
-            Raw
-          </Button>
-        </div>
-        <p className={"text-white pt-3"}>state</p>
-      </div>
+      <Row className={"m-0"}>
+        <Col sm={5} className={"border-bottom d-flex align-items-center p-0"}>
+          <BreadCrumbs storeName={storeName} {...breadCrumbProps} />
+        </Col>
+        <Col className={"border-bottom p-0"}>
+          <Row>
+            <Col className={"p-0"}>
+              <SelectStore placeHolder="Store" />
+            </Col>
+            <Col className={"p-0"}>
+              <SelectStore placeHolder="State" />
+            </Col>
+
+            <Col className={"ps-0"}>
+              <SelectStore placeHolder="Type" />
+            </Col>
+          </Row>
+        </Col>
+        <Col sm={12} className={"bg-black p-3"}>
+          <ReactJson
+            name={"fruit"}
+            src={["foo", "fee"]}
+            theme="monokai"
+            enableClipboard
+            displayDataTypes={false}
+            displayObjectSize={false}
+            style={{
+              backgroundColor: "black",
+              fontSize: ".85rem",
+            }}
+          />
+        </Col>
+      </Row>
     </>
   );
 }
