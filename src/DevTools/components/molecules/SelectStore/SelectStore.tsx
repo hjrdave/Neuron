@@ -1,5 +1,5 @@
-import React from "react"
-import Select from "react-select"
+import React from "react";
+import Select from "react-select";
 
 interface Props {}
 export default function SelectStore({}: Props) {
@@ -13,12 +13,12 @@ export default function SelectStore({}: Props) {
             control: (baseStyles) => ({
               ...baseStyles,
               backgroundColor: "black",
-              border: "none",
-              borderRadius: "0"
-            })
+              border: "3px solid black",
+              borderRadius: "0",
+            }),
           }}
         />
       </div>
     </>
-  )
+  );
 }

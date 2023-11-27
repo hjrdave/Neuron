@@ -1,13 +1,14 @@
-import React from "react"
-import { Button } from "react-bootstrap"
+import React from "react";
+import { Button } from "react-bootstrap";
+import styles from "./BreadCrumbs.module.scss";
 
 interface Props {
-  storeName: string
-  stateKey?: string
-  payload?: boolean
-  state?: boolean
-  features?: boolean
-  actions?: boolean
+  storeName: string;
+  stateKey?: string;
+  payload?: boolean;
+  state?: boolean;
+  features?: boolean;
+  actions?: boolean;
 }
 
 export default function BreadCrumbs({
@@ -16,11 +17,16 @@ export default function BreadCrumbs({
   payload,
   state,
   features,
-  actions
+  actions,
 }: Props) {
   return (
     <>
-      <Button variant="none" disabled size="sm" className={"me-2 viewerTitle"}>
+      <Button
+        variant="none"
+        disabled
+        size="sm"
+        className={`me-2 border-0 ${styles.compContainer}`}
+      >
         <i className="fa-solid fa-cubes text-success pe-2"></i>
         <span className={"text-white"}>{storeName}</span>
         {stateKey ? (
@@ -71,5 +77,5 @@ export default function BreadCrumbs({
         {/**payload, state, features, actions */}
       </Button>
     </>
-  )
+  );
 }

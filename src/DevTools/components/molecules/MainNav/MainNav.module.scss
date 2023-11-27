@@ -1,13 +1,11 @@
-.navContainer {
-  :global(.nav-link) {
-    border-radius: 0px;
+.compContainer {
+  .navLink {
+    border-radius: 0px !important;
     border-bottom: 2px solid rgba(0, 0, 0, 0);
-    &:hover {
-      background-color: grey;
+
+    &:global(.active) {
+      background-color: rgba(0, 0, 0, 0) !important;
+      border-bottom: 2px solid green;
     }
-  }
-  :global(.nav-link.active) {
-    background-color: rgba(0, 0, 0, 0) !important;
-    border-bottom: 2px solid green;
   }
 }
