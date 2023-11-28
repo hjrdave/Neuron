@@ -20,11 +20,6 @@ export default function MainNav() {
             Inspect
           </Nav.Link>
         </Nav.Item>
-        {/* <Nav.Item>
-          <Nav.Link eventKey="settings" className={"text-white"}>
-            Watch
-          </Nav.Link>
-        </Nav.Item> */}
       </Nav>
     </>
   );

@@ -1,12 +1,9 @@
 import React from "react";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import { CrumbTypes } from "../../atoms/Crumb";
 import BreadCrumbs from "../../molecules/BreadCrumbs";
-import ViewerTabs from "../../molecules/ViewerTabs";
 import ReactJson from "react-json-view";
-import SelectStore from "../../molecules/SelectStore";
-import styles from "./StateViewer.module.scss";
+import SelectControl from "../../molecules/SelectControl";
 
 interface Props {
   stateKey: string;
@@ -21,41 +18,37 @@ export default function StateViewer({ stateKey, storeName }: Props) {
     features?: boolean;
     actions?: boolean;
   }>({ stateKey: stateKey, state: true });
-  const handleBreadCrumbs = (activeTab: CrumbTypes) => {
-    let props = {
-      stateKey: stateKey,
-      state: activeTab === CrumbTypes.State,
-      payload: activeTab === CrumbTypes.Payload,
-      features: activeTab === CrumbTypes.Features,
-      actions: activeTab === CrumbTypes.Actions,
-    };
-    setBreadCrumbProps(props);
-  };
+
   return (
     <>
-      <Row className={"m-0"}>
-        <Col
-          sm={5}
-          className={"d-flex align-items-center p-0 bg-black border-bottom"}
-        >
-          <BreadCrumbs storeName={storeName} {...breadCrumbProps} />
-        </Col>
+      <Row className={"m-0 flex-lg-row-reverse"}>
         <Col className={"bg-black"}>
           <Row>
-            <Col className={"p-0 border-bottom border-start"}>
-              <SelectStore placeHolder="Store" />
+            <Col sm={12} md={4} className={"p-0 border-bottom border-start"}>
+              <SelectControl placeHolder="Store" />
             </Col>
-            <Col className={"p-0 border-bottom border-start"}>
-              <SelectStore placeHolder="State" />
+            <Col sm={12} md={4} className={"p-0 border-bottom border-start"}>
+              <SelectControl placeHolder="State" />
             </Col>
-
-            <Col className={"ps-0 pe-0 border-bottom border-start"}>
-              <SelectStore placeHolder="Type" />
+            <Col
+              sm={12}
+              md={4}
+              className={"ps-0 pe-0 border-bottom border-start"}
+            >
+              <SelectControl placeHolder="Type" />
             </Col>
           </Row>
         </Col>
         <Col
           sm={12}
+          lg={5}
+          className={"d-flex align-items-center p-0 bg-black border-bottom"}
+        >
+          <BreadCrumbs storeName={storeName} {...breadCrumbProps} />
+        </Col>
+      </Row>
+      <Row className={"m-0"}>
+        <Col
           className={"bg-black p-3"}
           style={{ borderRadius: "0px 0px .25rem .25rem" }}
         >

@@ -6,7 +6,7 @@ import Inspect from "./scenes/Inspect";
 export default function DevTools() {
   return (
     <>
-      <Container className={"p-1 z-3 position-fixed top-0"}>
+      <Container className={"p-1 z-3"}>
         <Row>
           <Col>
             <Card

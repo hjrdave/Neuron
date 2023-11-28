@@ -8,8 +8,8 @@ interface Props {
 export default function Scene({ children }: Props) {
   return (
     <>
-      <Col style={{ height: "calc(100% - 40px)" }}>
-        <Row className={"h-100"}>{children}</Row>
+      <Col>
+        <Row>{children}</Row>
       </Col>
     </>
   );

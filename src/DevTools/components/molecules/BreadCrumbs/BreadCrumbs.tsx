@@ -1,7 +1,6 @@
 import React from "react";
 import Button from "react-bootstrap/Button";
 import Crumb, { CrumbTypes } from "../../atoms/Crumb";
-import styles from "./BreadCrumbs.module.scss";
 
 interface Props {
   storeName: string;
@@ -22,11 +21,7 @@ export default function BreadCrumbs({
 }: Props) {
   return (
     <>
-      <Button
-        variant="none"
-        size="sm"
-        className={`me-2 border-0 ${styles.compContainer}`}
-      >
+      <Button variant="none" size="sm" className={`me-2 border-0`}>
         <Crumb type={CrumbTypes.Store} label={storeName} />
         {stateKey ? <Crumb label={stateKey} /> : null}
         {state ? (
