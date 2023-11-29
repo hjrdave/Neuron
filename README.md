@@ -43,7 +43,7 @@ Store.add({
 ### Update state
 
 ```javascript
-Store.set("name", "Gary Oak"); //key, new state
+Store.set("name", "Ur Mom Lol"); //key, new state
 ```
 
 ### Get state
