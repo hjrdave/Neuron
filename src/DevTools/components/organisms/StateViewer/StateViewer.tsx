@@ -4,6 +4,8 @@ import Row from "react-bootstrap/Row";
 import BreadCrumbs from "../../molecules/BreadCrumbs";
 import ReactJson from "react-json-view";
 import SelectControl from "../../molecules/SelectControl";
+import usePanelPosition from "../../../hooks/usePanelPosition";
+import { PanelPositions } from "../../../Store";
 
 interface Props {
   stateKey: string;
@@ -19,20 +21,32 @@ export default function StateViewer({ stateKey, storeName }: Props) {
     actions?: boolean;
   }>({ stateKey: stateKey, state: true });
 
+  const { position } = usePanelPosition();
+  const isStacked =
+    position === PanelPositions.Right || position === PanelPositions.Left;
+
   return (
     <>
       <Row className={"m-0 flex-lg-row-reverse"}>
-        <Col className={"bg-black"}>
+        <Col className={"bg-black"} sm={isStacked ? 12 : 7}>
           <Row>
-            <Col sm={12} md={4} className={"p-0 border-bottom border-start"}>
+            <Col
+              sm={12}
+              md={isStacked ? 12 : 4}
+              className={"p-0 border-bottom border-start"}
+            >
               <SelectControl placeHolder="Store" />
             </Col>
-            <Col sm={12} md={4} className={"p-0 border-bottom border-start"}>
+            <Col
+              sm={12}
+              md={isStacked ? 12 : 4}
+              className={"p-0 border-bottom border-start"}
+            >
               <SelectControl placeHolder="State" />
             </Col>
             <Col
               sm={12}
-              md={4}
+              md={isStacked ? 12 : 4}
               className={"ps-0 pe-0 border-bottom border-start"}
             >
               <SelectControl placeHolder="Type" />
@@ -41,7 +55,7 @@ export default function StateViewer({ stateKey, storeName }: Props) {
         </Col>
         <Col
           sm={12}
-          lg={5}
+          lg={isStacked ? 12 : 5}
           className={"d-flex align-items-center p-0 bg-black border-bottom"}
         >
           <BreadCrumbs storeName={storeName} {...breadCrumbProps} />

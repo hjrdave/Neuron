@@ -3,9 +3,7 @@ import Col from "react-bootstrap/Col";
 import Scene from "../components/atoms/Scene";
 import StateViewer from "../components/organisms/StateViewer";
 
-interface Props {}
-
-export default function Inspect({}: Props) {
+export default function Inspect() {
   return (
     <>
       <Scene>

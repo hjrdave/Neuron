@@ -1,33 +1,20 @@
-import { Col, Container, Row, Card } from "react-bootstrap";
+import TopPanel from "./components/templates/TopPanel";
+import BottomPanel from "./components/templates/BottomPanel";
+import RightPanel from "./components/templates/RightPanel";
+import LeftPanel from "./components/templates/LeftPanel";
+import FloatingIcon from "./components/atoms/FloatingIcon";
+import Store from "./Store";
 import "./styles.scss";
-import Header from "./components/organisms/Header";
-import Inspect from "./scenes/Inspect";
 
 export default function DevTools() {
   return (
     <>
-      <Container className={"p-1 z-3"}>
-        <Row>
-          <Col>
-            <Card
-              className={"shadow"}
-              data-bs-theme="dark"
-              style={{ borderRadius: ".25rem" }}
-            >
-              <Card.Body className={"p-0"}>
-                <Container fluid>
-                  <Row>
-                    <Col>
-                      <Header />
-                      <Inspect />
-                    </Col>
-                  </Row>
-                </Container>
-              </Card.Body>
-            </Card>
-          </Col>
-        </Row>
-      </Container>
+      <Store />
+      <TopPanel />
+      <BottomPanel />
+      <RightPanel />
+      <LeftPanel />
+      <FloatingIcon />
     </>
   );
 }
