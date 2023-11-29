@@ -5,7 +5,12 @@ import BreadCrumbs from "../../molecules/BreadCrumbs";
 import ReactJson from "react-json-view";
 import SelectControl from "../../molecules/SelectControl";
 import usePanelPosition from "../../../hooks/usePanelPosition";
-import { PanelPositions, useNeuron } from "../../../Store";
+import {
+  PanelPositions,
+  useNeuron,
+  getState,
+  onDispatch,
+} from "../../../Store";
 
 interface Props {
   stateKey: string;
@@ -26,7 +31,32 @@ export default function StateViewer({ stateKey, storeName }: Props) {
   const isStacked =
     position === PanelPositions.Right || position === PanelPositions.Left;
 
-  const [storeData] = useNeuron("storeData");
+  const [storeList] = useNeuron<string[]>("storeList");
+  const [keyList] = useNeuron<string[]>("keyList");
+  const [selectedStore, setSelectedStore] = useNeuron<string>("selectedStore");
+  const [selectedKey, setSelectedKey] = useNeuron<string>("selectedKey");
+  const storeOptions = storeList.map((item) => ({ label: item, value: item }));
+  const keyOptions = keyList.map((item) => ({ label: item, value: item }));
+  const [storeData, setStoreData] = React.useState({});
+
+  React.useEffect(() => {
+    onDispatch((payload) => {
+      const newState = payload.state?.[selectedKey]?.state;
+      if (newState !== undefined) {
+        setStoreData(newState);
+      }
+    });
+  }, [selectedKey]);
+
+  React.useEffect(() => {
+    if (selectedStore && selectedKey) {
+      const dynamicStoreData = getState(selectedStore as any)?.[selectedKey]
+        .state;
+      if (dynamicStoreData) {
+        setStoreData(dynamicStoreData);
+      }
+    }
+  }, [selectedStore, selectedKey]);
 
   return (
     <>
@@ -54,14 +84,22 @@ export default function StateViewer({ stateKey, storeName }: Props) {
               md={isStacked ? 12 : 4}
               className={"p-0 border-bottom border-start"}
             >
-              <SelectControl placeHolder="Store" />
+              <SelectControl
+                placeHolder="Store"
+                options={storeOptions}
+                onChange={(option) => setSelectedStore(option?.value ?? "")}
+              />
             </Col>
             <Col
               sm={12}
               md={isStacked ? 12 : 4}
               className={"p-0 border-bottom border-start"}
             >
-              <SelectControl placeHolder="Key" />
+              <SelectControl
+                placeHolder="Key"
+                options={keyOptions}
+                onChange={(option) => setSelectedKey(option?.value ?? "")}
+              />
             </Col>
             <Col
               sm={12}
@@ -94,8 +132,8 @@ export default function StateViewer({ stateKey, storeName }: Props) {
           style={{ borderRadius: "0px 0px .25rem .25rem" }}
         >
           <ReactJson
-            name={"foo"}
-            src={storeData as any}
+            name={"state"}
+            src={{ [selectedKey]: storeData }}
             theme="monokai"
             enableClipboard
             displayDataTypes={false}

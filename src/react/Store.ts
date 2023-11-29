@@ -1,11 +1,16 @@
-import { Store as CoreStore, SelectorKey, Module as IModule } from "../vanilla";
+import {
+  Store as CoreStore,
+  SelectorKey,
+  Module as IModule,
+  DispatchCallback,
+} from "../vanilla";
 import { Selector } from "../modules/slices";
 import State, { StateProps } from "./State";
 import Module, { ModuleProps } from "./Module";
 import useNeuron from "./useNeuron";
 import useDispatch from "./useDispatch";
 import useStore from "./useStore";
-import { StateType } from "../vanilla/vanilla.interfaces";
+import { StateType, StoreItem } from "../vanilla/vanilla.interfaces";
 
 export default class Store<S = { [key: string]: unknown }, M = unknown> {
   private Core: CoreStore<S>;
@@ -31,6 +36,11 @@ export default class Store<S = { [key: string]: unknown }, M = unknown> {
     this.Core.set(key, state);
 
   getState = (key: SelectorKey<S>) => this.Core.get(key);
+
+  addState = (storeItem: StoreItem) => this.Core.add(storeItem as any);
+
+  onDispatch = (callback: DispatchCallback<unknown>) =>
+    this.Core.onDispatch(callback as any);
 
   public constructor(params?: { modules?: IModule<StateType, S>[] }) {
     this.Core = CoreStore<S>(params);

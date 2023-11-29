@@ -17,27 +17,11 @@ const Comp = () => {
   const [jobTitle, setJobTitle] = useNeuron((state) => state.person.jobTitle);
   const [name, setName] = useNeuron((state) => state.person.name);
 
-  const [panelPosition, setPanelPosition] = useDevToolsNeuron("panelPosition");
-
-  // React.useEffect(() => {}, [storeData]);
-
   return (
     <>
       <Container>
         <Row>
           <Col>
-            <Button
-              className={"me-2"}
-              onClick={() => setDevToolsState("panelPosition", "bottom")}
-            >
-              Bottom
-            </Button>
-            <Button
-              className={"me-2"}
-              onClick={() => setDevToolsState("panelPosition", "right")}
-            >
-              Right
-            </Button>
             <Button className={"me-2"} onClick={() => setFruit("PineApple")}>
               Fruit
             </Button>
@@ -63,7 +47,6 @@ const Comp = () => {
         </Row>
         <Row>
           <Col className={"pt-4"}>
-            <p>DevTools: {panelPosition}</p>
             <p>Fruit: {fruit}</p>
             <p>isLoading: {isLoading.toString()}</p>
             <p>Gender: {gender}</p>

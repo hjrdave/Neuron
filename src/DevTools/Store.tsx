@@ -17,28 +17,27 @@ interface SelectedStore {
   stateKey: string;
   stateType: "action" | "state" | "feature";
 }
-interface StoreData {
-  [storeName: string]: {
-    [stateKey: string]: {
-      state: any;
-      actions?: Actions;
-      features?: Features;
-      payload?: DispatchPayload;
-    };
+
+export interface StateItem {
+  [stateKey: string]: {
+    state: any;
+    actions?: Actions;
+    features?: Features;
+    payload?: DispatchPayload;
   };
 }
 
 interface State {
   panelPosition: PanelPositions;
-  selectedStore: SelectedStore | null;
-  storeData: StoreData | null;
+  selectedStore: string;
+  selectedKey: string;
   openPanel: boolean;
+  storeList: string[];
+  keyList: string[];
 }
 
-export const { State, useNeuron, setState, getState } = Neuron.Store<State>();
-export const setStoreData = (storeData: StoreData) =>
-  setState("storeData", storeData);
-export const getStoreData = () => getState("storeData");
+export const { State, useNeuron, setState, getState, addState, onDispatch } =
+  Neuron.Store<State>();
 
 export default function Store() {
   return (
@@ -47,12 +46,27 @@ export default function Store() {
         name={"panelPosition"}
         state={PanelPositions.Top}
       />
-      <State<SelectedStore | null>
+      <State<string>
         name={"selectedStore"}
-        state={{ foo: "moo" } as any}
+        state={""}
+        onCallback={(payload) => {
+          const selectedStoreData = payload.get<StateItem>(
+            payload.state as any
+          );
+          const keyList = Object.keys(selectedStoreData);
+          payload.set("keyList" as any, keyList);
+        }}
       />
-      <State<StoreData | null> name={"storeData"} state={{}} />
+      <State<string> name={"selectedKey"} state={""} />
       <State<boolean> name={"openPanel"} state={false} />
+      <State<string[]>
+        name={"storeList"}
+        state={[]}
+        onRun={(payload) => {
+          payload.state = [...new Set(payload.state)];
+        }}
+      />
+      <State<string[]> name={"keyList"} state={["foo"]} />
     </>
   );
 }

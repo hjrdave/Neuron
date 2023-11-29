@@ -7,6 +7,7 @@ import {
   DataProps,
   DispatchMutator as TDispatchMutator,
   DispatchPayload as TDispatchPayload,
+  DispatchCallback as TDispatchCallback,
 } from "./vanilla.interfaces";
 import { default as ModuleInstance, Params, IModule } from "./Module";
 import { IPayload } from "./Payload";
@@ -48,6 +49,7 @@ namespace Neuron {
     D = DataProps
   > = TDispatchMutator<T, S, D>;
   export type DispatchPayload<S = StoreProps> = TDispatchPayload<S>;
+  export type DispatchCallback<S = StoreProps> = TDispatchCallback<S>;
 }
 
 export type Store<S = { [key: string]: unknown }> = IStore<S>;
@@ -68,6 +70,7 @@ export type DispatchMutator<
   D = DataProps
 > = TDispatchMutator<T, S, D>;
 export type DispatchPayload<S = StoreProps> = TDispatchPayload<S>;
+export type DispatchCallback<S = StoreProps> = TDispatchCallback<S>;
 
 /**
  * Creates a Neuron store instance. Stores are globally accessible.

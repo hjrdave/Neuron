@@ -1,15 +1,17 @@
 import React from "react";
-import Select from "react-select";
+import Select, { SingleValue } from "react-select";
 
 interface Props {
   placeHolder?: string;
   className?: string;
   options?: { label: string; value: any }[];
+  onChange?: (option: SingleValue<{ label: string; value: string }>) => void;
 }
 export default function SelectControl({
   placeHolder,
   className,
   options,
+  onChange,
 }: Props) {
   return (
     <>
@@ -17,11 +19,12 @@ export default function SelectControl({
         options={options}
         placeholder={placeHolder}
         className={className}
+        onChange={onChange}
         styles={{
           indicatorSeparator: () => ({
             border: "none",
           }),
-          control: (baseStyles, state) => ({
+          control: (baseStyles) => ({
             ...baseStyles,
             backgroundColor: "black",
             border: "none",

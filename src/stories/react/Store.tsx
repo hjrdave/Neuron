@@ -35,7 +35,7 @@ export default function Store() {
   return (
     <>
       {/* <Module use={Persist} /> */}
-      <Module use={Devtools({ storeName: "helloWorldStore" })} />
+      <Module use={Devtools({ storeName: "fooStore" })} />
       <State<string> name={"fruit"} state={"apple"} />
 
       <State<boolean> name={"isLoading"} state={false} />
