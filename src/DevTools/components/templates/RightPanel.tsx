@@ -15,7 +15,7 @@ export default function RightPanel() {
       {panelPosition.position === PanelPositions.Right && panelPosition.open ? (
         <Container
           className={`p-1 z-3 position-fixed end-0 top-0`}
-          style={{ width: "400px" }}
+          style={{ maxWidth: "400px" }}
         >
           <Row>
             <Col>

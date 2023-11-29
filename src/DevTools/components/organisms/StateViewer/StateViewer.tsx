@@ -22,6 +22,7 @@ export default function StateViewer({ stateKey, storeName }: Props) {
   }>({ stateKey: stateKey, state: true });
 
   const { position } = usePanelPosition();
+  const [showStoreControls, setShowStoreControls] = React.useState(false);
   const isStacked =
     position === PanelPositions.Right || position === PanelPositions.Left;
 
@@ -29,7 +30,23 @@ export default function StateViewer({ stateKey, storeName }: Props) {
     <>
       <Row className={"m-0 flex-lg-row-reverse"}>
         <Col className={"bg-black"} sm={isStacked ? 12 : 7}>
-          <Row>
+          {isStacked ? (
+            <Row>
+              <Col
+                className={"d-flex justify-content-center border-bottom cursor"}
+                onClick={() =>
+                  setShowStoreControls(showStoreControls ? false : true)
+                }
+              >
+                <i className="fa-solid fa-ellipsis text-success fs-3"></i>
+              </Col>
+            </Row>
+          ) : null}
+          <Row
+            className={`${
+              isStacked ? (!showStoreControls ? "d-none" : "") : ""
+            }`}
+          >
             <Col
               sm={12}
               md={isStacked ? 12 : 4}
