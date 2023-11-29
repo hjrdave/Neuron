@@ -13,7 +13,14 @@ const PanelTemplate: StoryFn = () => {
       <Container>
         <Row>
           <Col>
-            <DevTools />
+            <DevTools
+              openPanel
+              customStyles={
+                {
+                  //floatingIcon: { backgroundColor: "blue!important" },
+                }
+              }
+            />
           </Col>
         </Row>
       </Container>

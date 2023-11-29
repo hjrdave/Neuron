@@ -1,0 +1,10 @@
+.hover {
+  cursor: pointer;
+  opacity: 0.4;
+  &:hover {
+    opacity: 1;
+  }
+}
+.active {
+  opacity: 1;
+}

@@ -5,8 +5,15 @@ import LeftPanel from "./components/templates/LeftPanel";
 import FloatingIcon from "./components/atoms/FloatingIcon";
 import Store from "./Store";
 import "./styles.scss";
+import { CSSProperties } from "react";
 
-export default function DevTools() {
+interface Props {
+  openPanel?: boolean;
+  customStyles?: {
+    floatingIcon?: CSSProperties;
+  };
+}
+export default function DevTools({ openPanel, customStyles }: Props) {
   return (
     <>
       <Store />
@@ -14,7 +21,10 @@ export default function DevTools() {
       <BottomPanel />
       <RightPanel />
       <LeftPanel />
-      <FloatingIcon />
+      <FloatingIcon
+        openPanel={openPanel}
+        customStyles={customStyles?.floatingIcon}
+      />
     </>
   );
 }

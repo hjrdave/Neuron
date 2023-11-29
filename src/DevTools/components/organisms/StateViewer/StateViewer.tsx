@@ -42,14 +42,22 @@ export default function StateViewer({ stateKey, storeName }: Props) {
               md={isStacked ? 12 : 4}
               className={"p-0 border-bottom border-start"}
             >
-              <SelectControl placeHolder="State" />
+              <SelectControl placeHolder="Key" />
             </Col>
             <Col
               sm={12}
               md={isStacked ? 12 : 4}
               className={"ps-0 pe-0 border-bottom border-start"}
             >
-              <SelectControl placeHolder="Type" />
+              <SelectControl
+                placeHolder="Type"
+                options={[
+                  { label: "State", value: "state" },
+                  { label: "Payload", value: "payload" },
+                  { label: "Features", value: "features" },
+                  { label: "Actions", value: "actions" },
+                ]}
+              />
             </Col>
           </Row>
         </Col>
