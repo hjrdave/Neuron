@@ -27,6 +27,11 @@ export default class Store<S = { [key: string]: unknown }, M = unknown> {
 
   useStore = () => useStore<S>(this.Core);
 
+  setState = <T = unknown>(key: SelectorKey<S>, state: T) =>
+    this.Core.set(key, state);
+
+  getState = (key: SelectorKey<S>) => this.Core.get(key);
+
   public constructor(params?: { modules?: IModule<StateType, S>[] }) {
     this.Core = CoreStore<S>(params);
   }

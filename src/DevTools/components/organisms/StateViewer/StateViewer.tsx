@@ -5,7 +5,7 @@ import BreadCrumbs from "../../molecules/BreadCrumbs";
 import ReactJson from "react-json-view";
 import SelectControl from "../../molecules/SelectControl";
 import usePanelPosition from "../../../hooks/usePanelPosition";
-import { PanelPositions } from "../../../Store";
+import { PanelPositions, useNeuron } from "../../../Store";
 
 interface Props {
   stateKey: string;
@@ -25,6 +25,8 @@ export default function StateViewer({ stateKey, storeName }: Props) {
   const [showStoreControls, setShowStoreControls] = React.useState(false);
   const isStacked =
     position === PanelPositions.Right || position === PanelPositions.Left;
+
+  const [storeData] = useNeuron("storeData");
 
   return (
     <>
@@ -92,8 +94,8 @@ export default function StateViewer({ stateKey, storeName }: Props) {
           style={{ borderRadius: "0px 0px .25rem .25rem" }}
         >
           <ReactJson
-            name={"fruit"}
-            src={["foo", "fee"]}
+            name={"foo"}
+            src={storeData as any}
             theme="monokai"
             enableClipboard
             displayDataTypes={false}

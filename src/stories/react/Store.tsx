@@ -1,6 +1,7 @@
 import React from "react";
 import Neuron from "../../react";
 import Persist, { PersistProps } from "../../modules/persist";
+import Devtools from "../../modules/devtools";
 
 interface IState {
   fruit: string;
@@ -33,9 +34,10 @@ export const useNeuron = _Store.useNeuron;
 export default function Store() {
   return (
     <>
-      <Module use={Persist} />
+      {/* <Module use={Persist} /> */}
+      <Module use={Devtools({ storeName: "helloWorldStore" })} />
       <State<string> name={"fruit"} state={"apple"} />
-      <State<string[]> name={"carList"} state={["toyota", "ford", "chevy"]} />
+
       <State<boolean> name={"isLoading"} state={false} />
       <State<Person>
         name={"person"}
@@ -61,6 +63,7 @@ export default function Store() {
         })}
       />
       <State<string> name={"userName"} state={"Captain Foo"} />
+      <State<string[]> name={"carList"} state={["toyota", "ford", "chevy"]} />
     </>
   );
 }

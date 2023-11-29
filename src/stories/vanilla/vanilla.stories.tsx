@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { StoryFn, Meta } from "@storybook/react";
-import Neuron from "@sandstack/neuron";
+import Neuron from "../../vanilla";
 
 const store = Neuron.Store();
 store.add({

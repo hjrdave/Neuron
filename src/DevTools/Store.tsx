@@ -35,7 +35,10 @@ interface State {
   openPanel: boolean;
 }
 
-export const { State, useNeuron } = Neuron.Store<State>();
+export const { State, useNeuron, setState, getState } = Neuron.Store<State>();
+export const setStoreData = (storeData: StoreData) =>
+  setState("storeData", storeData);
+export const getStoreData = () => getState("storeData");
 
 export default function Store() {
   return (
@@ -44,8 +47,11 @@ export default function Store() {
         name={"panelPosition"}
         state={PanelPositions.Top}
       />
-      <State<SelectedStore | null> name={"selectedStore"} state={null} />
-      <State<StoreData | null> name={"storeData"} state={null} />
+      <State<SelectedStore | null>
+        name={"selectedStore"}
+        state={{ foo: "moo" } as any}
+      />
+      <State<StoreData | null> name={"storeData"} state={{}} />
       <State<boolean> name={"openPanel"} state={false} />
     </>
   );
