@@ -6,12 +6,14 @@ interface Props {
   className?: string;
   options?: { label: string; value: any }[];
   onChange?: (option: SingleValue<{ label: string; value: string }>) => void;
+  defaultInputValue?: string;
 }
 export default function SelectControl({
   placeHolder,
   className,
   options,
   onChange,
+  defaultInputValue,
 }: Props) {
   return (
     <>
@@ -19,6 +21,7 @@ export default function SelectControl({
         options={options}
         placeholder={placeHolder}
         className={className}
+        defaultInputValue={defaultInputValue}
         onChange={onChange}
         styles={{
           indicatorSeparator: () => ({

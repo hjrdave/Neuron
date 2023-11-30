@@ -5,35 +5,25 @@ import Crumb, { CrumbTypes } from "../../atoms/Crumb";
 interface Props {
   storeName: string;
   stateKey?: string;
-  payload?: boolean;
-  state?: boolean;
-  features?: boolean;
-  actions?: boolean;
+  stateType?: "state" | "features" | "actions" | "payload";
 }
 
-export default function BreadCrumbs({
-  storeName,
-  stateKey,
-  payload,
-  state,
-  features,
-  actions,
-}: Props) {
+export default function BreadCrumbs({ storeName, stateKey, stateType }: Props) {
   return (
     <>
       <Button variant="none" size="sm" className={`me-2 border-0`}>
         <Crumb type={CrumbTypes.Store} label={storeName} />
         {stateKey ? <Crumb label={stateKey} /> : null}
-        {state ? (
+        {stateType === "state" ? (
           <Crumb type={CrumbTypes.State} label={"State"} hideArrow />
         ) : null}
-        {payload ? (
+        {stateType === "payload" ? (
           <Crumb type={CrumbTypes.Payload} label={"Payload"} hideArrow />
         ) : null}
-        {features ? (
+        {stateType === "features" ? (
           <Crumb type={CrumbTypes.Features} label={"Features"} hideArrow />
         ) : null}
-        {actions ? (
+        {stateType === "actions" ? (
           <Crumb type={CrumbTypes.Actions} label={"Actions"} hideArrow />
         ) : null}
       </Button>

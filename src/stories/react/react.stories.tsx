@@ -70,7 +70,7 @@ const Comp = () => {
 const UpdateAndSetStateTemplate: StoryFn = () => {
   return (
     <>
-      <DevTools />
+      <DevTools openPanel />
       <Store />
       <Comp />
     </>

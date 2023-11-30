@@ -25,7 +25,14 @@ const Devtools = ({ storeName }: Options) => {
           state: payload.state,
           actions: {},
           features: payload.features,
-          payload: payload,
+          payload: {
+            key: payload.key,
+            state: payload.state,
+            prevState: payload.prevState,
+            features: payload.features,
+            data: payload.data,
+            isDispatchCancelled: payload.isDispatchCancelled,
+          },
         },
       });
     },
@@ -37,7 +44,14 @@ const Devtools = ({ storeName }: Options) => {
           state: payload.state,
           actions: {},
           features: payload.features,
-          payload: payload,
+          payload: {
+            key: payload.key,
+            state: payload.state,
+            prevState: payload.prevState,
+            features: payload.features,
+            data: payload.data,
+            isDispatchCancelled: payload.isDispatchCancelled(),
+          },
         },
       });
     },

@@ -13,18 +13,18 @@ import {
 } from "../../../Store";
 
 interface Props {
-  stateKey: string;
-  storeName: string;
+  stateKey?: string;
+  storeName?: string;
 }
 
-export default function StateViewer({ stateKey, storeName }: Props) {
-  const [breadCrumbProps, setBreadCrumbProps] = React.useState<{
-    stateKey?: string;
-    state?: boolean;
-    payload?: boolean;
-    features?: boolean;
-    actions?: boolean;
-  }>({ stateKey: stateKey, state: true });
+export default function StateViewer({}: Props) {
+  // const [breadCrumbProps, setBreadCrumbProps] = React.useState<{
+  //   stateKey?: string;
+  //   state?: boolean;
+  //   payload?: boolean;
+  //   features?: boolean;
+  //   actions?: boolean;
+  // }>({ stateKey: stateKey, state: true });
 
   const { position } = usePanelPosition();
   const [showStoreControls, setShowStoreControls] = React.useState(false);
@@ -35,28 +35,32 @@ export default function StateViewer({ stateKey, storeName }: Props) {
   const [keyList] = useNeuron<string[]>("keyList");
   const [selectedStore, setSelectedStore] = useNeuron<string>("selectedStore");
   const [selectedKey, setSelectedKey] = useNeuron<string>("selectedKey");
+  const [selectedType, setSelectedType] = React.useState<
+    "state" | "features" | "actions" | "payload"
+  >("state");
   const storeOptions = storeList.map((item) => ({ label: item, value: item }));
   const keyOptions = keyList.map((item) => ({ label: item, value: item }));
   const [storeData, setStoreData] = React.useState({});
 
   React.useEffect(() => {
     onDispatch((payload) => {
-      const newState = payload.state?.[selectedKey]?.state;
+      const newState = payload.state?.[selectedKey]?.[selectedType];
       if (newState !== undefined) {
         setStoreData(newState);
       }
     });
-  }, [selectedKey]);
+  }, [selectedKey, selectedType]);
 
   React.useEffect(() => {
     if (selectedStore && selectedKey) {
-      const dynamicStoreData = getState(selectedStore as any)?.[selectedKey]
-        .state;
+      const dynamicStoreData = getState(selectedStore as any)?.[selectedKey]?.[
+        selectedType
+      ];
       if (dynamicStoreData) {
         setStoreData(dynamicStoreData);
       }
     }
-  }, [selectedStore, selectedKey]);
+  }, [selectedStore, selectedKey, selectedType]);
 
   return (
     <>
@@ -88,6 +92,7 @@ export default function StateViewer({ stateKey, storeName }: Props) {
                 placeHolder="Store"
                 options={storeOptions}
                 onChange={(option) => setSelectedStore(option?.value ?? "")}
+                defaultInputValue={selectedStore}
               />
             </Col>
             <Col
@@ -99,6 +104,7 @@ export default function StateViewer({ stateKey, storeName }: Props) {
                 placeHolder="Key"
                 options={keyOptions}
                 onChange={(option) => setSelectedKey(option?.value ?? "")}
+                defaultInputValue={selectedKey}
               />
             </Col>
             <Col
@@ -114,6 +120,8 @@ export default function StateViewer({ stateKey, storeName }: Props) {
                   { label: "Features", value: "features" },
                   { label: "Actions", value: "actions" },
                 ]}
+                onChange={(option) => setSelectedType(option?.value as any)}
+                defaultInputValue={selectedType}
               />
             </Col>
           </Row>
@@ -123,17 +131,29 @@ export default function StateViewer({ stateKey, storeName }: Props) {
           lg={isStacked ? 12 : 5}
           className={"d-flex align-items-center p-0 bg-black border-bottom"}
         >
-          <BreadCrumbs storeName={storeName} {...breadCrumbProps} />
+          <BreadCrumbs
+            storeName={selectedStore}
+            stateKey={selectedKey}
+            stateType={selectedType}
+          />
         </Col>
       </Row>
       <Row className={"m-0"}>
         <Col
           className={"bg-black p-3"}
-          style={{ borderRadius: "0px 0px .25rem .25rem" }}
+          style={{
+            borderRadius: "0px 0px .25rem .25rem",
+            maxHeight: "400px",
+            overflow: "auto",
+          }}
         >
           <ReactJson
-            name={"state"}
-            src={{ [selectedKey]: storeData }}
+            name={selectedType}
+            src={
+              selectedType !== "state"
+                ? storeData
+                : { [selectedKey]: storeData }
+            }
             theme="monokai"
             enableClipboard
             displayDataTypes={false}
