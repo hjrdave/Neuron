@@ -14,13 +14,6 @@ export default function PanelPosition() {
     <>
       <Stack gap={2} direction={"horizontal"} className={styles.compContainer}>
         <img
-          src={PositionRightIcon}
-          className={`${styles.positionIcon} ${
-            panelPosition.position === PanelPositions.Right ? styles.active : ""
-          }`}
-          onClick={panelPosition.attachRight}
-        />
-        <img
           src={PositionLeftIcon}
           className={`${styles.positionIcon} ${
             panelPosition.position === PanelPositions.Left ? styles.active : ""
@@ -33,6 +26,13 @@ export default function PanelPosition() {
             panelPosition.position === PanelPositions.Top ? styles.active : ""
           }`}
           onClick={panelPosition.attachTop}
+        />
+        <img
+          src={PositionRightIcon}
+          className={`${styles.positionIcon} ${
+            panelPosition.position === PanelPositions.Right ? styles.active : ""
+          }`}
+          onClick={panelPosition.attachRight}
         />
         <img
           src={PositionBottomIcon}

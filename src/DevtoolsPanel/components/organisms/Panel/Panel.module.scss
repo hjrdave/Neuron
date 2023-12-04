@@ -1,0 +1,39 @@
+.compContainer {
+  border-radius: 0.25rem;
+  z-index: 1000;
+}
+.body {
+  padding: 0rem !important;
+}
+.top {
+  position: fixed !important;
+  width: 75vw;
+  margin: auto;
+  margin-top: 5px;
+  right: 0;
+  left: 0;
+}
+.bottom {
+  position: fixed !important;
+  width: 75vw;
+  margin: 10px auto;
+  right: 0;
+  left: 0;
+  bottom: 0;
+}
+.left {
+  position: fixed !important;
+  width: 400px;
+  margin-top: 5px !important;
+  margin-left: 5px !important;
+  margin: auto;
+  left: 0;
+}
+.right {
+  position: fixed !important;
+  width: 400px;
+  margin-top: 5px !important;
+  margin-right: 5px !important;
+  margin: auto;
+  right: 0;
+}

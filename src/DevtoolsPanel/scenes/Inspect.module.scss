@@ -38,7 +38,7 @@
 
 .reverseRow {
   display: flex;
-  flex-direction: row-reverse;
+  flex-direction: row-reverse !important;
   // @include media-breakpoint-down(lg) {
   // }
 }

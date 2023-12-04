@@ -1,5 +1,10 @@
 import Neuron from "../../vanilla";
-import { getState, setState, addState, StateItem } from "../../DevTools/Store";
+import {
+  getState,
+  setState,
+  addState,
+  StateItem,
+} from "../../DevtoolsPanel/Store";
 
 interface Options {
   storeName: string;

@@ -1,9 +1,9 @@
-import DevTools from "./DevTools";
+import DevtoolsPanel from "./DevtoolsPanel";
 import {
   useNeuron as useDevToolsNeuron,
   setState as setDevToolsState,
-} from "../DevTools/Store";
+} from "./Store";
 import useDevtools from "./hooks/useDevtools";
 
 export { useDevtools, useDevToolsNeuron, setDevToolsState };
-export default DevTools;
+export default DevtoolsPanel;

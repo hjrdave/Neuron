@@ -95,12 +95,18 @@ export default function Inspect() {
           </Row>
           <Row>
             <Col className={styles.stateViewerContainer}>
-              <StateViewer
-                storeData={storeData}
-                selectedStore={selectedStore}
-                selectedKey={selectedKey}
-                selectedType={selectedType}
-              />
+              {selectedStore && selectedKey && selectedType ? (
+                <StateViewer
+                  storeData={storeData}
+                  selectedStore={selectedStore}
+                  selectedKey={selectedKey}
+                  selectedType={selectedType}
+                />
+              ) : (
+                <p style={{ marginBottom: "0rem" }}>
+                  <small>Nothing is selected.</small>
+                </p>
+              )}
             </Col>
           </Row>
         </Col>
