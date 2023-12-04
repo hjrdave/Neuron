@@ -40,7 +40,9 @@ export default function StateSelectors({
           }))}
           onChange={(option) => onStoreChange(option?.value ?? "")}
           defaultValue={selectedStore}
-          className={styles.selector}
+          className={`${styles.selector} ${
+            stacked ? styles.stackedBorders : styles.borders
+          }`}
         />
         <SelectControl
           placeHolder="Key"
@@ -50,7 +52,9 @@ export default function StateSelectors({
           }))}
           onChange={(option) => onKeyChange(option?.value ?? "")}
           defaultValue={selectedKey}
-          className={styles.selector}
+          className={`${styles.selector} ${
+            stacked ? styles.stackedBorders : styles.borders
+          }`}
         />
         <SelectControl
           placeHolder="Type"
@@ -62,7 +66,9 @@ export default function StateSelectors({
           ]}
           onChange={(option) => onTypeChange(option?.value ?? "")}
           defaultValue={selectedType}
-          className={styles.selector}
+          className={`${styles.selector} ${
+            stacked ? styles.stackedBorders : styles.borders
+          }`}
         />
       </Stack>
     </>

@@ -1,4 +1,7 @@
 @use "../variables.scss" as *;
+@import "../../../node_modules/bootstrap/scss/functions";
+@import "../../../node_modules/bootstrap/scss/mixins/breakpoints";
+@import "../../../node_modules/bootstrap/scss/variables";
 .breadCrumbContainer {
   display: flex;
   align-items: center;
@@ -17,7 +20,8 @@
 
 .stateSelectorContainer {
   background-color: black;
-  border-bottom: 1px solid $border;
+  //border-bottom: 1px solid $border;
+  padding: 0rem !important;
 }
 .selectorElipsisMenu {
   display: flex;
@@ -30,4 +34,11 @@
     font-size: 1.25rem;
     color: $primary;
   }
+}
+
+.reverseRow {
+  display: flex;
+  flex-direction: row-reverse;
+  // @include media-breakpoint-down(lg) {
+  // }
 }

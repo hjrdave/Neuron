@@ -49,7 +49,7 @@ export default function Inspect() {
     <>
       <Scene>
         <Col>
-          <Row>
+          <Row className={`${isStacked ? styles.reverseRow : ""}`}>
             <Col
               sm={12}
               lg={isStacked ? 12 : 5}

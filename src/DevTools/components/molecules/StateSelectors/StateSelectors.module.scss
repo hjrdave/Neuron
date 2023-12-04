@@ -7,3 +7,10 @@
 .selector {
   width: 100%;
 }
+.borders {
+  border-left: 1px solid $border;
+  border-bottom: 1px solid $border;
+}
+.stackedBorders {
+  border-bottom: 1px solid $border;
+}
