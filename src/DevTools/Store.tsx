@@ -12,12 +12,6 @@ export enum PanelPositions {
   Left = "left",
   Expand = "expand",
 }
-interface SelectedStore {
-  name: string;
-  stateKey: string;
-  stateType: "action" | "state" | "feature";
-}
-
 export interface StateItem {
   [stateKey: string]: {
     state: any;
@@ -31,6 +25,7 @@ interface State {
   panelPosition: PanelPositions;
   selectedStore: string;
   selectedKey: string;
+  selectedType: string;
   openPanel: boolean;
   storeList: string[];
   keyList: string[];
@@ -58,6 +53,7 @@ export default function Store() {
         }}
       />
       <State<string> name={"selectedKey"} state={""} />
+      <State<string> name={"selectedType"} state={""} />
       <State<boolean> name={"openPanel"} state={false} />
       <State<string[]>
         name={"storeList"}
@@ -66,7 +62,7 @@ export default function Store() {
           payload.state = [...new Set(payload.state)];
         }}
       />
-      <State<string[]> name={"keyList"} state={["foo"]} />
+      <State<string[]> name={"keyList"} state={[]} />
     </>
   );
 }

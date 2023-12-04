@@ -6,13 +6,13 @@ import Card from "react-bootstrap/Card";
 import Header from "../organisms/Header";
 import Inspect from "../../scenes/Inspect";
 import { PanelPositions } from "../../Store";
-import usePanelPosition from "../../hooks/usePanelPosition";
+import usePanel from "../../hooks/usePanel";
 
 export default function LeftPanel() {
-  const panelPosition = usePanelPosition();
+  const panel = usePanel();
   return (
     <>
-      {panelPosition.position === PanelPositions.Left && panelPosition.open ? (
+      {panel.position === PanelPositions.Left && panel.open ? (
         <Container
           className={`p-1 z-3 position-fixed start-0 top-0`}
           style={{ maxWidth: "400px" }}

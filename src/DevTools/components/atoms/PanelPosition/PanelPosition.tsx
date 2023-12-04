@@ -1,57 +1,49 @@
 import React from "react";
-import Image from "react-bootstrap/Image";
+import Stack from "react-bootstrap/Stack";
 import PositionRightIcon from "../../../assets/position-right.svg";
 import PositionLeftIcon from "../../../assets/position-left.svg";
 import PositionTopIcon from "../../../assets/position-top.svg";
 import PositionBottomIcon from "../../../assets/position-bottom.svg";
 import { PanelPositions } from "../../../Store";
-import usePanelPosition from "../../../hooks/usePanelPosition";
+import usePanel from "../../../hooks/usePanel";
 import styles from "./PanelPosition.module.scss";
 
 export default function PanelPosition() {
-  const panelPosition = usePanelPosition();
+  const panelPosition = usePanel();
   return (
     <>
-      <div className={"d-flex align-items-center justify-content-end h-100"}>
-        <Image
+      <Stack gap={2} direction={"horizontal"} className={styles.compContainer}>
+        <img
           src={PositionRightIcon}
-          width={"20rem"}
-          className={`me-2 ${styles.hover} ${
+          className={`${styles.positionIcon} ${
             panelPosition.position === PanelPositions.Right ? styles.active : ""
           }`}
           onClick={panelPosition.attachRight}
         />
-        <Image
+        <img
           src={PositionLeftIcon}
-          width={"20rem"}
-          className={`me-2 ${styles.hover} ${
+          className={`${styles.positionIcon} ${
             panelPosition.position === PanelPositions.Left ? styles.active : ""
           }`}
           onClick={panelPosition.attachLeft}
         />
-        <Image
+        <img
           src={PositionTopIcon}
-          width={"20rem"}
-          className={`me-2 ${styles.hover} ${
+          className={`${styles.positionIcon} ${
             panelPosition.position === PanelPositions.Top ? styles.active : ""
           }`}
           onClick={panelPosition.attachTop}
         />
-        <Image
+        <img
           src={PositionBottomIcon}
-          width={"20rem"}
-          className={`me-2 ${styles.hover} ${
+          className={`${styles.positionIcon} ${
             panelPosition.position === PanelPositions.Bottom
               ? styles.active
               : ""
           }`}
           onClick={panelPosition.attachBottom}
         />
-        <i
-          className={`fa-solid fa-minus text-success ${styles.hover}`}
-          onClick={panelPosition.closePanel}
-        ></i>
-      </div>
+      </Stack>
     </>
   );
 }

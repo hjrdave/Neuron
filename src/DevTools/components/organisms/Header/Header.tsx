@@ -1,26 +1,35 @@
 import React from "react";
-import Image from "react-bootstrap/Image";
+import Stack from "react-bootstrap/esm/Stack";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import MainNav from "../../molecules/MainNav";
 import PanelPosition from "../../atoms/PanelPosition";
 import NeuronLogo from "../../../assets/logo-neuron.webp";
+import usePanel from "../../../hooks/usePanel";
+import styles from "./Header.module.scss";
 
 export default function Header() {
+  const panel = usePanel();
   return (
-    <Row className={"d-flex justify-content-between border-bottom"}>
-      <Col className={"px-0"}>
-        <div className={"d-flex"}>
-          <div className={"py-2 px-3"}>
-            <Image src={NeuronLogo} width={30} />
-          </div>
-          <div className={"d-flex align-items-end"}>
-            <MainNav />
-          </div>
-        </div>
+    <Row className={styles.compContainer}>
+      <Col md={4}>
+        <Stack gap={3} direction={"horizontal"}>
+          <img
+            src={NeuronLogo}
+            width={30}
+            style={{ paddingTop: ".35rem", paddingBottom: ".35rem" }}
+          />
+        </Stack>
       </Col>
-      <Col sm={4} className={"d-none d-sm-block"}>
-        <PanelPosition />
+      <Col md={8}>
+        <Stack gap={1} direction="horizontal" className={styles.stackContainer}>
+          <div className={styles.actionContainer}>
+            <PanelPosition />
+          </div>
+          <i
+            className={`fa-solid fa-minus ${styles.minifyIcon}`}
+            onClick={panel.closePanel}
+          ></i>
+        </Stack>
       </Col>
     </Row>
   );

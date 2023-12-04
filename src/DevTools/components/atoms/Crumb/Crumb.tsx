@@ -17,7 +17,7 @@ interface Props {
 export default function Crumb({ label, type, hideArrow }: Props) {
   return (
     <>
-      <span className={`${styles.compContainer} text-white px-2`}>
+      <span className={styles.compContainer}>
         <i
           className={`fa-solid ${
             type === CrumbTypes.Store
@@ -31,11 +31,11 @@ export default function Crumb({ label, type, hideArrow }: Props) {
               : CrumbTypes.Actions === type
               ? "fa-bolt"
               : "fa-cube"
-          } text-success pe-2`}
+          } ${styles.iconType}`}
         ></i>
         {label}
         {!hideArrow ? (
-          <i className="ps-2 fa-solid fa-arrow-right-long"></i>
+          <i className={`fa-solid fa-arrow-right-long ${styles.iconArrow}`}></i>
         ) : null}
       </span>
     </>

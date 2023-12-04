@@ -23,9 +23,9 @@ export default function DevTools({ openPanel, customStyles }: Props) {
       <RightPanel />
       <LeftPanel />
       <FloatingIcon
-        openPanel={openPanel}
+        openPanel
         //customStyles={customStyles?.floatingIcon}
-        rightPanel
+        //rightPanel
       />
     </>
   );

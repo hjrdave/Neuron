@@ -1,10 +1,19 @@
-.hover {
+@use "../../../variables.scss" as *;
+.compContainer {
+  height: 100%;
+  display: flex;
+  justify-content: end;
+}
+
+.positionIcon {
+  width: 1.25rem;
   cursor: pointer;
   opacity: 0.4;
   &:hover {
     opacity: 1;
   }
 }
+
 .active {
   opacity: 1;
 }

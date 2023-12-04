@@ -1,0 +1,9 @@
+@use "../../../variables.scss" as *;
+.compContainer {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+.selector {
+  width: 100%;
+}

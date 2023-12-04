@@ -1,8 +1,26 @@
+@use "../../../variables.scss" as *;
+
 .compContainer {
+  position: fixed;
   transform: scale(0.75);
   transition: transform 0.2s;
+  padding: 0.5rem;
+  margin: 0.25rem;
+  border-radius: 50%;
+  box-shadow: $shadow-lg;
+  background-color: $bg-dark;
+  width: 75px;
+  height: 75px;
+  bottom: 0;
+  left: 0;
   cursor: pointer;
   &:hover {
     transform: scale(1);
   }
+}
+.hide {
+  display: none;
+}
+.logo {
+  width: 100%;
 }

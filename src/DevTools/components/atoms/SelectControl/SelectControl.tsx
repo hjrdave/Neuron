@@ -6,23 +6,28 @@ interface Props {
   className?: string;
   options?: { label: string; value: any }[];
   onChange?: (option: SingleValue<{ label: string; value: string }>) => void;
-  defaultInputValue?: string;
+  defaultValue?: string;
 }
 export default function SelectControl({
   placeHolder,
   className,
   options,
   onChange,
-  defaultInputValue,
+  defaultValue,
 }: Props) {
   return (
     <>
       <Select
+        defaultValue={
+          defaultValue
+            ? { label: defaultValue, value: defaultValue }
+            : undefined
+        }
         options={options}
         placeholder={placeHolder}
         className={className}
-        defaultInputValue={defaultInputValue}
         onChange={onChange}
+        isSearchable
         styles={{
           indicatorSeparator: () => ({
             border: "none",
@@ -33,10 +38,13 @@ export default function SelectControl({
             border: "none",
             borderRadius: "0",
             boxShadow: "none",
+            fontFamily: "Fira Code",
+            fontSize: ".9rem",
           }),
-          input: (baseStyles, state) => ({
+          input: (baseStyles) => ({
             ...baseStyles,
             color: "white",
+            fontFamily: "Fira Code",
           }),
           menu: (baseStyles) => ({
             ...baseStyles,
@@ -46,7 +54,7 @@ export default function SelectControl({
             ...baseStyles,
             fontSize: ".9rem",
           }),
-          singleValue: (baseStyles, state) => ({
+          singleValue: (baseStyles) => ({
             ...baseStyles,
             color: "white",
             fontSize: ".9rem",
@@ -59,6 +67,7 @@ export default function SelectControl({
               ? "#212529"
               : "#212529",
             cursor: "pointer",
+            fontFamily: "Fira Code",
           }),
         }}
       />

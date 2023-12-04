@@ -1,7 +1,7 @@
 import { useNeuron } from "../Store";
 import { PanelPositions } from "../Store";
 
-const usePanelPosition = () => {
+const usePanel = () => {
   const [position, setPosition] = useNeuron((state) => state.panelPosition);
   const [open, setOpen] = useNeuron((state) => state.openPanel);
   const attachRight = () => setPosition(PanelPositions.Right);
@@ -23,4 +23,4 @@ const usePanelPosition = () => {
   };
 };
 
-export default usePanelPosition;
+export default usePanel;

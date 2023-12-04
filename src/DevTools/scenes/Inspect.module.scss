@@ -1,0 +1,33 @@
+@use "../variables.scss" as *;
+.breadCrumbContainer {
+  display: flex;
+  align-items: center;
+  padding-left: 1rem;
+  background-color: black;
+  border-bottom: 1px solid $border;
+}
+.stateViewerContainer {
+  background-color: black;
+  border-bottom: 1px solid $border;
+  border-radius: 0px 0px 0.25rem 0.25rem;
+  max-height: 400px;
+  overflow: auto;
+  padding: 1rem;
+}
+
+.stateSelectorContainer {
+  background-color: black;
+  border-bottom: 1px solid $border;
+}
+.selectorElipsisMenu {
+  display: flex;
+  justify-content: center;
+  background-color: black;
+  border-bottom: 1px solid $border;
+  padding: 0.1rem;
+  cursor: pointer;
+  i {
+    font-size: 1.25rem;
+    color: $primary;
+  }
+}

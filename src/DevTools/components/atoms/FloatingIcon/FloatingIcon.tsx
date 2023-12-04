@@ -1,9 +1,8 @@
-import React, { CSSProperties } from "react";
-import Image from "react-bootstrap/Image";
+import { useEffect, CSSProperties } from "react";
 import LogoNeuron from "../../../assets/logo-neuron.webp";
 import { PanelPositions } from "../../../Store";
-import usePanelPosition from "../../../hooks/usePanelPosition";
-import styles from "./FloatingIcon.module.scss";
+import usePanel from "../../../hooks/usePanel";
+import compStyles from "./FloatingIcon.module.scss";
 
 interface Props {
   openPanel?: boolean;
@@ -12,29 +11,23 @@ interface Props {
   bottomPanel?: boolean;
   rightPanel?: boolean;
   leftPanel?: boolean;
-  customStyles?: CSSProperties;
+  styles?: CSSProperties;
 }
 export default function FloatingIcon({
   openPanel,
-  customStyles,
-  panelPosition: position,
+  styles,
   topPanel,
   bottomPanel,
   rightPanel,
   leftPanel,
 }: Props) {
-  const panelPosition = usePanelPosition();
-  React.useEffect(() => {
+  const panelPosition = usePanel();
+  const defaultPanelOpenState = () => {
     if (openPanel) {
       panelPosition.openPanel();
     }
-  }, []);
-  const cssProperties = {
-    width: "75px",
-    height: "75px",
-    ...customStyles,
   };
-  React.useEffect(() => {
+  const defaultPanelPosition = () => {
     bottomPanel
       ? panelPosition.attachBottom()
       : topPanel
@@ -44,19 +37,21 @@ export default function FloatingIcon({
       : rightPanel
       ? panelPosition.attachRight()
       : panelPosition.attachTop();
+  };
+  useEffect(() => {
+    defaultPanelOpenState();
+    defaultPanelPosition();
   }, []);
   return (
     <>
       <div
-        className={`${
-          styles.compContainer
-        } p-2 fixed-bottom start-0 rounded-circle m-3 bg-dark shadow-lg ${
-          panelPosition.open ? "d-none" : ""
+        className={`${compStyles.compContainer} ${
+          panelPosition.open ? compStyles.hide : ""
         }`}
-        style={cssProperties}
+        style={styles}
         onClick={panelPosition.openPanel}
       >
-        <Image src={LogoNeuron} fluid />
+        <img src={LogoNeuron} className={compStyles.logo} />
       </div>
     </>
   );
