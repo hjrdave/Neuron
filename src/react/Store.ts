@@ -35,9 +35,10 @@ export default class Store<S = { [key: string]: unknown }, M = unknown> {
   setState = <T = unknown>(key: SelectorKey<S>, state: T) =>
     this.Core.set(key, state);
 
-  getState = (key: SelectorKey<S>) => this.Core.get(key);
+  getState = <T = unknown>(key: SelectorKey<S>) => this.Core.get<T>(key);
 
-  addState = (storeItem: StoreItem) => this.Core.add(storeItem as any);
+  addState = <T = unknown>(storeItem: StoreItem) =>
+    this.Core.add<T>(storeItem as StoreItem<any, any, any>);
 
   onDispatch = (callback: DispatchCallback<unknown>) =>
     this.Core.onDispatch(callback as any);

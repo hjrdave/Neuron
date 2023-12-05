@@ -1,6 +1,7 @@
 import React from "react";
 import Button from "react-bootstrap/Button";
 import Crumb, { CrumbTypes } from "../../atoms/Crumb";
+import useCustomStyles from "../../../hooks/useCustomStyles";
 
 interface Props {
   storeName: string;
@@ -9,9 +10,10 @@ interface Props {
 }
 
 export default function BreadCrumbs({ storeName, stateKey, stateType }: Props) {
+  const { customStyles } = useCustomStyles();
   return (
     <>
-      <Button variant="none" size="sm">
+      <Button variant="none" size="sm" style={customStyles.breadCrumbs}>
         {storeName ? (
           <>
             <Crumb type={CrumbTypes.Store} label={storeName} />

@@ -1,6 +1,7 @@
 import React from "react";
 import Stack from "react-bootstrap/Stack";
 import SelectControl from "../../atoms/SelectControl";
+import useCustomStyles from "../../../hooks/useCustomStyles";
 import styles from "./StateSelectors.module.scss";
 
 interface Props {
@@ -26,11 +27,13 @@ export default function StateSelectors({
   storeOptions,
   keyOptions,
 }: Props) {
+  const { customStyles } = useCustomStyles();
   return (
     <>
       <Stack
         direction={stacked ? "vertical" : "horizontal"}
         className={styles.compContainer}
+        style={customStyles.stateSelectors}
       >
         <SelectControl
           placeHolder="Store"

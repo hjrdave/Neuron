@@ -5,6 +5,7 @@ import {
   DispatchPayload,
   Features,
 } from "../vanilla/vanilla.interfaces";
+import { CSSProperties } from "react";
 
 export enum PanelPositions {
   Top = "top",
@@ -21,7 +22,20 @@ export interface StateItem {
     payload?: DispatchPayload;
   };
 }
-
+export interface CustomStyles {
+  floatingIcon?: CSSProperties;
+  panel?: CSSProperties;
+  topPanel?: CSSProperties;
+  bottomPanel?: CSSProperties;
+  rightPanel?: CSSProperties;
+  leftPanel?: CSSProperties;
+  header?: CSSProperties;
+  breadCrumbs?: CSSProperties;
+  crumb?: CSSProperties;
+  stateSelectors?: CSSProperties;
+  stateViewer?: CSSProperties;
+  panelPositionContainer?: CSSProperties;
+}
 export interface State {
   devtools_panelPosition: PanelPositions;
   devtools_selectedStore: string;
@@ -30,6 +44,7 @@ export interface State {
   devtools_openPanel: boolean;
   devtools_storeList: string[];
   devtools_keyList: string[];
+  devtools_customStyles: CustomStyles;
 }
 
 export const {
@@ -75,6 +90,7 @@ export default function Store() {
         persist
       />
       <State<string[]> name={"devtools_keyList"} state={[]} persist />
+      <State<CustomStyles> name={"devtools_customStyles"} state={{}} />
     </>
   );
 }

@@ -3,8 +3,7 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Card from "react-bootstrap/Card";
-import usePanel from "../../../hooks/usePanel";
-import { PanelPositions } from "../../../Store";
+import useCustomStyles from "../../../hooks/useCustomStyles";
 import styles from "./Panel.module.scss";
 
 interface Props {
@@ -15,19 +14,27 @@ interface Props {
   children?: React.ReactNode;
 }
 export default function Panel({ children, top, bottom, right, left }: Props) {
-  const panelPositionStyles = top
-    ? styles.top
+  const { customStyles } = useCustomStyles();
+  const currentPosition = top
+    ? "top"
     : bottom
-    ? styles.bottom
+    ? "bottom"
     : right
-    ? styles.right
+    ? "right"
     : left
-    ? styles.left
-    : styles.right;
+    ? "left"
+    : "right";
+
+  const panelCustomStyles = {
+    ...customStyles.panel,
+    ...customStyles[`${currentPosition}Panel`],
+  };
+
   return (
     <>
       <Card
-        className={`${styles.compContainer} ${panelPositionStyles}`}
+        className={`${styles.compContainer} ${styles[currentPosition]}`}
+        style={panelCustomStyles}
         data-bs-theme="dark"
       >
         <Card.Body className={styles.body}>

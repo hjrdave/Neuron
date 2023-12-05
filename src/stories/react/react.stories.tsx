@@ -1,13 +1,10 @@
 import React from "react";
 //import Neuron from "@sandstack/neuron/react";
-import DevtoolsPanel, {
-  useDevToolsNeuron,
-  setDevToolsState,
-} from "../../DevtoolsPanel";
+import DevtoolsPanel from "../../DevtoolsPanel";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import { StoryFn, Meta } from "@storybook/react";
 import Store, { useNeuron, ScoreActions } from "./Store";
-import "../../../node_modules/bootstrap/dist/css/bootstrap.css";
+// import "../../../node_modules/bootstrap/dist/css/bootstrap.css";
 export default {
   title: "Tests/React",
 } as Meta;
@@ -73,7 +70,7 @@ const Comp = () => {
 const UpdateAndSetStateTemplate: StoryFn = () => {
   return (
     <>
-      <DevtoolsPanel openPanel />
+      <DevtoolsPanel />
       <Store />
       <Comp />
     </>

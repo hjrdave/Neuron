@@ -1,5 +1,6 @@
 import React from "react";
 import ReactJson from "react-json-view";
+import useCustomStyles from "../../../hooks/useCustomStyles";
 
 interface Props {
   selectedStore?: string;
@@ -12,6 +13,7 @@ export default function StateViewer({
   storeData,
   selectedKey,
 }: Props) {
+  const { customStyles } = useCustomStyles();
   return (
     <>
       <ReactJson
@@ -28,6 +30,7 @@ export default function StateViewer({
         style={{
           backgroundColor: "black",
           fontSize: ".75rem",
+          ...customStyles.stateViewer,
         }}
       />
     </>

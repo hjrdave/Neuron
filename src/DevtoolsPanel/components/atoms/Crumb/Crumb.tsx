@@ -1,4 +1,5 @@
 import React from "react";
+import useCustomStyles from "../../../hooks/useCustomStyles";
 import styles from "./Crumb.module.scss";
 
 export enum CrumbTypes {
@@ -15,9 +16,10 @@ interface Props {
   hideArrow?: boolean;
 }
 export default function Crumb({ label, type, hideArrow }: Props) {
+  const { customStyles } = useCustomStyles();
   return (
     <>
-      <span className={styles.compContainer}>
+      <span className={styles.compContainer} style={customStyles.crumb}>
         <i
           className={`fa-solid ${
             type === CrumbTypes.Store

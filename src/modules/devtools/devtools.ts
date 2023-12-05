@@ -1,16 +1,16 @@
 import Neuron from "../../vanilla";
-import { Devtools as DevtoolsInstance } from "../../DevtoolsPanel";
+import { DevtoolsConnection } from "../../DevtoolsPanel";
 
 interface Options {
   storeName: string;
 }
 export interface ModuleProps {}
 
-const moduleName = `@sandstack/neuron/devtools`; //need a unique id that is passed by store
+const moduleName = `@sandstack/neuron/devtools-panel`; //need a unique id that is passed by store
 
 const Devtools = ({ storeName }: Options) => {
-  const devtools = new DevtoolsInstance({ storeName: storeName });
-  devtools.connectToPanel();
+  const devtools = new DevtoolsConnection();
+  devtools.connectToPanel(storeName);
   return Neuron.Module({
     name: moduleName,
     onLoad: (payload) => {

@@ -6,13 +6,20 @@ import PositionTopIcon from "../../../assets/position-top.svg";
 import PositionBottomIcon from "../../../assets/position-bottom.svg";
 import { PanelPositions } from "../../../Store";
 import usePanel from "../../../hooks/usePanel";
+import useCustomStyles from "../../../hooks/useCustomStyles";
 import styles from "./PanelPosition.module.scss";
 
 export default function PanelPosition() {
+  const { customStyles } = useCustomStyles();
   const panelPosition = usePanel();
   return (
     <>
-      <Stack gap={2} direction={"horizontal"} className={styles.compContainer}>
+      <Stack
+        gap={2}
+        direction={"horizontal"}
+        className={styles.compContainer}
+        style={customStyles.panelPositionContainer}
+      >
         <img
           src={PositionLeftIcon}
           className={`${styles.positionIcon} ${
