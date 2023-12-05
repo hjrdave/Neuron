@@ -17,11 +17,17 @@ export default function Inspect() {
     panel.position === PanelPositions.Right ||
     panel.position === PanelPositions.Left;
 
-  const [storeList] = useNeuron<string[]>("storeList");
-  const [keyList] = useNeuron<string[]>("keyList");
-  const [selectedStore, setSelectedStore] = useNeuron<string>("selectedStore");
-  const [selectedKey, setSelectedKey] = useNeuron<string>("selectedKey");
-  const [selectedType, setSelectedType] = useNeuron<string>("selectedType");
+  const [storeList] = useNeuron<string[]>("devtools_storeList");
+  const [keyList] = useNeuron<string[]>("devtools_keyList");
+  const [selectedStore, setSelectedStore] = useNeuron<string>(
+    "devtools_selectedStore"
+  );
+  const [selectedKey, setSelectedKey] = useNeuron<string>(
+    "devtools_selectedKey"
+  );
+  const [selectedType, setSelectedType] = useNeuron<string>(
+    "devtools_selectedType"
+  );
 
   const [storeData, setStoreData] = React.useState({});
 

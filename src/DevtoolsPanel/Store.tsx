@@ -1,4 +1,5 @@
 import Neuron from "../react";
+import Persist, { PersistProps } from "../modules/persist";
 import {
   Actions,
   DispatchPayload,
@@ -21,48 +22,59 @@ export interface StateItem {
   };
 }
 
-interface State {
-  panelPosition: PanelPositions;
-  selectedStore: string;
-  selectedKey: string;
-  selectedType: string;
-  openPanel: boolean;
-  storeList: string[];
-  keyList: string[];
+export interface State {
+  devtools_panelPosition: PanelPositions;
+  devtools_selectedStore: string;
+  devtools_selectedKey: string;
+  devtools_selectedType: string;
+  devtools_openPanel: boolean;
+  devtools_storeList: string[];
+  devtools_keyList: string[];
 }
 
-export const { State, useNeuron, setState, getState, addState, onDispatch } =
-  Neuron.Store<State>();
+export const {
+  State,
+  useNeuron,
+  setState,
+  getState,
+  addState,
+  onDispatch,
+  Module,
+} = Neuron.Store<State, PersistProps>();
 
 export default function Store() {
   return (
     <>
+      <Module use={Persist} />
       <State<PanelPositions>
-        name={"panelPosition"}
+        name={"devtools_panelPosition"}
         state={PanelPositions.Top}
+        persist
       />
       <State<string>
-        name={"selectedStore"}
+        name={"devtools_selectedStore"}
         state={""}
+        persist
         onCallback={(payload) => {
           const selectedStoreData = payload.get<StateItem>(
             payload.state as any
           );
           const keyList = Object.keys(selectedStoreData);
-          payload.set("keyList" as any, keyList);
+          payload.set("devtools_keyList" as any, keyList);
         }}
       />
-      <State<string> name={"selectedKey"} state={""} />
-      <State<string> name={"selectedType"} state={""} />
-      <State<boolean> name={"openPanel"} state={false} />
+      <State<string> name={"devtools_selectedKey"} state={""} persist />
+      <State<string> name={"devtools_selectedType"} state={""} persist />
+      <State<boolean> name={"devtools_openPanel"} state={false} persist />
       <State<string[]>
-        name={"storeList"}
+        name={"devtools_storeList"}
         state={[]}
         onRun={(payload) => {
           payload.state = [...new Set(payload.state)];
         }}
+        persist
       />
-      <State<string[]> name={"keyList"} state={[]} />
+      <State<string[]> name={"devtools_keyList"} state={[]} persist />
     </>
   );
 }

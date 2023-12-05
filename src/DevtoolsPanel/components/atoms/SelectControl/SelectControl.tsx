@@ -23,6 +23,7 @@ export default function SelectControl({
             ? { label: defaultValue, value: defaultValue }
             : undefined
         }
+        menuPosition={"fixed"}
         options={options}
         placeholder={placeHolder}
         className={className}
