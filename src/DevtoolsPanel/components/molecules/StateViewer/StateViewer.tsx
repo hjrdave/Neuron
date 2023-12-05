@@ -27,7 +27,7 @@ export default function StateViewer({
         displayObjectSize={false}
         style={{
           backgroundColor: "black",
-          fontSize: ".8rem",
+          fontSize: ".75rem",
         }}
       />
     </>

@@ -40,7 +40,7 @@ export default function SelectControl({
             borderRadius: "0",
             boxShadow: "none",
             fontFamily: "Fira Code",
-            fontSize: ".9rem",
+            fontSize: ".8rem",
           }),
           input: (baseStyles) => ({
             ...baseStyles,
@@ -53,12 +53,12 @@ export default function SelectControl({
           }),
           menuList: (baseStyles) => ({
             ...baseStyles,
-            fontSize: ".9rem",
+            fontSize: ".8rem",
           }),
           singleValue: (baseStyles) => ({
             ...baseStyles,
             color: "white",
-            fontSize: ".9rem",
+            fontSize: ".8rem",
           }),
           option: (baseStyles, state) => ({
             ...baseStyles,
