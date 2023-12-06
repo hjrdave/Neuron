@@ -11,6 +11,10 @@
   border-left: 1px solid $border;
   border-bottom: 1px solid $border;
 }
+.stacked {
+  display: flex;
+  flex-direction: column;
+}
 .stackedBorders {
   border-bottom: 1px solid $border;
 }

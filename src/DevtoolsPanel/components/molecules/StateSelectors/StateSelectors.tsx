@@ -1,5 +1,4 @@
 import React from "react";
-import Stack from "react-bootstrap/Stack";
 import SelectControl from "../../atoms/SelectControl";
 import useCustomStyles from "../../../hooks/useCustomStyles";
 import styles from "./StateSelectors.module.scss";
@@ -30,9 +29,8 @@ export default function StateSelectors({
   const { customStyles } = useCustomStyles();
   return (
     <>
-      <Stack
-        direction={stacked ? "vertical" : "horizontal"}
-        className={styles.compContainer}
+      <div
+        className={`${styles.compContainer} ${stacked ? styles.stacked : ""}`}
         style={customStyles.stateSelectors}
       >
         <SelectControl
@@ -73,7 +71,7 @@ export default function StateSelectors({
             stacked ? styles.stackedBorders : styles.borders
           }`}
         />
-      </Stack>
+      </div>
     </>
   );
 }

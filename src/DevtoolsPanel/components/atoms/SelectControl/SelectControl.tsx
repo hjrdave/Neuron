@@ -53,6 +53,7 @@ export default function SelectControl({
           }),
           menuList: (baseStyles) => ({
             ...baseStyles,
+            color: "white",
             fontSize: ".8rem",
           }),
           singleValue: (baseStyles) => ({

@@ -32,19 +32,12 @@ export default function Panel({ children, top, bottom, right, left }: Props) {
 
   return (
     <>
-      <Card
+      <div
         className={`${styles.compContainer} ${styles[currentPosition]}`}
         style={panelCustomStyles}
-        data-bs-theme="dark"
       >
-        <Card.Body className={styles.body}>
-          <Container fluid>
-            <Row>
-              <Col>{children}</Col>
-            </Row>
-          </Container>
-        </Card.Body>
-      </Card>
+        {children}
+      </div>
     </>
   );
 }

@@ -4,7 +4,13 @@
 @import "../../../../../node_modules/bootstrap/scss/variables";
 
 .compContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   border-bottom: 1px solid $border;
+  padding-right: 0.5rem;
+  padding-left: 0.5rem;
+  background-color: $bg-dark;
 }
 .actionContainer {
   padding-right: 0.5rem;
@@ -23,6 +29,8 @@
 }
 
 .stackContainer {
+  display: flex;
+  align-items: center;
   height: 100%;
   justify-content: end;
 }

@@ -1,5 +1,4 @@
 import React from "react";
-import Stack from "react-bootstrap/Stack";
 import PositionRightIcon from "../../../assets/position-right.svg";
 import PositionLeftIcon from "../../../assets/position-left.svg";
 import PositionTopIcon from "../../../assets/position-top.svg";
@@ -14,9 +13,7 @@ export default function PanelPosition() {
   const panelPosition = usePanel();
   return (
     <>
-      <Stack
-        gap={2}
-        direction={"horizontal"}
+      <div
         className={styles.compContainer}
         style={customStyles.panelPositionContainer}
       >
@@ -50,7 +47,7 @@ export default function PanelPosition() {
           }`}
           onClick={panelPosition.attachBottom}
         />
-      </Stack>
+      </div>
     </>
   );
 }

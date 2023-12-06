@@ -2,12 +2,28 @@
 @import "../../../node_modules/bootstrap/scss/functions";
 @import "../../../node_modules/bootstrap/scss/mixins/breakpoints";
 @import "../../../node_modules/bootstrap/scss/variables";
+.row {
+  display: flex;
+  justify-content: space-between;
+}
 .breadCrumbContainer {
   display: flex;
   align-items: center;
   padding-left: 1rem;
   background-color: black;
   border-bottom: 1px solid $border;
+  padding: 0.5rem;
+}
+.w-40 {
+  width: 40%;
+}
+.w-60 {
+  width: 60%;
+}
+
+.stateSelectorContainer {
+  background-color: black;
+  padding: 0rem !important;
 }
 .stateViewerContainer {
   background-color: black;
@@ -17,11 +33,6 @@
   padding: 1rem;
 }
 
-.stateSelectorContainer {
-  background-color: black;
-  //border-bottom: 1px solid $border;
-  padding: 0rem !important;
-}
 .selectorElipsisMenu {
   display: flex;
   justify-content: center;
@@ -37,7 +48,5 @@
 
 .reverseRow {
   display: flex;
-  flex-direction: row-reverse !important;
-  // @include media-breakpoint-down(lg) {
-  // }
+  flex-direction: column-reverse;
 }

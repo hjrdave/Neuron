@@ -1,7 +1,4 @@
 import React from "react";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import Scene from "../components/atoms/Scene";
 import StateViewer from "../components/molecules/StateViewer";
 import BreadCrumbs from "../components/molecules/BreadCrumbs";
 import StateSelectors from "../components/molecules/StateSelectors";
@@ -53,70 +50,62 @@ export default function Inspect() {
 
   return (
     <>
-      <Scene>
-        <Col>
-          <Row className={`${isStacked ? styles.reverseRow : ""}`}>
-            <Col
-              sm={12}
-              lg={isStacked ? 12 : 5}
-              className={styles.breadCrumbContainer}
+      <div className={`${isStacked ? styles.reverseRow : styles.row}`}>
+        <div
+          className={`${styles.breadCrumbContainer} ${
+            !isStacked ? styles["w-40"] : ""
+          }`}
+        >
+          <BreadCrumbs
+            storeName={selectedStore}
+            stateKey={selectedKey}
+            stateType={selectedType as any}
+          />
+        </div>
+        <div
+          className={`${styles.stateSelectorContainer} ${
+            !isStacked ? styles["w-60"] : ""
+          }`}
+        >
+          {isStacked ? (
+            <div
+              className={styles.selectorElipsisMenu}
+              onClick={() =>
+                setShowStoreControls(showStoreControls ? false : true)
+              }
             >
-              <BreadCrumbs
-                storeName={selectedStore}
-                stateKey={selectedKey}
-                stateType={selectedType as any}
-              />
-            </Col>
-            <Col sm={isStacked ? 12 : 7}>
-              {isStacked ? (
-                <Row>
-                  <Col
-                    className={styles.selectorElipsisMenu}
-                    onClick={() =>
-                      setShowStoreControls(showStoreControls ? false : true)
-                    }
-                  >
-                    <i className={`fa-solid fa-ellipsis`}></i>
-                  </Col>
-                </Row>
-              ) : null}
-              {!isStacked || showStoreControls ? (
-                <Row>
-                  <Col className={styles.stateSelectorContainer}>
-                    <StateSelectors
-                      stacked={isStacked}
-                      storeOptions={storeList}
-                      keyOptions={keyList}
-                      onStoreChange={setSelectedStore}
-                      onKeyChange={setSelectedKey}
-                      onTypeChange={setSelectedType as any}
-                      selectedStore={selectedStore}
-                      selectedKey={selectedKey}
-                      selectedType={selectedType}
-                    />
-                  </Col>
-                </Row>
-              ) : null}
-            </Col>
-          </Row>
-          <Row>
-            <Col className={styles.stateViewerContainer}>
-              {selectedStore && selectedKey && selectedType ? (
-                <StateViewer
-                  storeData={storeData}
-                  selectedStore={selectedStore}
-                  selectedKey={selectedKey}
-                  selectedType={selectedType}
-                />
-              ) : (
-                <p style={{ marginBottom: "0rem" }}>
-                  <small>Nothing is selected.</small>
-                </p>
-              )}
-            </Col>
-          </Row>
-        </Col>
-      </Scene>
+              <i className={`fa-solid fa-ellipsis`}></i>
+            </div>
+          ) : null}
+          {!isStacked || showStoreControls ? (
+            <StateSelectors
+              stacked={isStacked}
+              storeOptions={storeList}
+              keyOptions={keyList}
+              onStoreChange={setSelectedStore}
+              onKeyChange={setSelectedKey}
+              onTypeChange={setSelectedType as any}
+              selectedStore={selectedStore}
+              selectedKey={selectedKey}
+              selectedType={selectedType}
+            />
+          ) : null}
+        </div>
+      </div>
+      <div className={styles.stateViewerContainer}>
+        {selectedStore && selectedKey && selectedType ? (
+          <StateViewer
+            storeData={storeData}
+            selectedStore={selectedStore}
+            selectedKey={selectedKey}
+            selectedType={selectedType}
+          />
+        ) : (
+          <p style={{ marginBottom: "0rem" }}>
+            <small>Nothing is selected.</small>
+          </p>
+        )}
+      </div>
     </>
   );
 }
