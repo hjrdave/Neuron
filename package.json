@@ -78,6 +78,24 @@
         "default": "./react.js"
       }
     },
+    "./DevtoolsPanel": {
+      "require": {
+        "types": "./DevtoolsPanel.d.ts",
+        "default": "./DevtoolsPanel.cjs"
+      },
+      "import": {
+        "types": "./DevtoolsPanel.d.ts",
+        "default": "./DevtoolsPanel.js"
+      },
+      "module": {
+        "types": "./DevtoolsPanel.d.ts",
+        "default": "./DevtoolsPanel.js"
+      },
+      "default": {
+        "types": "./DevtoolsPanel.d.ts",
+        "default": "./DevtoolsPanel.js"
+      }
+    },
     "./modules": {
       "require": {
         "types": "./module.d.ts",
@@ -130,6 +148,24 @@
       "default": {
         "types": "./modules/slices/index.d.ts",
         "default": "./modules/slices/index.js"
+      }
+    },
+    "./modules/devtools": {
+      "require": {
+        "types": "./modules/devtools/index.d.ts",
+        "default": "./modules/devtools/index.cjs"
+      },
+      "import": {
+        "types": "./modules/devtools/index.d.ts",
+        "default": "./modules/devtools/index.js"
+      },
+      "module": {
+        "types": "./modules/devtools/index.d.ts",
+        "default": "./modules/devtools/index.js"
+      },
+      "default": {
+        "types": "./modules/devtools/index.d.ts",
+        "default": "./modules/devtools/index.js"
       }
     }
   },
