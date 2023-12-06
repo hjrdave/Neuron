@@ -55,6 +55,7 @@ export const {
   addState,
   onDispatch,
   Module,
+  useWeakNeuron,
 } = Neuron.Store<State, PersistProps>();
 
 export default function Store() {

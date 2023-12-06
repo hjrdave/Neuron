@@ -4,7 +4,7 @@ import BreadCrumbs from "../components/molecules/BreadCrumbs";
 import StateSelectors from "../components/molecules/StateSelectors";
 import usePanel from "../hooks/usePanel";
 import { PanelPositions } from "../Store";
-import { useNeuron, getState, onDispatch } from "../Store";
+import { useNeuron, useWeakNeuron } from "../Store";
 import styles from "./Inspect.module.scss";
 
 export default function Inspect() {
@@ -25,7 +25,7 @@ export default function Inspect() {
   const [selectedType, setSelectedType] = useNeuron<string>(
     "devtools_selectedType"
   );
-  const [dynamicState] = useNeuron(selectedStore as any);
+  const [dynamicState] = useWeakNeuron(selectedStore);
 
   return (
     <>

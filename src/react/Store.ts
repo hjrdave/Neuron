@@ -8,8 +8,8 @@ import { Selector } from "../modules/slices";
 import State, { StateProps } from "./State";
 import Module, { ModuleProps } from "./Module";
 import useNeuron from "./useNeuron";
+import useWeakNeuron from "./useWeakNeuron";
 import useDispatch from "./useDispatch";
-import useStore from "./useStore";
 import { StateType, StoreItem } from "../vanilla/vanilla.interfaces";
 
 export default class Store<S = { [key: string]: unknown }, M = unknown> {
@@ -26,11 +26,13 @@ export default class Store<S = { [key: string]: unknown }, M = unknown> {
     selector: SelectorKey<S> | Selector<S, T>
   ) => useNeuron<T, A, S>(selector as any, this.Core);
 
+  useWeakNeuron = <T = unknown, A = { [key: string]: unknown }>(
+    selector: string
+  ) => useWeakNeuron<T, A, S>(selector as SelectorKey<unknown>, this.Core);
+
   useDispatch = <T = unknown, D = { [key: string]: any }>(
     selector: SelectorKey<S>
   ) => useDispatch<T, S, D>(selector, this.Core);
-
-  useStore = () => useStore<S>(this.Core);
 
   setState = <T = unknown>(key: SelectorKey<S>, state: T) =>
     this.Core.set(key, state);
