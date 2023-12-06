@@ -1,4 +1,3 @@
-import React from "react";
 import PanelPosition from "../../atoms/PanelPosition";
 import NeuronLogo from "../../../assets/logo-neuron.webp";
 import usePanel from "../../../hooks/usePanel";

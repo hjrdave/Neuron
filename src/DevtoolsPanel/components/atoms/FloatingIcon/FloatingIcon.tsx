@@ -1,4 +1,3 @@
-import React from "react";
 import LogoNeuron from "../../../assets/logo-neuron.webp";
 import usePanel from "../../../hooks/usePanel";
 import useCustomStyles from "../../../hooks/useCustomStyles";

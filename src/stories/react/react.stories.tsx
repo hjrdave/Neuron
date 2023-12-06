@@ -1,6 +1,7 @@
 import React from "react";
 //import Neuron from "@sandstack/neuron/react";
-import DevtoolsPanel from "../../DevtoolsPanel";
+//import DevtoolsPanel from "../../DevtoolsPanel";
+import DevtoolsPanelPackage from "../../../dist/DevtoolsPanel";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import { StoryFn, Meta } from "@storybook/react";
 import Store, { useNeuron, ScoreActions } from "./Store";
@@ -70,7 +71,8 @@ const Comp = () => {
 const UpdateAndSetStateTemplate: StoryFn = () => {
   return (
     <>
-      <DevtoolsPanel />
+      {/* <DevtoolsPanel /> */}
+      <DevtoolsPanelPackage />
       <Store />
       <Comp />
     </>

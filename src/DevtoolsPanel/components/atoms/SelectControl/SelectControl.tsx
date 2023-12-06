@@ -1,4 +1,3 @@
-import React from "react";
 import Select, { SingleValue } from "react-select";
 
 interface Props {

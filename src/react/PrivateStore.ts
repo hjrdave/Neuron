@@ -3,14 +3,12 @@ import { default as Core, Module, DispatchMutator } from "../vanilla";
 import { Selector } from "../modules/slices";
 import Store from "./Store";
 import Private from "./Private";
-import { UseStore } from "./useStore";
 import { UseNeuron } from "./useNeuron";
 import { UseDispatch } from "./useDispatch";
 
 interface IContext<S = { [key: string]: unknown }> {
   useNeuron: UseNeuron<S>;
   useDispatch: UseDispatch<S>;
-  useStore: UseStore<S>;
 }
 
 export default class PrivateStore<S = { [key: string]: unknown }, M = unknown> {
@@ -23,7 +21,6 @@ export default class PrivateStore<S = { [key: string]: unknown }, M = unknown> {
     this.ContextState = {
       useNeuron: storeInstance.useNeuron as any,
       useDispatch: storeInstance.useDispatch,
-      useStore: storeInstance.useStore,
     };
     return storeInstance;
   };
@@ -34,7 +31,6 @@ export default class PrivateStore<S = { [key: string]: unknown }, M = unknown> {
       children: props.children,
       useNeuron: this.ContextState.useNeuron,
       useDispatch: this.ContextState.useDispatch,
-      useStore: this.ContextState.useStore,
     });
 
   useNeuron = <T = unknown, A = { [key: string]: unknown }>(
@@ -70,27 +66,12 @@ export default class PrivateStore<S = { [key: string]: unknown }, M = unknown> {
     }
   };
 
-  useStore = (Store: Core.Store<S>) => {
-    try {
-      const context = useContext(this.Context);
-      return context?.useStore(Store);
-    } catch (err) {
-      console.error(
-        console.error(
-          `Neuron: Protected store hooks cannot be called outside of scope.`
-        ),
-        err
-      );
-    }
-  };
-
   public constructor(options?: { modules?: Module<unknown, S>[] }) {
     this.Context = createContext(null as any);
     this.options = options;
     this.ContextState = {
       useNeuron: undefined as any,
       useDispatch: undefined as any,
-      useStore: undefined as any,
     };
   }
 }

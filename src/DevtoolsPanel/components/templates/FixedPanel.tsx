@@ -1,4 +1,3 @@
-import React from "react";
 import Header from "../organisms/Header";
 import Inspect from "../../scenes/Inspect";
 import Panel from "../organisms/Panel";

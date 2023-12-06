@@ -1,4 +1,3 @@
-import React from "react";
 import PositionRightIcon from "../../../assets/position-right.svg";
 import PositionLeftIcon from "../../../assets/position-left.svg";
 import PositionTopIcon from "../../../assets/position-top.svg";

@@ -1,4 +1,3 @@
-import React from "react";
 import useCustomStyles from "../../../hooks/useCustomStyles";
 import styles from "./Crumb.module.scss";
 

@@ -1,4 +1,3 @@
-import React from "react";
 import SelectControl from "../../atoms/SelectControl";
 import useCustomStyles from "../../../hooks/useCustomStyles";
 import styles from "./StateSelectors.module.scss";
