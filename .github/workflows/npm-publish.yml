@@ -18,7 +18,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 16
-      - run: npm install
+      - run: npm install --legacy-peer-deps
       - run: npm run test
 
   Build:
@@ -29,7 +29,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 16
-      - run: npm install
+      - run: npm install --legacy-peer-deps
       - run: npm run build
 
   Publish:
@@ -42,7 +42,7 @@ jobs:
           node-version: 16
           registry-url: https://registry.npmjs.org/
       - name: Installing Packages
-        run: npm install
+        run: npm install --legacy-peer-deps
       - name: Building Package
         run: npm run build
       - name: Publishing to
