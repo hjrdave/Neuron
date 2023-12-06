@@ -25,28 +25,7 @@ export default function Inspect() {
   const [selectedType, setSelectedType] = useNeuron<string>(
     "devtools_selectedType"
   );
-
-  const [storeData, setStoreData] = React.useState({});
-
-  React.useEffect(() => {
-    onDispatch((payload) => {
-      const newState = payload.state?.[selectedKey]?.[selectedType];
-      if (newState !== undefined) {
-        setStoreData(newState);
-      }
-    });
-  }, [selectedKey, selectedType]);
-
-  React.useEffect(() => {
-    if (selectedStore && selectedKey) {
-      const dynamicStoreData = getState(selectedStore as any)?.[selectedKey]?.[
-        selectedType
-      ];
-      if (dynamicStoreData) {
-        setStoreData(dynamicStoreData);
-      }
-    }
-  }, [selectedStore, selectedKey, selectedType]);
+  const [dynamicState] = useNeuron(selectedStore as any);
 
   return (
     <>
@@ -93,18 +72,12 @@ export default function Inspect() {
         </div>
       </div>
       <div className={styles.stateViewerContainer}>
-        {selectedStore && selectedKey && selectedType ? (
-          <StateViewer
-            storeData={storeData}
-            selectedStore={selectedStore}
-            selectedKey={selectedKey}
-            selectedType={selectedType}
-          />
-        ) : (
-          <p style={{ marginBottom: "0rem" }}>
-            <small>Nothing is selected.</small>
-          </p>
-        )}
+        <StateViewer
+          storeData={dynamicState?.[selectedKey]?.[selectedType]}
+          selectedStore={selectedStore}
+          selectedKey={selectedKey}
+          selectedType={selectedType}
+        />
       </div>
     </>
   );

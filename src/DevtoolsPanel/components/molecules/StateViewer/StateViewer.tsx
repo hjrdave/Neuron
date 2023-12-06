@@ -18,11 +18,7 @@ export default function StateViewer({
     <>
       <ReactJson
         name={selectedType}
-        src={
-          selectedType !== "state"
-            ? storeData
-            : { [selectedKey ?? ""]: storeData }
-        }
+        src={{ [selectedKey ?? ""]: storeData }}
         theme="monokai"
         enableClipboard
         displayDataTypes={false}
