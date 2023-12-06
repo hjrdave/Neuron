@@ -17,24 +17,24 @@ export default defineConfig({
       fileName: "DevtoolsPanel",
     },
     rollupOptions: {
-      external: ["react", "react-dom", "../modules/persist"],
+      //external: ["react", "react-dom", "../modules/persist"],
       output: [
         {
           dir: "./dist/",
           name: "DevtoolsPanel",
           entryFileNames: "[name].js",
-          globals: {
-            react: "React",
-          },
+          // globals: {
+          //   react: "React",
+          // },
         },
         {
           dir: "./dist/",
           name: "DevtoolsPanel",
           format: "cjs",
           entryFileNames: "[name].cjs",
-          globals: {
-            react: "React",
-          },
+          // globals: {
+          //   react: "React",
+          // },
         },
       ],
     },
