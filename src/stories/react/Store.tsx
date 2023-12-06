@@ -1,7 +1,7 @@
 import React from "react";
 import Neuron from "../../react";
-import Persist, { PersistProps } from "../../modules/persist";
-import Devtools from "../../modules/devtools";
+// import Persist, { PersistProps } from "../../modules/persist";
+import Devtools from "../../../dist/modules/devtools";
 
 interface IState {
   fruit: string;
@@ -27,7 +27,7 @@ export interface ScoreActions {
   decrement: () => void;
 }
 
-const { State, Module, ..._Store } = Neuron.Store<IState, PersistProps>();
+const { State, Module, ..._Store } = Neuron.Store<IState>();
 
 export const useNeuron = _Store.useNeuron;
 
@@ -35,7 +35,7 @@ export default function Store() {
   return (
     <>
       {/* <Module use={Persist} /> */}
-      <Module use={Devtools({ storeName: "fooStore" })} />
+      <Module use={Devtools({ storeName: "feeStore" })} />
       <State<string> name={"fruit"} state={"apple"} />
 
       <State<boolean> name={"isLoading"} state={false} />

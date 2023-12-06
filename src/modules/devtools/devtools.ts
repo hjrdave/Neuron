@@ -6,7 +6,7 @@ interface Options {
 }
 export interface ModuleProps {}
 
-const moduleName = `@sandstack/neuron/devtools-panel`; //need a unique id that is passed by store
+const moduleName = `@sandstack/neuron/devtools`; //need a unique id that is passed by store
 
 const Devtools = ({ storeName }: Options) => {
   const devtools = new DevtoolsConnection();

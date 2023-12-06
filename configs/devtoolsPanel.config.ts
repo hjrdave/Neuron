@@ -17,7 +17,7 @@ export default defineConfig({
       fileName: "DevtoolsPanel",
     },
     rollupOptions: {
-      external: ["react"],
+      external: ["react", "react-dom", "../modules/persist"],
       output: [
         {
           dir: "./dist/",
