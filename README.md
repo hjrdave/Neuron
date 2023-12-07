@@ -1,4 +1,4 @@
-<div><img src='https://sandstack.dev/Neuron-Banner.png' /></div>
+<div><img src='https://sandstack.dev/readme-neuron.png' /></div>
 <p>&nbsp;</p>
 
 [![npm version](https://badge.fury.io/js/@sandstack%2Fneuron.svg)](https://badge.fury.io/js/@sandstack%2Fneuron)
@@ -162,6 +162,9 @@ Store.add({
 });
 
 ```
+
+<div><img src='https://sandstack.dev/readme-neuron-x-react.png' /></div>
+<p>&nbsp;</p>
 
 # Neuron React
 
