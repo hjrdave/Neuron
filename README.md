@@ -165,7 +165,6 @@ Store.add({
 
 <p>&nbsp;</p>
 <div><img src='https://sandstack.dev/readme-neuron-x-react.png' /></div>
-<p>&nbsp;</p>
 
 # Neuron React
 
