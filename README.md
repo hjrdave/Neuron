@@ -3,7 +3,7 @@
 
 [![npm version](https://badge.fury.io/js/@sandstack%2Fneuron.svg)](https://badge.fury.io/js/@sandstack%2Fneuron)
 ![build](https://github.com/hjrdave/Neuron/actions/workflows/npm-publish.yml/badge.svg?event=push)
-![size](https://badgen.net/bundlephobia/minzip/@sandstack%2Fneuron)
+[![@sandstack/neuron badge](https://deno.bundlejs.com/?q=@sandstack/neuron&badge=detailed&badge-style=for-the-badge)](https://bundlejs.com/?q=@sandstack/neuron)
 
 # Neuron Global State Manager
 
