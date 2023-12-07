@@ -45,6 +45,8 @@ export default class Store<S = { [key: string]: unknown }, M = unknown> {
   onDispatch = (callback: DispatchCallback<unknown>) =>
     this.Core.onDispatch(callback as any);
 
+  bridge = { connect: () => this.Core };
+
   public constructor(params?: { modules?: IModule<StateType, S>[] }) {
     this.Core = CoreStore<S>(params);
   }
