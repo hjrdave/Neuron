@@ -1,7 +1,7 @@
 @use "../../../variables.scss" as *;
 .compContainer {
   border-radius: 0.25rem;
-  z-index: 1000;
+  z-index: 10000;
   background-color: black;
   border: 1px solid $border;
   box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175) !important;

@@ -13,6 +13,8 @@
   height: 75px;
   bottom: 0;
   left: 0;
+  z-index: 10000;
+
   cursor: pointer;
   &:hover {
     transform: scale(1);
