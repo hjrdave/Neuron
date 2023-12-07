@@ -1,9 +1,9 @@
-<!-- [![npm version](https://badge.fury.io/js/@sandstack%2Fcore.svg)](https://badge.fury.io/js/@sandstack%2Fcore)
-[![Neuron Package](https://github.com/hjrdave/Neuron.Core/actions/workflows/npm-publish.yml/badge.svg)](https://github.com/hjrdave/Neuron.Core/actions/workflows/npm-publish.yml)
-![Package](https://badgen.net/bundlephobia/minzip/@sandstack/core) -->
+<div><img src='https://sandstack.dev/Neuron-Banner.png' /></div>
+<p>&nbsp;</p>
 
-<!-- <div><img src='https://hjrdave.github.io/get-treble-gsm/static/bd3520df0df3356f8a53c4588b0b285c/f3583/banner-readme.png' /></div>
-<p>&nbsp;</p> -->
+[![npm version](https://badge.fury.io/js/@sandstack%2Fneuron.svg)](https://badge.fury.io/js/@sandstack%2Fneuron)
+![build](https://github.com/OWNER/Neuron/actions/workflows/npm-publish/badge.svg?event=push)
+![size](https://badgen.net/bundlephobia/minzip/@sandstack/neuron)
 
 # Neuron Global State Manager
 
