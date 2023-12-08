@@ -1,4 +1,4 @@
-import { default as ReactStore } from "./Store";
+import { default as ReactStore, Bridge } from "./Store";
 import { default as ReactPrivateStore } from "./PrivateStore";
 import { Module } from "../vanilla";
 import Slices from "../modules/slices";
@@ -47,5 +47,5 @@ export function PrivateStore<
     modules: [...DefaultModules, ...modules],
   });
 }
-
+export type { Bridge };
 export default Neuron;

@@ -8,6 +8,7 @@ import {
   DispatchMutator as TDispatchMutator,
   DispatchPayload as TDispatchPayload,
   DispatchCallback as TDispatchCallback,
+  Bridge as TBridge,
 } from "./vanilla.interfaces";
 import { default as ModuleInstance, Params, IModule } from "./Module";
 import { IPayload } from "./Payload";
@@ -71,7 +72,7 @@ export type DispatchMutator<
 > = TDispatchMutator<T, S, D>;
 export type DispatchPayload<S = StoreProps> = TDispatchPayload<S>;
 export type DispatchCallback<S = StoreProps> = TDispatchCallback<S>;
-
+export type Bridge<S = StoreProps> = TBridge<S>;
 /**
  * Creates a Neuron store instance. Stores are globally accessible.
  * @param {Options} options - Store options
@@ -89,5 +90,4 @@ export function Module<T = unknown, S = { [key: string]: unknown }>(
 ) {
   return new ModuleInstance<T, S>(params);
 }
-
 export default Neuron;

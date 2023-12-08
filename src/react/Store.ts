@@ -10,7 +10,7 @@ import Module, { ModuleProps } from "./Module";
 import useNeuron from "./useNeuron";
 import useWeakNeuron from "./useWeakNeuron";
 import useDispatch from "./useDispatch";
-import { StateType, StoreItem } from "../vanilla/vanilla.interfaces";
+import { StateType, StoreItem, Bridge } from "../vanilla/vanilla.interfaces";
 
 export default class Store<S = { [key: string]: unknown }, M = unknown> {
   private Core: CoreStore<S>;
@@ -45,7 +45,7 @@ export default class Store<S = { [key: string]: unknown }, M = unknown> {
   onDispatch = (callback: DispatchCallback<unknown>) =>
     this.Core.onDispatch(callback as any);
 
-  bridge = { connect: () => this.Core };
+  bridge = () => this.Core;
 
   public constructor(params?: { modules?: IModule<StateType, S>[] }) {
     this.Core = CoreStore<S>(params);

@@ -1,11 +1,9 @@
 import React from "react";
-//import Neuron from "@sandstack/neuron/react";
-//import DevtoolsPanel from "../../DevtoolsPanel";
 import DevtoolsPanelPackage from "../../../dist/DevtoolsPanel";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import { StoryFn, Meta } from "@storybook/react";
-import Store, { useNeuron, ScoreActions } from "./Store";
-// import "../../../node_modules/bootstrap/dist/css/bootstrap.css";
+import Store, { useNeuron, ScoreActions, useNeuronSync } from "./Store";
+import "../../../node_modules/bootstrap/dist/css/bootstrap.css";
 export default {
   title: "Tests/React",
 } as Meta;
@@ -169,3 +167,28 @@ const ActionsTemplate: StoryFn = () => {
 };
 export const Actions = ActionsTemplate.bind({});
 Actions.args = {};
+
+const ServerStateComp = () => {
+  const [data, actions, status] = useNeuronSync<string[]>("foo");
+  return (
+    <>
+      <Container>
+        <Row>
+          <Col>
+            <p className={"text-white"}>Server State</p>
+          </Col>
+        </Row>
+      </Container>
+    </>
+  );
+};
+const ServerStateTemplate: StoryFn = () => {
+  return (
+    <>
+      <Store />
+      <ServerStateComp />
+    </>
+  );
+};
+export const ServerState = ServerStateTemplate.bind({});
+ServerState.args = {};

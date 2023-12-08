@@ -1,5 +1,6 @@
 import React from "react";
 import Neuron from "../../react";
+import NeuronSync from "../../neuronsync";
 // import Persist, { PersistProps } from "../../modules/persist";
 import Devtools from "../../../dist/modules/devtools";
 
@@ -27,9 +28,9 @@ export interface ScoreActions {
   decrement: () => void;
 }
 
-const { State, Module, ..._Store } = Neuron.Store<IState>();
-
-export const useNeuron = _Store.useNeuron;
+export const { State, Module, bridge, useNeuron, ..._Store } =
+  Neuron.Store<IState>();
+export const { ServerState, useNeuronSync } = NeuronSync<IState>(bridge);
 
 export default function Store() {
   return (

@@ -1,5 +1,6 @@
 import { IPayload as Payload } from "./Payload";
 import { IModule as Module } from "./Module";
+import { default as CoreStore } from "./Store";
 
 export enum InterceptorTypes {
   OnLoad = "onLoad",
@@ -67,6 +68,9 @@ export type GetActions<S = StoreProps> = <A = ActionProps>(
   selector: SelectorKey<S>
 ) => A;
 
+export interface Bridge<S> {
+  connect: () => CoreStore<S>;
+}
 export interface StoreItem<T = StateType, S = StoreProps, A = ActionProps> {
   key: SelectorKey<S>;
   state: T;
