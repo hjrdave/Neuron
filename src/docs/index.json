@@ -1,0 +1,85 @@
+[
+  {
+    "section": "About",
+    "filename": "https://sandstack.dev"
+  },
+  {
+    "section": "Getting Started",
+    "filename": "https://sandstack.dev"
+  },
+  {
+    "section": "Vanilla",
+    "items": [
+      {
+        "title": "Create Store",
+        "filename": "https://sandstack.dev"
+      },
+      {
+        "title": "Read and Update State",
+        "filename": "https://sandstack.dev"
+      },
+      {
+        "title": "Listen for State Changes",
+        "filename": "https://sandstack.dev"
+      },
+      {
+        "title": "Dispatch for State Changes",
+        "filename": "https://sandstack.dev"
+      },
+      {
+        "title": "Middleware",
+        "filename": "https://sandstack.dev"
+      },
+      {
+        "title": "Modules",
+        "filename": "https://sandstack.dev"
+      }
+    ]
+  },
+  {
+    "section": "React",
+    "items": [
+      {
+        "title": "About",
+        "filename": "https://sandstack.dev"
+      },
+      {
+        "title": "Create Store",
+        "filename": "https://sandstack.dev"
+      },
+      {
+        "title": "Read and Update State",
+        "filename": "https://sandstack.dev"
+      },
+      {
+        "title": "Middleware",
+        "filename": "https://sandstack.dev"
+      },
+      {
+        "title": "Actions",
+        "filename": "https://sandstack.dev"
+      },
+      {
+        "title": "Private Stores",
+        "filename": "https://sandstack.dev"
+      },
+      {
+        "title": "Modules",
+        "filename": "https://sandstack.dev"
+      }
+    ]
+  },
+  {
+    "section": "Modules",
+    "items": [
+      {
+        "title": "Persist",
+        "filename": "https://sandstack.dev"
+      },
+      {
+        "title": "Slices",
+        "filename": "https://sandstack.dev"
+      }
+    ]
+  }
+]
