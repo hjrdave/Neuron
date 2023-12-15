@@ -1,38 +1,38 @@
 [
   {
     "section": "About",
-    "filename": "https://sandstack.dev"
+    "filename": "about"
   },
   {
     "section": "Getting Started",
-    "filename": "https://sandstack.dev"
+    "filename": "getting-started"
   },
   {
     "section": "Vanilla",
     "items": [
       {
         "title": "Create Store",
-        "filename": "https://sandstack.dev"
+        "filename": "vanilla/create-store"
       },
       {
         "title": "Read and Update State",
-        "filename": "https://sandstack.dev"
+        "filename": "vanilla/read-and-update-state"
       },
       {
         "title": "Listen for State Changes",
-        "filename": "https://sandstack.dev"
+        "filename": "vanilla/listen-for-state-changes"
       },
       {
         "title": "Dispatch for State Changes",
-        "filename": "https://sandstack.dev"
+        "filename": "vanilla/dispatch-state-to-store"
       },
       {
         "title": "Middleware",
-        "filename": "https://sandstack.dev"
+        "filename": "vanilla/middleware"
       },
       {
         "title": "Modules",
-        "filename": "https://sandstack.dev"
+        "filename": "vanilla/modules"
       }
     ]
   },
@@ -41,31 +41,31 @@
     "items": [
       {
         "title": "About",
-        "filename": "https://sandstack.dev"
+        "filename": "react/about"
       },
       {
         "title": "Create Store",
-        "filename": "https://sandstack.dev"
+        "filename": "react/create-store"
       },
       {
         "title": "Read and Update State",
-        "filename": "https://sandstack.dev"
+        "filename": "react/read-and-update-state"
       },
       {
         "title": "Middleware",
-        "filename": "https://sandstack.dev"
+        "filename": "react/middleware"
       },
       {
         "title": "Actions",
-        "filename": "https://sandstack.dev"
+        "filename": "react/actions"
       },
       {
         "title": "Private Stores",
-        "filename": "https://sandstack.dev"
+        "filename": "react/private-stores"
       },
       {
         "title": "Modules",
-        "filename": "https://sandstack.dev"
+        "filename": "react/modules"
       }
     ]
   },
@@ -74,11 +74,11 @@
     "items": [
       {
         "title": "Persist",
-        "filename": "https://sandstack.dev"
+        "filename": "modules/persist"
       },
       {
         "title": "Slices",
-        "filename": "https://sandstack.dev"
+        "filename": "modules/slices"
       }
     ]
   }
