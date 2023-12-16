@@ -16,6 +16,36 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
+```jsx
+import Neuron from "@sandstack/neuron/react";
+
+export const { State, useNeuron } = Neuron.Store();
+
+export default function AppStore() {
+  return (
+    <>
+      <State name={"fruit"} state={"apple"} />
+
+      <State name={"car"} state={"Tesla"} />
+    </>
+  );
+}
+```
+
+```javascript
+Store.onDispatch((dispatchItem) => {
+  if (dispatchItem.key === "name") {
+    console.log(dispatchItem.state);
+  }
+});
+
+//initial console.log output
+//name: Ash Ketchum
+
+//new console.log output
+//name: Gary Oak
+```
+
 #### Heading 3
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
@@ -23,6 +53,20 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 ##### Heading 4
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+```javascript
+Store.onDispatch((dispatchItem) => {
+  if (dispatchItem.key === "name") {
+    console.log(dispatchItem.state);
+  }
+});
+
+//initial console.log output
+//name: Ash Ketchum
+
+//new console.log output
+//name: Gary Oak
+```
 
 ###### Heading 5
 
