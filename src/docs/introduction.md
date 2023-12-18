@@ -16,11 +16,11 @@ The Neuron State Manager is a small, bare bones, framework agnostic library for 
 
 ## Motivation
 
-I created Neuron because I wanted a light weight and unopinionated state management solution, that could be configured to work with any javascript framework. I also realized that many state management solutions in the wild currently, were convoluted, boilerplately and missing some key features that can make complicated UI components easier to make.
+I created Neuron because I wanted a light weight and unopinionated state management solution, that could be configured to work with any javascript framework. I also realized that many state management solutions in the wild currently were convoluted, boilerplately, and missing some key features that can make complicated UI components easier to make.
 
 I decided to create my own solution for managing client state, and thus Neuron was born. It has module support for easily extending functionality, and handy devtools for state transparency. I also created a React specific version using vanilla Neuron as it's foundation. See [React](/react/about).
 
-Vanilla example below.
+![Neuron Global State Manager - Vanilla](https://sandstack.dev/neuron-vanilla-banner.png "a title")
 
 ```javascript
 import Neuron from "@sandstack/neuron";
@@ -49,7 +49,7 @@ onDispatch((payload) => {
 });
 ```
 
-React package example below.
+![Neuron Global State Manager - React](https://sandstack.dev/neuron-react-banner.png "a title")
 
 ```jsx
 import Neuron from '@sandstack/neuron/react'
