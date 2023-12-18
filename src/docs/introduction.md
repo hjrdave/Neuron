@@ -8,7 +8,7 @@ subnav:
   - Foo4
 ---
 
-<img src='https://sandstack.dev/readme-neuron.png' alt='Neuron Global State Manager' style="width: 100%"/>
+<img src='https://sandstack.dev/readme-neuron.png' alt='Neuron Global State Manager' style={{width: "100%"}}/>
 
 # Introduction
 
