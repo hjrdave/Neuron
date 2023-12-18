@@ -20,6 +20,7 @@ Vanilla example below.
 
 ```javascript
 import Neuron from "@sandstack/neuron";
+
 const Store = Neuron.Store();
 
 //add state to store
@@ -48,7 +49,9 @@ React package example below.
 
 ```jsx
 import Neuron from '@sandstack/neuron/react'
+
 const {State, useNeuron} = Neuron.Store();
+
 function Store(){
   return(
     <>
