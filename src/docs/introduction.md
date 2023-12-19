@@ -10,11 +10,11 @@ subnav:
 
 ![Neuron Global State Manager](https://sandstack.dev/readme-neuron.png "a title")
 
-# Introduction
+# Introduction {: id=introduction}
 
 The Neuron State Manager is a small, bare bones, framework agnostic library for managing client state in javascript user interfaces. It is simple enough to be used by itself or tailor fitted to be used with any UI Framework of your choice. The vanilla npm package is less than _2KBs_ and can be configured anyway to your tech stack or project needs.
 
-## What is Global State?
+## What is Global State? {: id=what-is-global-state}
 
 State is the current condition or snapshot of a system at a particular moment. In user interfaces state is basically variables with observables on them that will be reflected in the user interface when it changes.
 
@@ -22,7 +22,7 @@ In component architecture, each component controls its own local state. When tha
 
 Enter global state. Global state is lifting your state variables outside of your components. The global state does not care how or when a component is rerendered. The state only changes if a component explicitly changes it. With this method we can create a global store for our components and they can subscribe and unsubscribe to that Store. See the graphic below.
 
-## Motivation
+## Motivation {: id=motivation}
 
 I created Neuron because I wanted a light weight and unopinionated state management solution, that could be configured to work with any javascript framework. I also realized that many state management solutions in the wild currently were convoluted, had lots of boilerplate, and missing some key features that can make complicated UI components easier to make.
 
@@ -30,7 +30,7 @@ I decided to create my own solution for managing client state, and thus Neuron w
 
 ![Neuron Global State Manager - Vanilla](https://sandstack.dev/neuron-vanilla-banner.png "a title")
 
-## Vanilla Neuron Example
+## Vanilla Neuron Example {: id=vanilla-neuron-example}
 
 The vanilla package is just pure javascript. You can use this by importing `@sandstack/neuron` into your file.
 
@@ -63,7 +63,7 @@ onDispatch((payload) => {
 
 ![Neuron Global State Manager - React](https://sandstack.dev/neuron-react-banner.png "a title")
 
-## React Neuron Example
+## React Neuron Example {: id=react-neuron-example}
 
 Neuron has first class support for React. You can use the React specific package by importing `@sandstack/neuron/react` into your file.
 
