@@ -2,10 +2,10 @@
 title: Introduction
 description: The Neuron Global State Manager is a small, bare bones, framework agnostic library for managing client state in javascript user interfaces.
 subnav:
-  - Foo
-  - Foo 2
-  - Foo 3
-  - Foo4
+  - What is Global State
+  - Motivation
+  - Vanilla Neuron Example
+  - React Neuron Example
 ---
 
 ![Neuron Global State Manager](https://sandstack.dev/readme-neuron.png "a title")
