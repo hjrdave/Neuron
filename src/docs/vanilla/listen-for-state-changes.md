@@ -5,14 +5,14 @@ In Vanilla Neuron state is not reactive out of the box as is in JS frameworks/li
 ```javascript
 Store.onDispatch((payload) => {
   if (payload.key === "pokemon") {
-    console.log(dispatchItem.state);
+    console.log(payload.state);
   }
 });
 //name: Pikachu
 
 Store.onDispatch((payload) => {
   if (payload.key === "trainer") {
-    console.log(dispatchItem.state);
+    console.log(payload.state);
   }
 });
 //name: Ash Ketchum
