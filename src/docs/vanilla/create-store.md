@@ -1,4 +1,4 @@
-## Setup Store
+# Create Store
 
 Neuron stores are easy to set up and only require a key/value pair to instantiate a state. Stores are dynamic in nature and state can be added to the store any where at any time. Reading and updating non existent state will fail gracefully.
 

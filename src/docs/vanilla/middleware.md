@@ -1,3 +1,5 @@
+# Middleware
+
 ### Set Custom Middleware
 
 Middleware can be applied to each individual Store Item's `add` method. There are three middleware types.
@@ -19,7 +21,7 @@ Each of these methods have access to the `payload` object. You can manipulate di
 - `isDispatchCancelled` - Method that returns the status of the dispatch.
 - `get` - Method that gets state from a store item by key.
 - `set` - Method that sets state of a store item by key.
-- `reset` - Method that resets store item to it's initial state by key. **Note: If no key is passed then it will reset all store items to initial.** state.
+- `reset` - Method that resets store item to it's initial state by key. **Note: If no key is passed then it will reset all store items to initial state.**.
 
 ```javascript
 const Store = Neuron.Store();
