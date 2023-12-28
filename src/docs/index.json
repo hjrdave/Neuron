@@ -11,26 +11,32 @@
     "section": "Vanilla",
     "items": [
       {
+        "parent": "Vanilla",
         "title": "Create Store",
         "filename": "vanilla/create-store"
       },
       {
+        "parent": "Vanilla",
         "title": "Read and Update State",
         "filename": "vanilla/read-and-update-state"
       },
       {
+        "parent": "Vanilla",
         "title": "Listen for State Changes",
         "filename": "vanilla/listen-for-state-changes"
       },
       {
+        "parent": "Vanilla",
         "title": "Dispatch for State Changes",
         "filename": "vanilla/dispatch-state-to-store"
       },
       {
+        "parent": "Vanilla",
         "title": "Middleware",
         "filename": "vanilla/middleware"
       },
       {
+        "parent": "Vanilla",
         "title": "Modules",
         "filename": "vanilla/modules"
       }
@@ -40,30 +46,37 @@
     "section": "React",
     "items": [
       {
+        "parent": "React",
         "title": "About",
         "filename": "react/about"
       },
       {
+        "parent": "React",
         "title": "Create Store",
         "filename": "react/create-store"
       },
       {
+        "parent": "React",
         "title": "Read and Update State",
         "filename": "react/read-and-update-state"
       },
       {
+        "parent": "React",
         "title": "Middleware",
         "filename": "react/middleware"
       },
       {
+        "parent": "React",
         "title": "Actions",
         "filename": "react/actions"
       },
       {
+        "parent": "React",
         "title": "Private Stores",
         "filename": "react/private-stores"
       },
       {
+        "parent": "React",
         "title": "Modules",
         "filename": "react/modules"
       }
@@ -73,10 +86,12 @@
     "section": "Modules",
     "items": [
       {
+        "parent": "Modules",
         "title": "Persist",
         "filename": "modules/persist"
       },
       {
+        "parent": "Modules",
         "title": "Slices",
         "filename": "modules/slices"
       }
