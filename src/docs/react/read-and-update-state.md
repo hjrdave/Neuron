@@ -1,3 +1,23 @@
+## Manage Global State
+
+1. Create a new `Store`
+
+```jsx
+import Neuron from "@sandstack/neuron/react";
+
+export const { State, useNeuron } = Neuron.Store();
+
+export default function AppStore() {
+  return (
+    <>
+      <State name={"fruit"} state={"apple"} />
+
+      <State name={"car"} state={"Tesla"} />
+    </>
+  );
+}
+```
+
 3. Get and Set state with Store hook
 
 ```jsx
