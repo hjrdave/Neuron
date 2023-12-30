@@ -6,7 +6,7 @@ Neuron React is a React only global state management library that is a wrapper a
 
 To use just install Neuron into your app.
 
-```
+```bash
 npm install @sandstack/neuron
 //or
 yarn add @sandstack/neuron
