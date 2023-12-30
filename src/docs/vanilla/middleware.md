@@ -87,6 +87,8 @@ examples: _onLoad_, _onRun_, _onCallback_, and module specific props passed to t
 
 ### Examples of using middleware and payloads
 
+#### Example 1
+
 Make sure dispatched state is always capitalized.
 
 ```javascript
@@ -104,6 +106,8 @@ Store.add({
 });
 ```
 
+#### Example 2
+
 Cancel a dispatch if the state does not meet a certain condition.
 
 ```javascript
@@ -120,6 +124,8 @@ Store.add({
   },
 });
 ```
+
+#### Example 3
 
 Update another state if the dispatched state is a certain value.
 
