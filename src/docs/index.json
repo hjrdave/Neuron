@@ -27,13 +27,13 @@
       },
       {
         "parent": "Vanilla",
-        "title": "Dispatch for State Changes",
-        "filename": "vanilla/dispatch-state-to-store"
+        "title": "Middleware",
+        "filename": "vanilla/middleware"
       },
       {
         "parent": "Vanilla",
-        "title": "Middleware",
-        "filename": "vanilla/middleware"
+        "title": "Dispatch State Changes",
+        "filename": "vanilla/dispatch-state-changes"
       },
       {
         "parent": "Vanilla",

@@ -1,6 +1,6 @@
 # Middleware
 
-Middleware is used to implement logic before or after state is updated to the store. Middleware has access to the dispatched state and is able to manipulate other state items.
+Middleware is used to implement logic before or after state is updated to the store. Middleware has access to the dispatched state and is able to manipulate other state items via a mutator function.
 
 ## Types
 
@@ -56,7 +56,7 @@ Store.add({
 
 ### Payload
 
-The payload is an object of properties and methods that is made available to each middleware function. This allows logic to manipulate state or cancel a dispatch.
+The payload is an object of properties and methods that is made available to each middleware mutator function. This allows logic to manipulate state or even cancel a dispatch in mid flight.
 
 **Properties**
 
