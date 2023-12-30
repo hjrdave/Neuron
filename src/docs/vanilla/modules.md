@@ -1,6 +1,12 @@
-### Extend Neuron with Modules
+# Modules
 
-Modules like Persist allow you to extend Neuron features. In this case (only works in browser) state will be persisted between page refreshes. Modules must be applied by the `use` method on the `Store`. They must be set before any `add` methods.
+Modules allow for Neuron to be extended with new features. They hook into store middleware and can change state based on pre configured logic.
+
+## Add a Module
+
+Modules can be added to a store by using the `use` method. This method takes the module as a parameter and adds it to the store. Modules **must** be called above the `add` methods.
+
+The Persist module is a good example of a Neuron module. This allows state to be persisted between page refreshes. It adds a prop to the store features called `persist`. This allows for each store item to have state persistence toggled onto it. See below.
 
 ```javascript
 import Persist from @sandstack/neuron/modules/persist;
