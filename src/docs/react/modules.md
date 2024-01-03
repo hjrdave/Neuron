@@ -1,4 +1,4 @@
-## Modules
+# Modules
 
 Modules are a way to hook into store middleware and extend Neuron with features like state persistance and dev tools. Below is an example of extending a Neuron store with state persistence by using the `Persist` module. You can use the `Store.Use` component to inject a module into your store. Each module works different and might have a different api. In the case below, the `Persist` module is instantiated and the feature flag `persist` is set on the store items that you want to run the module on.
 

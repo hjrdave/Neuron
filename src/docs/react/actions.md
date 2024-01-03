@@ -1,4 +1,4 @@
-## Actions
+# Actions
 
 Actions are custom dedicated methods to manipulate state in the store. They target the state that they are passed to.
 

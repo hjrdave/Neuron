@@ -1,6 +1,6 @@
-## Middleware
+# Middleware
 
-Middleware is logic that runs at different times during the store dispatch process. This allows for state to be manipulated, interrigated, logged, and even cancelled during a dispatch. Middleware is set on a store item. Any time the store item gets a dispatch, the appropriate middleware will run. And example middleware is below:
+Middleware is logic that runs at different times during the store dispatch process. This allows for state to be manipulated, interrogated, logged, and even cancelled during a dispatch. Middleware is set on a store item. Any time the store item gets a dispatch, the appropriate middleware will run. And example middleware is below:
 
 ```jsx
 <State
@@ -12,68 +12,53 @@ Middleware is logic that runs at different times during the store dispatch proce
 />
 ```
 
-### Types
+## Types
 
-All three types of middleware have access to the `payload` object. This object has properties and methods that allow the middleware to interogate, manipulate, or cancel the dispatch. You may use all three types on one store item.
+All three types of middleware have access to the `payload` object. This object has properties and methods that allow the middleware to interrogate, manipulate, or cancel the dispatch. You may use all three types on one store item. Learn the payload api [here](vanilla/middleware#payload).
 
-#### OnLoad
+### OnLoad
 
-This only fires once as the store is instantiated. It will not run again, even if a dispatch happens.
+Only fires once as the store is instantiated. It will not run again, even if a dispatch happens.
 
 ```jsx
 <State
-  name={"fruit"}
-  state={"apple"}
+  name={"trainer"}
+  state={"ash"}
   onLoad={(payload) => {
     console.log("I fire only once when the store first instantiates");
   }}
 />
 ```
 
-#### OnRun
+### OnRun
 
-This fires every time a dispatch is sent. When this middleware resolves, the dispatch will also resolve and the store will be updated.
+Fires every time a dispatch is sent. When this middleware resolves, the dispatch will also resolve and the store will be updated.
 
 ```jsx
 <State
-  name={"fruit"}
-  state={"apple"}
+  name={"trainer"}
+  state={"ash"}
   onRun={(payload) => {
-    if (payload.state === "lemon") {
-      console.log("Gross, I hate lemons!");
+    if (payload.state === "gary") {
+      console.log("Gary is lame!");
       payload.cancelDispatch();
     } else {
-      console.log("I love ", payload.state);
+      console.log(payload.state, " is amazing!");
     }
   }}
 />
 ```
 
-#### OnCallback
+### OnCallback
 
-This fires only when all other middleware and the dispatch resolves. This will fire even if a dispatch is cancelled.
+Fires only when all other middleware and the dispatch resolves. This will fire even if a dispatch is cancelled.
 
 ```jsx
 <State
-  name={"fruit"}
-  state={"apple"}
+  name={"trainer"}
+  state={"ash"}
   onCallback={(payload) => {
     console.log("The store has been updated....");
   }}
 />
 ```
-
-#### Payload
-
-The payload object is used by middleware to manipulate the dispatch process. Below is the list of methods and properties that are available in each payload.
-
-- `key` - This is the name of the store item the dispatch is targeting.
-- `prevState` - Previous state.
-- `state` - A writable property that will be the next state.
-- `data` - A writable property that can be used by `useDispatch` to send non state data to store middleware.
-- `features` - Features set for the store item. (examples: `onLoad`, `onRun`, `onCallback`, and module specific props passed to the `State` component)
-- `cancelDispatch` - Method that will cancel the dispatch (nothing will be saved to store).
-- `isDispatchCancelled` - Method that can be used in `onCallback` middleware to determine if dispatch was cancelled.
-- `get` - Method that gets state from a store item by key.
-- `set` - Method that sets state of a store item by key.
-- `reset` - Method that resets store item to it's initial state by key. **Note: If no key is passed then it will reset all store items to initial.** state.
