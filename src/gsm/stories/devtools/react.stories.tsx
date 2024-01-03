@@ -1,7 +1,7 @@
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { StoryFn, Meta } from "@storybook/react";
-import DevtoolsPanel from "../../DevtoolsPanel";
+import DevtoolsPanel from "../../../devtools/DevtoolsPanel";
 
 export default {
   title: "Tests/Devtools",

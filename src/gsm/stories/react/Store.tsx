@@ -1,7 +1,7 @@
 import React from "react";
 import Neuron from "../../react";
 // import Persist, { PersistProps } from "../../modules/persist";
-import Devtools from "../../../dist/modules/devtools";
+import Devtools from "../../../../dist/modules/devtools";
 
 interface IState {
   fruit: string;

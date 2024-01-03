@@ -1,5 +1,5 @@
 import Neuron from "../../vanilla";
-import { DevtoolsConnection } from "../../DevtoolsPanel";
+import { DevtoolsConnection } from "../../../devtools/DevtoolsPanel";
 
 interface Options {
   storeName: string;
