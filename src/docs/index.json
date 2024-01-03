@@ -89,11 +89,6 @@
         "parent": "Modules",
         "title": "Persist",
         "filename": "modules/persist"
-      },
-      {
-        "parent": "Modules",
-        "title": "Slices",
-        "filename": "modules/slices"
       }
     ]
   }

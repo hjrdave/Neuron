@@ -1,4 +1,4 @@
-## Persist
+# Persist
 
 Persist allows for state persistance in state. This is opt in and you must set the `persist` prop to `true`.
 
