@@ -5,6 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build --config vite.config.ts"
+    "test:watch": "vitest",
+    "test": "vitest run",
+    "build": "tsc && npm run test && vite build --config vite.config.ts"
   }
 }

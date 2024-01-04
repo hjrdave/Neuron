@@ -10,7 +10,6 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "declaration": true,
 
     /*bundler*/
     "moduleResolution": "bundler",
@@ -23,5 +22,5 @@
     "noFallthroughCasesInSwitch": true,
     "noImplicitAny": false
   },
-  "include": ["./src", "vite.config.ts"]
+  "include": ["src"]
 }
