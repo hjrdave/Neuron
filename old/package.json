@@ -1,0 +1,236 @@
+{
+  "name": "@sandstack/neuron",
+  "version": "0.0.0",
+  "description": "A framework agnostic javascript global state manager.",
+  "sideEffects": false,
+  "main": "./index.js",
+  "types": "./index.d.ts",
+  "scripts": {
+    "build": "tsc && vite build --config configs/index.config.ts && vite build --config configs/vanilla.config.ts && vite build --config configs/react.config.ts && vite build --config configs/modules.config.ts && vite build --config configs/persist.config.ts && vite build --config configs/slices.config.ts && vite build --config configs/devtools.config.ts && vite build --config configs/devtoolsPanel.config.ts && copyfiles package.json dist && copyfiles CONTRIBUTING.md dist && copyfiles README.md dist",
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview",
+    "storybook:run": "storybook dev -p 6006",
+    "tsc": "tsc --noEmit --watch",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "storybook:clean-cache": "rimraf node_modules/.cache/storybook",
+    "publish:dry": "npm publish --dry-run",
+    "npm:pack": "npm pack --production"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead"
+  ],
+  "exports": {
+    "./package.json": "./package.json",
+    "./CONTRIBUTING.md": "./CONTRIBUTING.md",
+    ".": {
+      "require": {
+        "types": "./index.d.ts",
+        "default": "./index.cjs"
+      },
+      "import": {
+        "types": "./index.d.ts",
+        "default": "./index.js"
+      },
+      "module": {
+        "types": "./index.d.ts",
+        "default": "./index.js"
+      },
+      "default": {
+        "types": "./index.d.ts",
+        "default": "./index.js"
+      }
+    },
+    "./vanilla": {
+      "require": {
+        "types": "./vanilla.d.ts",
+        "default": "./vanilla.cjs"
+      },
+      "import": {
+        "types": "./vanilla.d.ts",
+        "default": "./vanilla.js"
+      },
+      "module": {
+        "types": "./vanilla.d.ts",
+        "default": "./vanilla.js"
+      },
+      "default": {
+        "types": "./vanilla.d.ts",
+        "default": "./vanilla.js"
+      }
+    },
+    "./react": {
+      "require": {
+        "types": "./react.d.ts",
+        "default": "./react.cjs"
+      },
+      "import": {
+        "types": "./react.d.ts",
+        "default": "./react.js"
+      },
+      "module": {
+        "types": "./react.d.ts",
+        "default": "./react.js"
+      },
+      "default": {
+        "types": "./react.d.ts",
+        "default": "./react.js"
+      }
+    },
+    "./DevtoolsPanel": {
+      "require": {
+        "types": "./DevtoolsPanel.d.ts",
+        "default": "./DevtoolsPanel.cjs"
+      },
+      "import": {
+        "types": "./DevtoolsPanel.d.ts",
+        "default": "./DevtoolsPanel.js"
+      },
+      "module": {
+        "types": "./DevtoolsPanel.d.ts",
+        "default": "./DevtoolsPanel.js"
+      },
+      "default": {
+        "types": "./DevtoolsPanel.d.ts",
+        "default": "./DevtoolsPanel.js"
+      }
+    },
+    "./modules": {
+      "require": {
+        "types": "./module.d.ts",
+        "default": "./module.cjs"
+      },
+      "import": {
+        "types": "./module.d.ts",
+        "default": "./module.js"
+      },
+      "module": {
+        "types": "./module.d.ts",
+        "default": "./module.js"
+      },
+      "default": {
+        "types": "./module.d.ts",
+        "default": "./module.js"
+      }
+    },
+    "./modules/persist": {
+      "require": {
+        "types": "./modules/persist/index.d.ts",
+        "default": "./modules/persist/index.cjs"
+      },
+      "import": {
+        "types": "./modules/persist/index.d.ts",
+        "default": "./modules/persist/index.js"
+      },
+      "module": {
+        "types": "./modules/persist/index.d.ts",
+        "default": "./modules/persist/index.js"
+      },
+      "default": {
+        "types": "./modules/persist/index.d.ts",
+        "default": "./modules/persist/index.js"
+      }
+    },
+    "./modules/slices": {
+      "require": {
+        "types": "./modules/slices/index.d.ts",
+        "default": "./modules/slices/index.cjs"
+      },
+      "import": {
+        "types": "./modules/slices/index.d.ts",
+        "default": "./modules/slices/index.js"
+      },
+      "module": {
+        "types": "./modules/slices/index.d.ts",
+        "default": "./modules/slices/index.js"
+      },
+      "default": {
+        "types": "./modules/slices/index.d.ts",
+        "default": "./modules/slices/index.js"
+      }
+    },
+    "./modules/devtools": {
+      "require": {
+        "types": "./modules/devtools/index.d.ts",
+        "default": "./modules/devtools/index.cjs"
+      },
+      "import": {
+        "types": "./modules/devtools/index.d.ts",
+        "default": "./modules/devtools/index.js"
+      },
+      "module": {
+        "types": "./modules/devtools/index.d.ts",
+        "default": "./modules/devtools/index.js"
+      },
+      "default": {
+        "types": "./modules/devtools/index.d.ts",
+        "default": "./modules/devtools/index.js"
+      }
+    }
+  },
+  "files": [
+    "**"
+  ],
+  "keywords": [
+    "npm",
+    "module",
+    "node",
+    "javascript",
+    "typescript",
+    "global-state-management",
+    "state-manager",
+    "global",
+    "neuron",
+    "neuronjs",
+    "@sandstack",
+    "@neuron",
+    "sandstack"
+  ],
+  "author": "David A. Sanders",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hjrdave/Neuron/issues"
+  },
+  "homepage": "https://github.com/hjrdave/Neuron#readme",
+  "devDependencies": {
+    "@storybook/addon-essentials": "^7.5.1",
+    "@storybook/addon-interactions": "^7.5.1",
+    "@storybook/addon-links": "^7.5.1",
+    "@storybook/addon-onboarding": "^1.0.8",
+    "@storybook/blocks": "^7.5.1",
+    "@storybook/react": "^7.5.1",
+    "@storybook/react-vite": "^7.5.1",
+    "@storybook/testing-library": "^0.2.2",
+    "@types/jest": "^29.5.6",
+    "@types/react": "^18.2.15",
+    "@types/react-dom": "^18.2.7",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "@vitejs/plugin-react": "^4.1.1",
+    "@vitejs/plugin-react-swc": "^3.4.1",
+    "bootstrap": "^5.3.2",
+    "copyfiles": "^2.4.1",
+    "eslint": "^8.45.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.3",
+    "eslint-plugin-storybook": "^0.6.15",
+    "react": "^18.2.0",
+    "react-bootstrap": "^2.9.1",
+    "react-dom": "^18.2.0",
+    "storybook": "^7.5.1",
+    "typescript": "^5.0.2",
+    "vite": "^4.4.5",
+    "vite-plugin-copy": "^0.1.6",
+    "vite-plugin-dts": "^3.6.1",
+    "vite-tsconfig-paths": "^4.2.1",
+    "vitest": "^0.34.6",
+    "@fortawesome/fontawesome-free": "^6.4.2",
+    "react-json-view": "^1.21.3",
+    "react-router-dom": "^6.20.0",
+    "react-select": "^5.8.0",
+    "sass": "^1.69.5",
+    "vite-plugin-css-injected-by-js": "^3.3.0"
+  },
+  "dependencies": {}
+}
