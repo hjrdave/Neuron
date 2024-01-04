@@ -18,8 +18,10 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitAny": false
   },
-  "include": ["src"],
+  "include": ["packages"],
+  "exclude": ["src/stories"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

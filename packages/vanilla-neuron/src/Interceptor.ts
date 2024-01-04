@@ -9,7 +9,7 @@ import {
   StoreProps,
   StateType,
   DataProps,
-} from "./vanilla.interfaces";
+} from "./Interfaces";
 
 export interface Params<T = StateType, S = StoreProps, D = DataProps> {
   payload: Payload<T, S, D>;

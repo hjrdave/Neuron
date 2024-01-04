@@ -1,5 +1,5 @@
 {
-  "name": "devtools",
+  "name": "@sandstack/neuron-devtools",
   "private": true,
   "version": "0.0.0",
   "type": "module",

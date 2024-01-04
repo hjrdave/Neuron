@@ -24,7 +24,7 @@ import {
   GetActions,
   HasState,
   ResetState,
-} from "./vanilla.interfaces";
+} from "./Interfaces";
 
 export interface Params<S = StoreProps> {
   modules?: IModule<StateType, S>[];

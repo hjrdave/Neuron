@@ -1,5 +1,5 @@
 {
-  "name": "neuron-modules",
+  "name": "@sandstack/neuron-modules",
   "private": true,
   "version": "0.0.0",
   "type": "module",

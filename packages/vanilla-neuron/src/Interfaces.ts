@@ -1,5 +1,5 @@
-import { IPayload as Payload } from "../vanilla/Payload";
-import { IModule as Module } from "../vanilla/Module";
+import { IPayload as Payload } from "./Payload";
+import { IModule as Module } from "./Module";
 
 export enum InterceptorTypes {
   OnLoad = "onLoad",

@@ -8,7 +8,7 @@ import {
   StoreProps,
   SelectorKey,
   StateType,
-} from "./vanilla.interfaces";
+} from "./Interfaces";
 
 export interface IDispatcher<S = StoreProps> {
   listen: (key: SelectorKey<S>, callbackfn: DispatchCallback<S>) => void;

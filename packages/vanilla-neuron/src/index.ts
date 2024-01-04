@@ -8,7 +8,7 @@ import {
   DispatchMutator as TDispatchMutator,
   DispatchPayload as TDispatchPayload,
   DispatchCallback as TDispatchCallback,
-} from "./vanilla.interfaces";
+} from "./Interfaces";
 import { default as ModuleInstance, Params, IModule } from "./Module";
 import { IPayload } from "./Payload";
 namespace Neuron {
