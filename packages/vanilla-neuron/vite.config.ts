@@ -14,7 +14,7 @@ export default defineConfig({
     sourcemap: true,
     emptyOutDir: false,
     lib: {
-      entry: "./src/index.ts",
+      entry: "src/index.ts",
       name: "Neuron",
       fileName: "index",
     },
