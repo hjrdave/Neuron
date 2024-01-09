@@ -1,17 +1,17 @@
-import Neuron from "../../vanilla";
-
+import Neuron from "@sandstack/neuron";
+export type Payload = Neuron.Payload<string, any>;
 export enum StorageTypes {
   SESSION = "session",
   LOCAL = "local",
 }
 
-export interface ModuleProps {
+export interface PersistProps {
   persist?: StorageTypes.LOCAL | StorageTypes.SESSION | boolean;
 }
 
-const moduleName = `@sandstack/neuron/persist`; //need a unique id that is passed by store
+const moduleName = `@sandstack/neuron-persist`; //need a unique id that is passed by store
 
-const saveStateToStorage = (payload: Neuron.Payload<string, any>) => {
+const saveStateToStorage = (payload: Payload) => {
   const isEnabled = (payload?.features as any)?.persist;
   if (isEnabled) {
     const storageKey = `${moduleName}/${payload.key as string}`;
@@ -32,7 +32,7 @@ const saveStateToStorage = (payload: Neuron.Payload<string, any>) => {
   }
 };
 
-const getStateFromStorage = (payload: Neuron.Payload<string, any>) => {
+const getStateFromStorage = (payload: Payload) => {
   const isEnabled = (payload?.features as any)?.persist;
   if (isEnabled) {
     const storageKey = `${moduleName}/${payload.key as string}`;
@@ -65,13 +65,13 @@ const getStateFromStorage = (payload: Neuron.Payload<string, any>) => {
 const Persist = Neuron.Module({
   name: moduleName,
   onLoad: (payload) => {
-    const cachedState = getStateFromStorage(payload as any);
+    const cachedState = getStateFromStorage(payload as Payload);
     if (cachedState !== null && cachedState !== undefined) {
       payload.state = cachedState;
     }
   },
   onCallback: (payload) => {
-    saveStateToStorage(payload as any);
+    saveStateToStorage(payload as Payload);
   },
 });
 export default Persist;

@@ -1,0 +1,66 @@
+{
+  "name": "@sandstack/neuron-persist",
+  "version": "0.0.0-alpha.1",
+  "author": "David A. Sanders",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hjrdave/Neuron/issues"
+  },
+  "homepage": "https://sandstack.dev/neuron",
+  "type": "module",
+  "browserslist": [
+    ">0.2%",
+    "not dead"
+  ],
+  "files": [
+    "**"
+  ],
+  "exports": {
+    "./package.json": "./package.json",
+    "./CONTRIBUTING.md": "./CONTRIBUTING.md",
+    ".": {
+      "require": {
+        "types": "./index.d.ts",
+        "default": "./index.cjs"
+      },
+      "import": {
+        "types": "./index.d.ts",
+        "default": "./index.js"
+      },
+      "module": {
+        "types": "./index.d.ts",
+        "default": "./index.js"
+      },
+      "default": {
+        "types": "./index.d.ts",
+        "default": "./index.js"
+      }
+    }
+  },
+  "keywords": [
+    "npm",
+    "module",
+    "node",
+    "javascript",
+    "typescript",
+    "global-state-management",
+    "state-manager",
+    "global",
+    "neuron",
+    "neuronjs",
+    "@sandstack",
+    "@neuron",
+    "sandstack",
+    "vanilla-neuron"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "test:watch": "vitest",
+    "test": "vitest run",
+    "build": "tsc && vite build --config vite.config.ts && npm run copy-files",
+    "copy-files": "ncp package.json dist/package.json && ncp LICENSE dist/LICENSE && ncp CONTRIBUTING.md dist/CONTRIBUTING.md && ncp README.md dist/README.md"
+  },
+  "dependencies": {
+    "@sandstack/neuron": "^0.0.0-alpha.47"
+  }
+}

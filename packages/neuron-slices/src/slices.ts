@@ -1,9 +1,4 @@
-import {
-  Module,
-  SelectorKey,
-  Store,
-  Payload,
-} from "../../../neuron-vanilla/src";
+import { Module, SelectorKey, Store, Payload } from "@sandstack/neuron";
 
 export type Selector<State = { [key: string]: any }, T = any> = (
   store: State
