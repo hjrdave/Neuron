@@ -4,7 +4,7 @@ import {
   SelectorKey,
   Actions,
   DispatchMutator,
-} from "../../vanilla-neuron/vanilla-neuron/src";
+} from "../../neuron-vanilla/vanilla-neuron/src";
 
 export interface StateProps<
   T = unknown,

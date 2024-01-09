@@ -1,7 +1,7 @@
 import {
   Module as IModule,
   Store,
-} from "../../vanilla-neuron/vanilla-neuron/src";
+} from "../../neuron-vanilla/vanilla-neuron/src";
 export interface ModuleProps {
   use: IModule;
 }

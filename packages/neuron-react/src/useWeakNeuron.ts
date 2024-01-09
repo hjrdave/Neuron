@@ -2,7 +2,7 @@ import React from "react";
 import {
   Store as CoreStore,
   SelectorKey,
-} from "../../vanilla-neuron/vanilla-neuron/src";
+} from "../../neuron-vanilla/vanilla-neuron/src";
 
 export type UseNeuron<S = { [key: string]: unknown }> = <T, A>(
   selector: SelectorKey<S>

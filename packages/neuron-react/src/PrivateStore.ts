@@ -3,7 +3,7 @@ import {
   default as Core,
   Module,
   DispatchMutator,
-} from "../../vanilla-neuron/vanilla-neuron/src";
+} from "../../neuron-vanilla/vanilla-neuron/src";
 import { Selector } from "../neuron-vanilla/modules/slices";
 import Store from "./Store";
 import Private from "./Private";

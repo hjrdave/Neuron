@@ -3,7 +3,7 @@ import {
   SelectorKey,
   Module as IModule,
   DispatchCallback,
-} from "../../vanilla-neuron/vanilla-neuron/src";
+} from "../../neuron-vanilla/vanilla-neuron/src";
 import { Selector } from "../neuron-vanilla/modules/slices";
 import State, { StateProps } from "./State";
 import Module, { ModuleProps } from "./Module";
@@ -13,7 +13,7 @@ import useDispatch from "./useDispatch";
 import {
   StateType,
   StoreItem,
-} from "../../vanilla-neuron/vanilla-neuron/src/vanilla.interfaces";
+} from "../../neuron-vanilla/vanilla-neuron/src/vanilla.interfaces";
 
 export default class Store<S = { [key: string]: unknown }, M = unknown> {
   private Core: CoreStore<S>;
