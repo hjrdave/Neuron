@@ -1,7 +1,4 @@
-import {
-  Module as IModule,
-  Store,
-} from "../../neuron-vanilla/vanilla-neuron/src";
+import { Module as IModule, Store } from "@sandstack/neuron";
 export interface ModuleProps {
   use: IModule;
 }
@@ -15,5 +12,5 @@ export default function Module<S = { [key: string]: unknown }>({
 }: Props<S>) {
   Store.use(use);
 
-  return <></>;
+  return null;
 }

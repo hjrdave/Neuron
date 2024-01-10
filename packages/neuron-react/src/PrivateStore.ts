@@ -1,10 +1,6 @@
 import React, { useContext, createContext } from "react";
-import {
-  default as Core,
-  Module,
-  DispatchMutator,
-} from "../../neuron-vanilla/vanilla-neuron/src";
-import { Selector } from "../neuron-vanilla/modules/slices";
+import { default as Core, Module, DispatchMutator } from "@sandstack/neuron";
+import { Selector } from "@sandstack/neuron-slices";
 import Store from "./Store";
 import Private from "./Private";
 import { UseNeuron } from "./useNeuron";

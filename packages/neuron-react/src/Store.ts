@@ -3,18 +3,15 @@ import {
   SelectorKey,
   Module as IModule,
   DispatchCallback,
-} from "../../neuron-vanilla/vanilla-neuron/src";
-import { Selector } from "../neuron-vanilla/modules/slices";
+  StateType,
+  StoreItem,
+} from "@sandstack/neuron";
+import { Selector } from "@sandstack/neuron-slices";
 import State, { StateProps } from "./State";
 import Module, { ModuleProps } from "./Module";
 import useNeuron from "./useNeuron";
 import useWeakNeuron from "./useWeakNeuron";
 import useDispatch from "./useDispatch";
-import {
-  StateType,
-  StoreItem,
-} from "../../neuron-vanilla/vanilla-neuron/src/vanilla.interfaces";
-
 export default class Store<S = { [key: string]: unknown }, M = unknown> {
   private Core: CoreStore<S>;
 

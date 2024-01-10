@@ -4,7 +4,7 @@ import {
   SelectorKey,
   Actions,
   DispatchMutator,
-} from "../../neuron-vanilla/vanilla-neuron/src";
+} from "@sandstack/neuron";
 
 export interface StateProps<
   T = unknown,

@@ -3,7 +3,7 @@ import {
   Store,
   DispatchPayload,
   DispatchMutator,
-} from "../../neuron-vanilla/vanilla-neuron/src";
+} from "@sandstack/neuron";
 
 export type UseDispatch<S = { [key: string]: unknown }> = DispatchPayload<S>;
 

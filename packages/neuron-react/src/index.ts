@@ -1,7 +1,7 @@
-import { default as ReactStore } from "../neuron-vanilla/neuron-react/Store";
-import { default as ReactPrivateStore } from "../neuron-vanilla/neuron-react/PrivateStore";
-import { Module } from "../neuron-vanilla/vanilla";
-import Slices from "../neuron-vanilla/modules/slices";
+import { default as ReactStore } from "./Store";
+import { default as ReactPrivateStore } from "./PrivateStore";
+import { Module } from "@sandstack/neuron";
+import Slices from "@sandstack/neuron-slices";
 
 const DefaultModules = [Slices] as any[];
 namespace Neuron {

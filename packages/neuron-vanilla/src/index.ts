@@ -2,12 +2,13 @@ import IStore, { default as StoreInstance, Params as Options } from "./Store";
 import {
   SelectorKey as TSelectorKey,
   Actions as TActions,
-  StateType,
-  StoreProps,
+  StateType as TStateType,
+  StoreProps as TStoreProps,
   DataProps,
   DispatchMutator as TDispatchMutator,
   DispatchPayload as TDispatchPayload,
   DispatchCallback as TDispatchCallback,
+  StoreItem as IStoreItem,
 } from "./Interfaces";
 import { default as ModuleInstance, Params, IModule } from "./Module";
 import { IPayload } from "./Payload";
@@ -38,6 +39,13 @@ namespace Neuron {
     T,
     S
   >;
+  export type StoreProps = TStoreProps;
+  export type StoreItem<
+    T = unknown,
+    S = StoreProps,
+    A = StoreProps
+  > = IStoreItem<T, S, A>;
+  export type StateType = TStateType;
   export type Actions<
     A = { [key: string]: unknown },
     T = unknown,
@@ -59,6 +67,13 @@ export type Payload<T = unknown, S = { [key: string]: unknown }> = IPayload<
   T,
   S
 >;
+export type StoreProps = TStoreProps;
+export type StoreItem<T = unknown, S = StoreProps, A = StoreProps> = IStoreItem<
+  T,
+  S,
+  A
+>;
+export type StateType = TStateType;
 export type Actions<
   A = { [key: string]: unknown },
   T = unknown,
