@@ -1,5 +1,5 @@
-import { expect, test, it } from "vitest";
-import Neuron from "@sandstack/neuron";
+import { expect, test } from "vitest";
+import Neuron from "../../vanilla";
 import Slices, { getSlice, setSlice, convertSelector } from "../slices";
 
 interface Person {

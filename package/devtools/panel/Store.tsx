@@ -1,4 +1,3 @@
-import React from "react";
 import { Actions, DispatchPayload, Features } from "../../vanilla";
 import Neuron from "../../react";
 import Persist, { PersistProps } from "../../persist";
@@ -69,7 +68,9 @@ export default function Store() {
         state={""}
         persist
         onCallback={(payload) => {
-          const selectedStoreData = payload.get(payload.state) as StateItem;
+          const selectedStoreData = payload.get<StateItem>(
+            payload.state as keyof State
+          );
           const keyList = Object.keys(selectedStoreData);
           payload.set("devtools_keyList" as any, keyList);
         }}

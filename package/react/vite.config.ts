@@ -1,5 +1,6 @@
 /// <reference types="vitest" />
 import { defineConfig } from "vite";
+import tsconfigPaths from "vite-tsconfig-paths";
 import dts from "vite-plugin-dts";
 import react from "@vitejs/plugin-react";
 
@@ -10,77 +11,53 @@ export default defineConfig({
   },
   build: {
     minify: true,
-    outDir: "./dist/",
+    outDir: "../package/dist/",
     sourcemap: true,
     emptyOutDir: false,
     lib: {
-      entry: "src/index.ts",
-      name: "NeuronReact",
+      entry: "./react/index.ts",
+      name: "Neuron",
       fileName: "index",
     },
     rollupOptions: {
-      external: [
-        "react",
-        "react/jsx-runtime",
-        "@sandstack/neuron",
-        "sandstack/neuron-slices",
-      ],
       output: [
         {
-          dir: "./dist/",
+          dir: "../package/dist/react/",
           name: "index",
           entryFileNames: "index.js",
-          globals: {
-            react: "React",
-          },
         },
         {
-          dir: "./dist/",
+          dir: "../package/dist/react/",
           name: "index",
           format: "cjs",
           entryFileNames: "index.cjs",
-          globals: {
-            react: "React",
-          },
         },
         {
-          dir: "./dist/umd/",
+          dir: "../package/dist/react/umd/",
           name: "index",
           format: "umd",
           entryFileNames: "index.js",
-          globals: {
-            react: "React",
-          },
         },
         {
-          dir: "./dist/esm/",
+          dir: "../package/dist/react/esm/",
           name: "index",
           format: "esm",
           entryFileNames: "index.js",
-          globals: {
-            react: "React",
-          },
         },
         {
-          dir: "./dist/iife/",
+          dir: "../package/dist/react/iife/",
           name: "index",
           format: "iife",
           entryFileNames: "index.js",
-          globals: {
-            react: "React",
-          },
         },
         {
-          dir: "./dist/system/",
+          dir: "../package/dist/react/system/",
           name: "index",
           format: "system",
           entryFileNames: "index.js",
-          globals: {
-            react: "React",
-          },
         },
       ],
     },
   },
-  plugins: [dts({ rollupTypes: true }), react()],
+  plugins: [dts({ rollupTypes: true }), tsconfigPaths(), react()],
 });

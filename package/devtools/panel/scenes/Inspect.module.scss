@@ -1,7 +1,7 @@
 @use "../variables.scss" as *;
-@import "../../../node_modules/bootstrap/scss/functions";
-@import "../../../node_modules/bootstrap/scss/mixins/breakpoints";
-@import "../../../node_modules/bootstrap/scss/variables";
+@import "../../../../node_modules/bootstrap/scss/functions";
+@import "../../../../node_modules/bootstrap/scss/mixins/breakpoints";
+@import "../../../../node_modules/bootstrap/scss/variables";
 .row {
   display: flex;
   justify-content: space-between;

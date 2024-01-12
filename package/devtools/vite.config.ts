@@ -1,8 +1,8 @@
 /// <reference types="vitest" />
 import { defineConfig } from "vite";
 import dts from "vite-plugin-dts";
-import cssInjectedByJsPlugin from "vite-plugin-css-injected-by-js";
 import react from "@vitejs/plugin-react";
+import cssInjectedByJsPlugin from "vite-plugin-css-injected-by-js";
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -11,54 +11,47 @@ export default defineConfig({
   },
   build: {
     minify: true,
-    outDir: "./dist/",
+    outDir: "../package/dist/",
     sourcemap: true,
     emptyOutDir: false,
     lib: {
-      entry: "src/index.ts",
+      entry: "./devtools/index.tsx",
       name: "NeuronDevtools",
       fileName: "index",
     },
     rollupOptions: {
-      external: [
-        "react",
-        "react/jsx-runtime",
-        "@sandstack/neuron",
-        "@sandstack/neuron-react",
-        "@sandstack/neuron-persist",
-      ],
       output: [
         {
-          dir: "./dist/",
+          dir: "../package/dist/devtools/",
           name: "index",
           entryFileNames: "index.js",
         },
         {
-          dir: "./dist/",
+          dir: "../package/dist/devtools/",
           name: "index",
           format: "cjs",
           entryFileNames: "index.cjs",
         },
         {
-          dir: "./dist/umd/",
+          dir: "../package/dist/devtools/umd/",
           name: "index",
           format: "umd",
           entryFileNames: "index.js",
         },
         {
-          dir: "./dist/esm/",
+          dir: "../package/dist/devtools/esm/",
           name: "index",
           format: "esm",
           entryFileNames: "index.js",
         },
         {
-          dir: "./dist/iife/",
+          dir: "../package/dist/devtools/iife/",
           name: "index",
           format: "iife",
           entryFileNames: "index.js",
         },
         {
-          dir: "./dist/system/",
+          dir: "../package/dist/devtools/system/",
           name: "index",
           format: "system",
           entryFileNames: "index.js",
@@ -66,5 +59,5 @@ export default defineConfig({
       ],
     },
   },
-  plugins: [dts({ rollupTypes: true }), react(), cssInjectedByJsPlugin()],
+  plugins: [dts({ rollupTypes: true }), cssInjectedByJsPlugin(), react()],
 });

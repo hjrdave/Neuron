@@ -10,48 +10,47 @@ export default defineConfig({
   },
   build: {
     minify: true,
-    outDir: "./dist/",
+    outDir: "../package/dist/",
     sourcemap: true,
     emptyOutDir: false,
     lib: {
-      entry: "src/index.ts",
-      name: "NeuronModules",
+      entry: "./slices/index.ts",
+      name: "NeuronSlices",
       fileName: "index",
     },
     rollupOptions: {
-      external: ["@sandstack/neuron"],
       output: [
         {
-          dir: "./dist/",
+          dir: "../package/dist/slices/",
           name: "index",
           entryFileNames: "index.js",
         },
         {
-          dir: "./dist/",
+          dir: "../package/dist/slices/",
           name: "index",
           format: "cjs",
           entryFileNames: "index.cjs",
         },
         {
-          dir: "./dist/umd/",
+          dir: "../package/dist/slices/umd/",
           name: "index",
           format: "umd",
           entryFileNames: "index.js",
         },
         {
-          dir: "./dist/esm/",
+          dir: "../package/dist/slices/esm/",
           name: "index",
           format: "esm",
           entryFileNames: "index.js",
         },
         {
-          dir: "./dist/iife/",
+          dir: "../package/dist/slices/iife/",
           name: "index",
           format: "iife",
           entryFileNames: "index.js",
         },
         {
-          dir: "./dist/system/",
+          dir: "../package/dist/slices/system/",
           name: "index",
           format: "system",
           entryFileNames: "index.js",
