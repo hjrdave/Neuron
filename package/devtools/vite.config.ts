@@ -20,6 +20,14 @@ export default defineConfig({
       fileName: "index",
     },
     rollupOptions: {
+      external: [
+        "react",
+        "react-dom",
+        "../vanilla",
+        "../../react",
+        "../../vanilla",
+        "../../persist",
+      ],
       output: [
         {
           dir: "../package/dist/devtools/",

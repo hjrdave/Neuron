@@ -23,5 +23,5 @@
     "noFallthroughCasesInSwitch": true,
     "noImplicitAny": false
   },
-  "include": ["vanilla", "slices", "persist", "react", "devtools"]
+  "include": ["vanilla", "slices", "persist", "react"]
 }

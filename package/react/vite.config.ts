@@ -20,6 +20,7 @@ export default defineConfig({
       fileName: "index",
     },
     rollupOptions: {
+      external: ["react", "../vanilla", "../slices"],
       output: [
         {
           dir: "../package/dist/react/",

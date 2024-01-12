@@ -57,7 +57,7 @@
     "dev": "vite",
     "test:watch": "vitest",
     "test": "vitest run",
-    "build": "tsc && vite build --config vanilla/vite.config.ts && vite build --config slices/vite.config.ts && vite build --config persist/vite.config.ts && vite build --config react/vite.config.ts && vite build --config devtools/vite.config.ts && npm run copy-files",
+    "build": "tsc && vite build --config vanilla/vite.config.ts && vite build --config slices/vite.config.ts && vite build --config persist/vite.config.ts && vite build --config react/vite.config.ts && npm run copy-files",
     "copy-files": "ncp package.json dist/package.json && ncp LICENSE dist/LICENSE && ncp CONTRIBUTING.md dist/CONTRIBUTING.md && ncp README.md dist/README.md"
   }
 }
