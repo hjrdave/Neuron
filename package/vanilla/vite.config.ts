@@ -10,47 +10,47 @@ export default defineConfig({
   },
   build: {
     minify: true,
-    outDir: "../package/dist/",
+    outDir: "./dist",
     sourcemap: true,
     emptyOutDir: false,
     lib: {
-      entry: "./vanilla/index.ts",
+      entry: "./package/vanilla/index.ts",
       name: "Neuron",
       fileName: "index",
     },
     rollupOptions: {
       output: [
         {
-          dir: "../package/dist",
+          dir: "./dist",
           name: "index",
           entryFileNames: "index.js",
         },
         {
-          dir: "../package/dist",
+          dir: "./dist",
           name: "index",
           format: "cjs",
           entryFileNames: "index.cjs",
         },
         {
-          dir: "../package/dist/vanilla/umd/",
+          dir: "./dist/vanilla/umd",
           name: "index",
           format: "umd",
           entryFileNames: "index.js",
         },
         {
-          dir: "../package/dist/vanilla/esm/",
+          dir: "./dist/vanilla/esm",
           name: "index",
           format: "esm",
           entryFileNames: "index.js",
         },
         {
-          dir: "../package/dist/vanilla/iife/",
+          dir: "./dist/vanilla/iife",
           name: "index",
           format: "iife",
           entryFileNames: "index.js",
         },
         {
-          dir: "../package/dist/vanilla/system/",
+          dir: "./dist/vanilla/system",
           name: "index",
           format: "system",
           entryFileNames: "index.js",

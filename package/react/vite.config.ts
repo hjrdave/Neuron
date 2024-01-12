@@ -11,11 +11,11 @@ export default defineConfig({
   },
   build: {
     minify: true,
-    outDir: "../package/dist/",
+    outDir: "./dist/",
     sourcemap: true,
     emptyOutDir: false,
     lib: {
-      entry: "./react/index.ts",
+      entry: "./package/react/index.ts",
       name: "Neuron",
       fileName: "index",
     },
@@ -23,36 +23,36 @@ export default defineConfig({
       external: ["react", "../vanilla", "../slices"],
       output: [
         {
-          dir: "../package/dist/react/",
+          dir: "./dist/react/",
           name: "index",
           entryFileNames: "index.js",
         },
         {
-          dir: "../package/dist/react/",
+          dir: "./dist/react/",
           name: "index",
           format: "cjs",
           entryFileNames: "index.cjs",
         },
         {
-          dir: "../package/dist/react/umd/",
+          dir: "./dist/react/umd/",
           name: "index",
           format: "umd",
           entryFileNames: "index.js",
         },
         {
-          dir: "../package/dist/react/esm/",
+          dir: "./dist/react/esm/",
           name: "index",
           format: "esm",
           entryFileNames: "index.js",
         },
         {
-          dir: "../package/dist/react/iife/",
+          dir: "./dist/react/iife/",
           name: "index",
           format: "iife",
           entryFileNames: "index.js",
         },
         {
-          dir: "../package/dist/react/system/",
+          dir: "./dist/react/system/",
           name: "index",
           format: "system",
           entryFileNames: "index.js",

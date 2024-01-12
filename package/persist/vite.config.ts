@@ -10,11 +10,11 @@ export default defineConfig({
   },
   build: {
     minify: true,
-    outDir: "../package/dist/",
+    outDir: "./dist/",
     sourcemap: true,
     emptyOutDir: false,
     lib: {
-      entry: "./persist/index.ts",
+      entry: "./package/persist/index.ts",
       name: "NeuronPersist",
       fileName: "index",
     },
@@ -22,36 +22,36 @@ export default defineConfig({
       external: ["../vanilla"],
       output: [
         {
-          dir: "../package/dist/persist/",
+          dir: "./dist/persist/",
           name: "index",
           entryFileNames: "index.js",
         },
         {
-          dir: "../package/dist/persist/",
+          dir: "./dist/persist/",
           name: "index",
           format: "cjs",
           entryFileNames: "index.cjs",
         },
         {
-          dir: "../package/dist/persist/umd/",
+          dir: "./dist/persist/umd/",
           name: "index",
           format: "umd",
           entryFileNames: "index.js",
         },
         {
-          dir: "../package/dist/persist/esm/",
+          dir: "./dist/persist/esm/",
           name: "index",
           format: "esm",
           entryFileNames: "index.js",
         },
         {
-          dir: "../package/dist/persist/iife/",
+          dir: "./dist/persist/iife/",
           name: "index",
           format: "iife",
           entryFileNames: "index.js",
         },
         {
-          dir: "../package/dist/persist/system/",
+          dir: "./dist/persist/system/",
           name: "index",
           format: "system",
           entryFileNames: "index.js",

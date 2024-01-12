@@ -10,11 +10,11 @@ export default defineConfig({
   },
   build: {
     minify: true,
-    outDir: "../package/dist/",
+    outDir: "./dist/",
     sourcemap: true,
     emptyOutDir: false,
     lib: {
-      entry: "./slices/index.ts",
+      entry: "./package/slices/index.ts",
       name: "NeuronSlices",
       fileName: "index",
     },
@@ -22,36 +22,36 @@ export default defineConfig({
       external: ["../vanilla"],
       output: [
         {
-          dir: "../package/dist/slices/",
+          dir: "./dist/slices/",
           name: "index",
           entryFileNames: "index.js",
         },
         {
-          dir: "../package/dist/slices/",
+          dir: "./dist/slices/",
           name: "index",
           format: "cjs",
           entryFileNames: "index.cjs",
         },
         {
-          dir: "../package/dist/slices/umd/",
+          dir: "./dist/slices/umd/",
           name: "index",
           format: "umd",
           entryFileNames: "index.js",
         },
         {
-          dir: "../package/dist/slices/esm/",
+          dir: "./dist/slices/esm/",
           name: "index",
           format: "esm",
           entryFileNames: "index.js",
         },
         {
-          dir: "../package/dist/slices/iife/",
+          dir: "./dist/slices/iife/",
           name: "index",
           format: "iife",
           entryFileNames: "index.js",
         },
         {
-          dir: "../package/dist/slices/system/",
+          dir: "./dist/slices/system/",
           name: "index",
           format: "system",
           entryFileNames: "index.js",
