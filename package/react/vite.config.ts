@@ -20,7 +20,7 @@ export default defineConfig({
       fileName: "index",
     },
     rollupOptions: {
-      external: ["react", "../vanilla", "../slices"],
+      external: ["react", "react/jsx-runtime", "../vanilla", "../slices"],
       output: [
         {
           dir: "./dist/react/",
