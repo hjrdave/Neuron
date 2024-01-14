@@ -22,6 +22,6 @@
     "noImplicitAny": false
   },
   "include": ["package"],
-  "exclude": [],
+  "exclude": ["package/**/*.test.ts", "package/**/*.config.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

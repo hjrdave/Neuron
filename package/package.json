@@ -1,6 +1,7 @@
 {
   "name": "@sandstack/neuron",
-  "version": "0.0.0-alpha.53",
+  "description": "Neuron is a lightweight framework agnostic global state manager for Javascript apps, with React support",
+  "version": "0.0.0",
   "author": "David A. Sanders",
   "license": "MIT",
   "bugs": {
@@ -8,6 +9,9 @@
   },
   "homepage": "https://sandstack.dev/neuron",
   "type": "module",
+  "sideEffects": false,
+  "main": "./index.js",
+  "types": "./index.d.ts",
   "browserslist": [
     ">0.2%",
     "not dead"
@@ -56,56 +60,56 @@
     },
     "./react": {
       "require": {
-        "types": "./index.d.ts",
-        "default": "./index.cjs"
+        "types": "./react/index.d.ts",
+        "default": "./react/index.cjs"
       },
       "import": {
-        "types": "./index.d.ts",
-        "default": "./index.js"
+        "types": "./react/index.d.ts",
+        "default": "./react/index.js"
       },
       "module": {
-        "types": "./index.d.ts",
-        "default": "./index.js"
+        "types": "./react/index.d.ts",
+        "default": "./react/index.js"
       },
       "default": {
-        "types": "./index.d.ts",
-        "default": "./index.js"
+        "types": "./react/index.d.ts",
+        "default": "./react/index.js"
       }
     },
     "./slices": {
       "require": {
-        "types": "./index.d.ts",
-        "default": "./index.cjs"
+        "types": "./slices/index.d.ts",
+        "default": "./slices/index.cjs"
       },
       "import": {
-        "types": "./index.d.ts",
-        "default": "./index.js"
+        "types": "./slices/index.d.ts",
+        "default": "./slices/index.js"
       },
       "module": {
-        "types": "./index.d.ts",
-        "default": "./index.js"
+        "types": "./slices/index.d.ts",
+        "default": "./slices/index.js"
       },
       "default": {
-        "types": "./index.d.ts",
-        "default": "./index.js"
+        "types": "./slices/index.d.ts",
+        "default": "./slices/index.js"
       }
     },
     "./persist": {
       "require": {
-        "types": "./index.d.ts",
-        "default": "./index.cjs"
+        "types": "./persist/index.d.ts",
+        "default": "./persist/index.cjs"
       },
       "import": {
-        "types": "./index.d.ts",
-        "default": "./index.js"
+        "types": "./persist/index.d.ts",
+        "default": "./persist/index.js"
       },
       "module": {
-        "types": "./index.d.ts",
-        "default": "./index.js"
+        "types": "./persist/index.d.ts",
+        "default": "./persist/index.js"
       },
       "default": {
-        "types": "./index.d.ts",
-        "default": "./index.js"
+        "types": "./persist/index.d.ts",
+        "default": "./persist/index.js"
       }
     }
   },

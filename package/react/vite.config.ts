@@ -60,5 +60,5 @@ export default defineConfig({
       ],
     },
   },
-  plugins: [dts({ rollupTypes: true }), tsconfigPaths(), react()],
+  plugins: [dts({ insertTypesEntry: true }), tsconfigPaths(), react()],
 });

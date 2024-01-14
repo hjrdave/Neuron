@@ -30,6 +30,7 @@ export default defineConfig({
           name: "index",
           format: "cjs",
           entryFileNames: "index.cjs",
+          exports: "named",
         },
         {
           dir: "./dist/vanilla/umd",
@@ -58,5 +59,5 @@ export default defineConfig({
       ],
     },
   },
-  plugins: [dts({ rollupTypes: true }), tsconfigPaths()],
+  plugins: [dts({ insertTypesEntry: true }), tsconfigPaths()],
 });
