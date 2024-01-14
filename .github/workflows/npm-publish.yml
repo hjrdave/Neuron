@@ -30,7 +30,7 @@ jobs:
         with:
           node-version: 16
       - run: npm install --legacy-peer-deps
-      - run: npm run build
+      - run: npm run build:package
 
   Publish:
     needs: Build
@@ -44,7 +44,7 @@ jobs:
       - name: Installing Packages
         run: npm install --legacy-peer-deps
       - name: Building Package
-        run: npm run build
+        run: npm run build:package
       - name: Publishing to
         run: cd dist && npm version ${{ env.VERSION }} --no-git-tag-version && npm publish --access public
         env:
