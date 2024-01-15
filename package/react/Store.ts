@@ -1,17 +1,20 @@
-import {
-  Store as CoreStore,
+import { Store as CoreStore } from "../vanilla";
+import type {
   SelectorKey,
   Module as IModule,
   DispatchCallback,
   StateType,
   StoreItem,
 } from "../vanilla";
-import { Selector } from "../slices";
-import State, { StateProps } from "./State";
-import Module, { ModuleProps } from "./Module";
+import type { Selector } from "../slices";
+import State from "./State";
+import type { StateProps } from "./State";
+import Module from "./Module";
+import type { ModuleProps } from "./Module";
 import useNeuron from "./useNeuron";
 import useWeakNeuron from "./useWeakNeuron";
 import useDispatch from "./useDispatch";
+import type { ActionProps } from "../vanilla/Interfaces";
 export default class Store<S = { [key: string]: unknown }, M = unknown> {
   private Core: CoreStore<S>;
 
@@ -20,17 +23,17 @@ export default class Store<S = { [key: string]: unknown }, M = unknown> {
 
   State = <T = unknown, A = { [key: string]: unknown }>(
     props: StateProps<T, A, S> & M
-  ) => State<T, A, S, M>({ ...props, ...{ Store: this.Core } } as any);
+  ) => State<T, A, S, M>({ ...props, ...{ Store: this.Core } });
 
   useNeuron = <T = unknown, A = { [key: string]: unknown }>(
     selector: SelectorKey<S> | Selector<S, T>
-  ) => useNeuron<T, A, S>(selector as any, this.Core);
+  ) => useNeuron<T, A, S>(selector, this.Core);
 
   useWeakNeuron = <T = unknown, A = { [key: string]: unknown }>(
     selector: string
   ) => useWeakNeuron<T, A, S>(selector as SelectorKey<unknown>, this.Core);
 
-  useDispatch = <T = unknown, D = { [key: string]: any }>(
+  useDispatch = <T = unknown, D = { [key: string]: unknown }>(
     selector: SelectorKey<S>
   ) => useDispatch<T, S, D>(selector, this.Core);
 
@@ -39,11 +42,11 @@ export default class Store<S = { [key: string]: unknown }, M = unknown> {
 
   getState = <T = unknown>(key: SelectorKey<S>) => this.Core.get<T>(key);
 
-  addState = <T = unknown>(storeItem: StoreItem) =>
-    this.Core.add<T>(storeItem as StoreItem<any, any, any>);
+  addState = <T = unknown, A = ActionProps>(storeItem: StoreItem<T, S, A>) =>
+    this.Core.add<T>(storeItem as StoreItem<T, S>);
 
-  onDispatch = (callback: DispatchCallback<unknown>) =>
-    this.Core.onDispatch(callback as any);
+  onDispatch = (callback: DispatchCallback<S>) =>
+    this.Core.onDispatch(callback);
 
   bridge = { connect: () => this.Core };
 

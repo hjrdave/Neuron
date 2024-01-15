@@ -1,4 +1,4 @@
-import { Module as IModule, Store } from "../vanilla";
+import type { Module as IModule, Store } from "../vanilla";
 export interface ModuleProps {
   use: IModule;
 }

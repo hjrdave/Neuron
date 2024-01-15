@@ -1,12 +1,12 @@
 import React from "react";
-import { Store as CoreStore, SelectorKey } from "../vanilla";
+import type { Store as CoreStore, SelectorKey } from "../vanilla";
 import {
-  Selector,
   getSlice,
   setSlice,
   updateStateWithSlice,
   convertSelector,
 } from "../slices";
+import type { Selector } from "../slices";
 
 export type UseNeuron<S = { [key: string]: unknown }> = <T, A>(
   selector: SelectorKey<S> | Selector<S, T>
@@ -43,7 +43,7 @@ const useNeuron = <
         if (selectorIsSlice) {
           const newSliceState = updateStateWithSlice<S>(
             selector as Selector<S, T>,
-            payload.state as any
+            payload.state as S
           );
           _setState(newSliceState);
         } else {

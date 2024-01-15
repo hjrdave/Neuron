@@ -1,8 +1,8 @@
 /**
  * Intercepts Payloads and runs middleware on them.
  */
-import { IPayload as Payload } from "./Payload";
-import { IModule as Module } from "./Module";
+import type { IPayload as Payload } from "./Payload";
+import type { IModule as Module } from "./Module";
 import {
   Features,
   InterceptorTypes,
@@ -22,9 +22,7 @@ export interface IInterceptor {
   readonly onRun: () => void;
   readonly onCallback: () => void;
 }
-export default class Interceptor<T = StateType, S = StoreProps, D = DataProps>
-  implements IInterceptor
-{
+export default class Interceptor<T, S, D> implements IInterceptor {
   private payload: Payload<T, S, D>;
   private features?: Features<T, S>;
   private modules?: Map<string, Module<StateType, S>>;

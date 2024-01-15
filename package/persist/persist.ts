@@ -1,5 +1,5 @@
 import Neuron, { Payload as TPayload } from "../vanilla";
-export type Payload = TPayload<string, any>;
+export type Payload = TPayload<string, unknown>;
 export enum StorageTypes {
   SESSION = "session",
   LOCAL = "local",
@@ -12,11 +12,12 @@ export interface PersistProps {
 const moduleName = `@sandstack/neuron-persist`; //need a unique id that is passed by store
 
 const saveStateToStorage = (payload: Payload) => {
-  const isEnabled = (payload?.features as any)?.persist;
+  const features = payload.features as PersistProps;
+  const isEnabled = features?.persist;
   if (isEnabled) {
-    const storageKey = `${moduleName}/${payload.key as string}`;
+    const storageKey = `${moduleName}/${payload.key}`;
     const storageType =
-      (payload?.features as any)?.persist === StorageTypes.SESSION
+      features?.persist === StorageTypes.SESSION
         ? StorageTypes.SESSION
         : StorageTypes.LOCAL;
     const stateToCache = JSON.stringify(payload.state);
@@ -33,11 +34,12 @@ const saveStateToStorage = (payload: Payload) => {
 };
 
 const getStateFromStorage = (payload: Payload) => {
-  const isEnabled = (payload?.features as any)?.persist;
+  const features = payload.features as PersistProps;
+  const isEnabled = features?.persist;
   if (isEnabled) {
     const storageKey = `${moduleName}/${payload.key as string}`;
     const storageType =
-      (payload?.features as any)?.persist === StorageTypes.SESSION
+      features?.persist === StorageTypes.SESSION
         ? StorageTypes.SESSION
         : StorageTypes.LOCAL;
     if (storageType === StorageTypes.LOCAL) {
@@ -64,14 +66,14 @@ const getStateFromStorage = (payload: Payload) => {
 
 const Persist = Neuron.Module({
   name: moduleName,
-  onLoad: (payload) => {
-    const cachedState = getStateFromStorage(payload as Payload);
+  onLoad: (payload: Payload) => {
+    const cachedState = getStateFromStorage(payload);
     if (cachedState !== null && cachedState !== undefined) {
       payload.state = cachedState;
     }
   },
-  onCallback: (payload) => {
-    saveStateToStorage(payload as Payload);
+  onCallback: (payload: Payload) => {
+    saveStateToStorage(payload);
   },
 });
 export default Persist;

@@ -1,12 +1,12 @@
 import { Module, SelectorKey, Store, Payload } from "../vanilla";
 
-export type Selector<State = { [key: string]: any }, T = any> = (
+export type Selector<State = { [key: string]: unknown }, T = unknown> = (
   store: State
 ) => T;
 
 interface DispatchData<State> {
   selector: Selector<State>;
-  newSliceState?: any;
+  newSliceState?: unknown;
 }
 
 export const convertSelector = <State>(
@@ -36,7 +36,7 @@ export const getSlice = <T, State>(
     (acc, item) => ({ ...acc, [item.key]: item.state }),
     {} as State
   );
-  return selector(state);
+  return selector(state) as T;
 };
 
 export const setSlice = <T, State>(
@@ -58,9 +58,9 @@ export const setSlice = <T, State>(
 export const updateStateWithSlice = <State>(
   selector: Selector<State>,
   state: State
-): any => {
+): unknown => {
   const pathArray = selector.toString().split(".").slice(2);
-  return pathArray.reduce((slice, key) => (slice as any)?.[key], state);
+  return pathArray.reduce((slice, key) => slice?.[key], state);
 };
 
 const deepStateUpdate = (payload: Payload) => {
@@ -85,7 +85,8 @@ const deepStateUpdate = (payload: Payload) => {
       });
       return allState;
     };
-    const currentSlice = (selector as any)?.(getAllStoreState());
+    // @ts-expect-error - A selector could be "(prev) => void"
+    const currentSlice = selector?.(getAllStoreState());
     const newSlice =
       typeof newSliceState === "function"
         ? newSliceState?.(currentSlice)
@@ -93,14 +94,17 @@ const deepStateUpdate = (payload: Payload) => {
     if (currentSlice !== newSlice) {
       const deepUpdate = (
         propPath: string[],
-        value: any,
-        objToUpdate: { [key: string]: any }
+        value: unknown,
+        objToUpdate: { [key: string]: unknown }
       ) => {
         const propAmount = propPath.length;
         for (let i = 0; i < propAmount - 1; i++) {
           const elem = propPath[i];
-          if (!objToUpdate[elem]) objToUpdate[elem] = {};
-          objToUpdate = objToUpdate[elem];
+          if (!objToUpdate[elem]) {
+            objToUpdate[elem] = {};
+          } else {
+            objToUpdate = objToUpdate[elem] as { [key: string]: unknown };
+          }
         }
         objToUpdate[propPath[propAmount - 1]] = value;
       };

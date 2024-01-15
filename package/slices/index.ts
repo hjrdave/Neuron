@@ -1,10 +1,10 @@
 import Slices, {
   convertSelector,
-  Selector,
   getSlice,
   setSlice,
   updateStateWithSlice,
 } from "./slices";
+import type { Selector } from "./slices";
 
 export type { Selector };
 export { convertSelector, getSlice, setSlice, updateStateWithSlice };

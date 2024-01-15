@@ -1,7 +1,7 @@
 /**
  * This class hold data necessary for updating state and running middleware.
  */
-import {
+import type {
   SelectorKey,
   Features,
   StateType,

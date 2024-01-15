@@ -1,19 +1,19 @@
 import React from "react";
-import { UseDispatch } from "./useDispatch";
-import { UseNeuron } from "./useNeuron";
+import type { UseDispatch } from "./useDispatch";
+import type { UseNeuron } from "./useNeuron";
 
-interface ContextProps<S = { [key: string]: any }> {
+interface ContextProps<S = { [key: string]: unknown }> {
   useNeuron: UseNeuron<S>;
   useDispatch: UseDispatch<S>;
 }
-interface Props<S = { [key: string]: any }> {
+interface Props<S = { [key: string]: unknown }> {
   children?: React.ReactNode;
   context: React.Context<ContextProps<S>>;
   useNeuron: UseNeuron<S>;
   useDispatch: UseDispatch<S>;
 }
 
-export default function Private<S = { [key: string]: any }>({
+export default function Private<S = { [key: string]: unknown }>({
   children,
   context: Context,
   useNeuron,

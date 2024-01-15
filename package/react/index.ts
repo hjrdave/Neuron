@@ -1,9 +1,9 @@
 import { default as ReactStore } from "./Store";
 import { default as ReactPrivateStore } from "./PrivateStore";
-import { Module } from "../vanilla";
+import type { Module } from "../vanilla";
 import Slices from "../slices";
 
-const DefaultModules = [Slices] as any[];
+const DefaultModules = [Slices] as Module[];
 namespace Neuron {
   export function Store<S = { [key: string]: unknown }, M = unknown>(options?: {
     modules?: Module<unknown, S>[];

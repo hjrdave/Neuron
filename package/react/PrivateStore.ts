@@ -1,10 +1,10 @@
 import React, { useContext, createContext } from "react";
-import { default as Core, Module, DispatchMutator } from "../vanilla";
-import { Selector } from "../slices";
+import type { default as Core, Module, DispatchMutator } from "../vanilla";
+import type { Selector } from "../slices";
 import Store from "./Store";
 import Private from "./Private";
-import { UseNeuron } from "./useNeuron";
-import { UseDispatch } from "./useDispatch";
+import type { UseNeuron } from "./useNeuron";
+import type { UseDispatch } from "./useDispatch";
 
 interface IContext<S = { [key: string]: unknown }> {
   useNeuron: UseNeuron<S>;
@@ -19,7 +19,7 @@ export default class PrivateStore<S = { [key: string]: unknown }, M = unknown> {
   usePrivateStore = () => {
     const storeInstance = new Store<S, M>(this.options);
     this.ContextState = {
-      useNeuron: storeInstance.useNeuron as any,
+      useNeuron: storeInstance.useNeuron,
       useDispatch: storeInstance.useDispatch,
     };
     return storeInstance;
@@ -38,12 +38,10 @@ export default class PrivateStore<S = { [key: string]: unknown }, M = unknown> {
   ) => {
     try {
       const context = useContext(this.Context);
-      return context?.useNeuron<T, A>(selector as any);
+      return context?.useNeuron<T, A>(selector);
     } catch (err) {
       console.error(
-        console.error(
-          `Neuron: Protected store hooks cannot be called outside of protected store scope.`
-        ),
+        console.error(`Neuron: Private store hooks must be called in scope.`),
         err
       );
     }
@@ -55,23 +53,21 @@ export default class PrivateStore<S = { [key: string]: unknown }, M = unknown> {
     try {
       const context = useContext(this.Context);
       return (mutator: DispatchMutator<T, S, D>) =>
-        context?.useDispatch<T>(selector, mutator as any);
+        context?.useDispatch<T>(selector, mutator as DispatchMutator<T, S>);
     } catch (err) {
       console.error(
-        console.error(
-          `Neuron: Protected store hooks cannot be called outside of scope.`
-        ),
+        console.error(`Neuron: Private store hooks must be called in scope.`),
         err
       );
     }
   };
 
   public constructor(options?: { modules?: Module<unknown, S>[] }) {
-    this.Context = createContext(null as any);
+    this.Context = createContext(null) as unknown as React.Context<IContext<S>>;
     this.options = options;
     this.ContextState = {
-      useNeuron: undefined as any,
-      useDispatch: undefined as any,
+      useNeuron: undefined as unknown as UseNeuron<S>,
+      useDispatch: undefined as unknown as UseDispatch<S>,
     };
   }
 }

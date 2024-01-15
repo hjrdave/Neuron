@@ -1,5 +1,5 @@
-import { IPayload as Payload } from "./Payload";
-import {
+import type { IPayload as Payload } from "./Payload";
+import type {
   DataProps,
   StateType,
   StoreProps,

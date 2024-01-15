@@ -1,9 +1,10 @@
 import React from "react";
-import { Store, SelectorKey, Actions, DispatchMutator } from "../vanilla";
+import type { Store, SelectorKey, Actions, DispatchMutator } from "../vanilla";
+import type { ActionProps } from "../vanilla/Interfaces";
 
 export interface StateProps<
   T = unknown,
-  A = { [key: string]: unknown },
+  A = ActionProps,
   S = { [key: string]: unknown }
 > {
   name: SelectorKey<S>;
@@ -13,17 +14,14 @@ export interface StateProps<
   onRun?: DispatchMutator<T, S>;
   onCallback?: DispatchMutator<T, S>;
 }
-interface Props<
-  T = unknown,
-  A = { [key: string]: unknown },
-  S = { [key: string]: unknown }
-> extends StateProps<T, A, S> {
+interface Props<T = unknown, A = ActionProps, S = { [key: string]: unknown }>
+  extends StateProps<T, A, S> {
   Store: Store<S>;
 }
 
 export default function State<
   T = unknown,
-  A = { [key: string]: unknown },
+  A = ActionProps,
   S = { [key: string]: unknown },
   M = unknown
 >({

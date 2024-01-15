@@ -1,8 +1,10 @@
-import Dispatcher, { IDispatcher } from "./Dispatcher";
-import Payload, { IPayload } from "./Payload";
+import Dispatcher from "./Dispatcher";
+import type { IDispatcher } from "./Dispatcher";
+import Payload from "./Payload";
+import { IPayload } from "./Payload";
 import Interceptor from "./Interceptor";
-import { IModule } from "./Module";
-import {
+import type { IModule } from "./Module";
+import type {
   StoreItem,
   SelectorKey,
   Features,
@@ -50,7 +52,10 @@ export default class Store<S = StoreProps> implements IStore<S> {
     SelectorKey<S>,
     Actions<ActionProps, StateType, S>
   >;
-  private moduleInventory: Map<string, IModule<StateType, S>>;
+  private moduleInventory: Map<
+    string,
+    IModule<StateType, StoreProps, DataProps>
+  >;
   private dispatcher: IDispatcher<S>;
 
   //runs payload through interceptor and then dispatches
@@ -99,7 +104,7 @@ export default class Store<S = StoreProps> implements IStore<S> {
    * @param {Module} module - imported module object
    */
   readonly use = (module: IModule) =>
-    this.moduleInventory.set(module.name, module as any);
+    this.moduleInventory.set(module.name, module);
 
   /**
    * Returns an array of store items.
@@ -161,7 +166,7 @@ export default class Store<S = StoreProps> implements IStore<S> {
   ) => {
     const dispatch = (mutator: DispatchMutator<T, S>) =>
       this.dispatch(selector, mutator);
-    return (this.actionsInventory.get(selector)?.(dispatch as any) ?? {}) as A;
+    return (this.actionsInventory.get(selector)?.(dispatch) ?? {}) as A;
   };
 
   /**
@@ -237,6 +242,6 @@ export default class Store<S = StoreProps> implements IStore<S> {
     this.actionsInventory = new Map();
     this.moduleInventory = new Map();
     this.dispatcher = new Dispatcher();
-    params?.modules?.forEach((module) => this.use(module as any));
+    params?.modules?.forEach((module) => this.use(module));
   }
 }

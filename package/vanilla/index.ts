@@ -1,5 +1,6 @@
-import IStore, { default as StoreInstance, Params as Options } from "./Store";
-import {
+import IStore, { default as StoreInstance } from "./Store";
+import type { Params as Options } from "./Store";
+import type {
   SelectorKey as TSelectorKey,
   Actions as TActions,
   StateType as TStateType,
@@ -10,9 +11,11 @@ import {
   DispatchCallback as TDispatchCallback,
   StoreItem as IStoreItem,
   Features as IFeatures,
+  ActionProps,
 } from "./Interfaces";
-import { default as ModuleInstance, Params, IModule } from "./Module";
-import { IPayload } from "./Payload";
+import { default as ModuleInstance } from "./Module";
+import type { Params, IModule } from "./Module";
+import type { IPayload } from "./Payload";
 namespace Neuron {
   /**
    * Creates a Neuron store instance. Stores are globally accessible.
@@ -70,11 +73,11 @@ export type Payload<T = unknown, S = { [key: string]: unknown }> = IPayload<
   S
 >;
 export type StoreProps = TStoreProps;
-export type StoreItem<T = unknown, S = StoreProps, A = StoreProps> = IStoreItem<
-  T,
-  S,
-  A
->;
+export type StoreItem<
+  T = unknown,
+  S = StoreProps,
+  A = ActionProps
+> = IStoreItem<T, S, A>;
 export type StateType = TStateType;
 export type Actions<
   A = { [key: string]: unknown },

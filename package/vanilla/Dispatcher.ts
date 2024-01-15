@@ -2,8 +2,8 @@
  * Sets listeners on the Payload so when state changes it dispatches that state to the Store.
  * (Will be using mitt for now, will have a lighter solution)
  */
-import { IPayload as Payload } from "./Payload";
-import {
+import type { IPayload as Payload } from "./Payload";
+import type {
   DispatchCallback,
   StoreProps,
   SelectorKey,
@@ -17,7 +17,7 @@ export interface IDispatcher<S = StoreProps> {
 }
 
 export default class Dispatcher<S = StoreProps> implements IDispatcher<S> {
-  private eventEmitters: Map<any, DispatchCallback<S>[]>;
+  private eventEmitters: Map<unknown, DispatchCallback<S>[]>;
   private payload?: Payload<StateType, S>;
 
   listen = (key: SelectorKey<S>, callback: DispatchCallback<S>) => {
@@ -35,7 +35,7 @@ export default class Dispatcher<S = StoreProps> implements IDispatcher<S> {
     this.payload = payload;
     const key = payload.key;
 
-    let allEmitters = this.eventEmitters.get(key);
+    const allEmitters = this.eventEmitters.get(key);
     allEmitters?.slice()?.map((emitter) => {
       emitter?.(payload);
     });
