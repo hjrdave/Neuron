@@ -29,16 +29,16 @@ export type DispatchMutator<T = StateType, S = StoreProps, D = DataProps> = (
 
 export type DispatchCallback<S = StoreProps> = DispatchMutator<unknown, S>;
 
-export type DispatchPayload<S = StoreProps> = <T = StateType>(
+export type DispatchPayload<S = StoreProps> = <T = StateType, D = DataProps>(
   key: SelectorKey<S>,
-  mutator: DispatchMutator<T, S>
+  mutator: DispatchMutator<T, S, D>
 ) => void;
 
 export type OnDispatch<S = StoreProps> = (
   callback: DispatchCallback<S>
 ) => void;
 
-export type AddState<S = StoreProps, A = ActionProps> = <T = StateType>(
+export type AddState<S = StoreProps> = <T = StateType, A = ActionProps>(
   storeItem: StoreItem<T, S, A>
 ) => void;
 

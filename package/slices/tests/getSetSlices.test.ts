@@ -1,6 +1,6 @@
 import { expect, test } from "vitest";
-import Neuron from "../../vanilla";
-import Slices, { getSlice, setSlice, convertSelector } from "../slices";
+import { createStore } from "../../vanilla";
+import { Slices, getSlice, setSlice, convertSelector } from "../slices";
 
 interface Person {
   name: string;
@@ -27,9 +27,9 @@ const StateValues: State = {
     },
   },
 };
-const Store = Neuron.Store<State>();
+const Store = createStore<State>();
 
-Store.use(Slices as any);
+Store.use(Slices);
 
 Store.add<typeof StateValues.person>({
   key: StateKeys.Person,

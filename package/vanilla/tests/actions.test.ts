@@ -1,4 +1,4 @@
-import Neuron from "../index";
+import { createStore } from "../index";
 
 import { expect, test } from "vitest";
 interface State {
@@ -10,7 +10,7 @@ enum StateKeys {
 enum StateValues {
   Fruit = "Apple",
 }
-const Store = Neuron.Store<State>();
+const Store = createStore<State>();
 
 interface FruitActions {
   changeFruitToOrange: () => void;

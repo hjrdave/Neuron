@@ -1,9 +1,10 @@
-import Dispatcher from "./Dispatcher";
+import { Dispatcher } from "./Dispatcher";
 import type { IDispatcher } from "./Dispatcher";
-import Payload from "./Payload";
+import { Payload } from "./Payload";
 import { IPayload } from "./Payload";
-import Interceptor from "./Interceptor";
+import { Interceptor } from "./Interceptor";
 import type { IModule } from "./Module";
+import { InterceptorTypes } from "./Interfaces";
 import type {
   StoreItem,
   SelectorKey,
@@ -14,7 +15,6 @@ import type {
   DataProps,
   ActionProps,
   DispatchCallback,
-  InterceptorTypes,
   DispatchMutator,
   GetState,
   SetState,
@@ -29,7 +29,7 @@ import type {
 } from "./Interfaces";
 
 export interface Params<S = StoreProps> {
-  modules?: IModule<StateType, S>[];
+  modules?: IModule<StateType, S, DataProps>[];
 }
 export interface IStore<S = StoreProps> {
   readonly use: UseModule;
@@ -44,7 +44,7 @@ export interface IStore<S = StoreProps> {
   readonly onDispatch: OnDispatch<S>;
 }
 
-export default class Store<S = StoreProps> implements IStore<S> {
+export class Store<S = StoreProps> implements IStore<S> {
   private stateInventory: Map<SelectorKey<S>, StateType>;
   private initialStateInventory: Map<SelectorKey<S>, StateType>;
   private featureInventory: Map<SelectorKey<S>, Features<StateType, S>>;
@@ -52,10 +52,7 @@ export default class Store<S = StoreProps> implements IStore<S> {
     SelectorKey<S>,
     Actions<ActionProps, StateType, S>
   >;
-  private moduleInventory: Map<
-    string,
-    IModule<StateType, StoreProps, DataProps>
-  >;
+  private moduleInventory: Map<string, IModule>;
   private dispatcher: IDispatcher<S>;
 
   //runs payload through interceptor and then dispatches
@@ -65,7 +62,10 @@ export default class Store<S = StoreProps> implements IStore<S> {
   ) => {
     const interceptor = new Interceptor<T, S, D>({
       payload: payload,
-      modules: this.moduleInventory,
+      modules: this.moduleInventory as unknown as Map<
+        string,
+        IModule<unknown, S>
+      >,
     });
     type === InterceptorTypes.OnLoad
       ? interceptor.onload()
@@ -242,6 +242,8 @@ export default class Store<S = StoreProps> implements IStore<S> {
     this.actionsInventory = new Map();
     this.moduleInventory = new Map();
     this.dispatcher = new Dispatcher();
-    params?.modules?.forEach((module) => this.use(module));
+    params?.modules?.forEach((module) =>
+      this.use(module as unknown as IModule)
+    );
   }
 }

@@ -1,5 +1,5 @@
 import React, { useContext, createContext } from "react";
-import type { default as Core, Module, DispatchMutator } from "../vanilla";
+import type { SelectorKey, Module, DispatchMutator } from "../vanilla";
 import type { Selector } from "../slices";
 import Store from "./Store";
 import Private from "./Private";
@@ -34,7 +34,7 @@ export default class PrivateStore<S = { [key: string]: unknown }, M = unknown> {
     });
 
   useNeuron = <T = unknown, A = { [key: string]: unknown }>(
-    selector: Core.SelectorKey<S> | Selector<S, T>
+    selector: SelectorKey<S> | Selector<S, T>
   ) => {
     try {
       const context = useContext(this.Context);
@@ -48,7 +48,7 @@ export default class PrivateStore<S = { [key: string]: unknown }, M = unknown> {
   };
 
   useDispatch = <T = unknown, D = { [key: string]: unknown }>(
-    selector: Core.SelectorKey<S>
+    selector: SelectorKey<S>
   ) => {
     try {
       const context = useContext(this.Context);

@@ -1,4 +1,5 @@
-import { Store as CoreStore } from "../vanilla";
+import type { Store as ICoreStore } from "../vanilla";
+import { Store as CoreStore } from "../vanilla/Store";
 import type {
   SelectorKey,
   Module as IModule,
@@ -16,7 +17,7 @@ import useWeakNeuron from "./useWeakNeuron";
 import useDispatch from "./useDispatch";
 import type { ActionProps } from "../vanilla/Interfaces";
 export default class Store<S = { [key: string]: unknown }, M = unknown> {
-  private Core: CoreStore<S>;
+  private Core: ICoreStore<S>;
 
   Module = (props: ModuleProps) =>
     Module({ ...props, ...{ Store: this.Core } });
@@ -51,6 +52,6 @@ export default class Store<S = { [key: string]: unknown }, M = unknown> {
   bridge = { connect: () => this.Core };
 
   public constructor(params?: { modules?: IModule<StateType, S>[] }) {
-    this.Core = CoreStore<S>(params);
+    this.Core = new CoreStore<S>(params);
   }
 }

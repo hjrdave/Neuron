@@ -38,7 +38,7 @@ export interface IPayload<T = StateType, S = StoreProps, D = DataProps> {
   readonly isDispatchCancelled: () => boolean;
 }
 
-export default class Payload<T = StateType, S = StoreProps, D = DataProps>
+export class Payload<T = StateType, S = StoreProps, D = DataProps>
   implements IPayload<T, S, D>
 {
   readonly key: SelectorKey<S>;

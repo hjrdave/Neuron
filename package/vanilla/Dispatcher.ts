@@ -16,7 +16,7 @@ export interface IDispatcher<S = StoreProps> {
   dispatch: DispatchCallback<S>;
 }
 
-export default class Dispatcher<S = StoreProps> implements IDispatcher<S> {
+export class Dispatcher<S = StoreProps> implements IDispatcher<S> {
   private eventEmitters: Map<unknown, DispatchCallback<S>[]>;
   private payload?: Payload<StateType, S>;
 

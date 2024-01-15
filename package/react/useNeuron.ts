@@ -22,7 +22,7 @@ const useNeuron = <
 ) => {
   const { key: selectorKey, isSlice: selectorIsSlice } =
       convertSelector<S>(selector),
-    stateActions = Store.getActions<A, T>(selectorKey),
+    stateActions = Store.getActions<A>(selectorKey),
     [state, _setState] = React.useState<T>(
       selectorIsSlice
         ? getSlice<T, S>(selector as Selector<S, T>, Store)
@@ -45,7 +45,7 @@ const useNeuron = <
             selector as Selector<S, T>,
             payload.state as S
           );
-          _setState(newSliceState);
+          _setState(newSliceState as React.SetStateAction<T>);
         } else {
           const newState = payload.state as T;
           _setState(newState);

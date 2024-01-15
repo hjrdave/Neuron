@@ -22,7 +22,7 @@ export interface IInterceptor {
   readonly onRun: () => void;
   readonly onCallback: () => void;
 }
-export default class Interceptor<T, S, D> implements IInterceptor {
+export class Interceptor<T, S, D> implements IInterceptor {
   private payload: Payload<T, S, D>;
   private features?: Features<T, S>;
   private modules?: Map<string, Module<StateType, S>>;

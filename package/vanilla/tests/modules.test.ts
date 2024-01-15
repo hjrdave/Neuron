@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import Neuron from "../index";
+import { createStore } from "../index";
 
 interface State {
   fruit: string;
@@ -13,7 +13,7 @@ enum StateValues {
   Fruit = "Apple",
   Car = "truck",
 }
-const Store = Neuron.Store<State>();
+const Store = createStore<State>();
 
 const TestModule = {
   name: "testModule",

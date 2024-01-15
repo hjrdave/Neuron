@@ -1,4 +1,4 @@
-import Neuron, { Payload as TPayload } from "../vanilla";
+import { createModule, Payload as TPayload } from "../vanilla";
 export type Payload = TPayload<string, unknown>;
 export enum StorageTypes {
   SESSION = "session",
@@ -64,7 +64,7 @@ const getStateFromStorage = (payload: Payload) => {
   }
 };
 
-const Persist = Neuron.Module({
+const Persist = createModule({
   name: moduleName,
   onLoad: (payload: Payload) => {
     const cachedState = getStateFromStorage(payload);

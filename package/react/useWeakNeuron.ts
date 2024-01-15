@@ -13,7 +13,7 @@ const useWeakNeuron = <
   selectorKey: SelectorKey<S>,
   Store: CoreStore<S>
 ) => {
-  const stateActions = Store.getActions<A, T>(selectorKey);
+  const stateActions = Store.getActions<A>(selectorKey);
   const [state, _setState] = React.useState<T>(Store.get<T>(selectorKey));
   const [actions] = React.useState<A>(stateActions);
   const setState = (value: T | ((prevState: T) => T)) =>
@@ -21,7 +21,7 @@ const useWeakNeuron = <
 
   React.useEffect(() => {
     _setState(Store.get<T>(selectorKey));
-  }, [selectorKey]);
+  }, [Store, selectorKey]);
 
   React.useEffect(() => {
     Store?.onDispatch((payload) => {
@@ -30,7 +30,7 @@ const useWeakNeuron = <
         _setState(newState);
       }
     });
-  }, [selectorKey]);
+  }, [Store, selectorKey]);
   return [state, setState, actions] as [T, typeof setState, A];
 };
 export default useWeakNeuron;

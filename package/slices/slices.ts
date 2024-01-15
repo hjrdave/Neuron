@@ -1,4 +1,4 @@
-import { Module, SelectorKey, Store, Payload } from "../vanilla";
+import { createModule, SelectorKey, Store, Payload } from "../vanilla";
 
 export type Selector<State = { [key: string]: unknown }, T = unknown> = (
   store: State
@@ -115,9 +115,7 @@ const deepStateUpdate = (payload: Payload) => {
   }
 };
 
-const Slices = Module({
+export const Slices = createModule({
   name: "slices",
   onRun: (payload) => deepStateUpdate(payload),
 });
-
-export default Slices;

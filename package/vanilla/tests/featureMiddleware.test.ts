@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import Neuron from "../index";
+import { createStore } from "../index";
 
 interface State {
   fruit: string;
@@ -25,7 +25,7 @@ enum StateValues {
   Teacher = "Mr. Anderson",
   Car = "Ford",
 }
-const Store = Neuron.Store<State>();
+const Store = createStore<State>();
 
 test("Check OnRun Feature Middleware.", () => {
   Store.add<string>({

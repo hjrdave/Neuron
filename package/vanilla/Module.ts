@@ -19,9 +19,7 @@ export interface IModule<T = StateType, S = StoreProps, D = DataProps> {
   readonly onRun?: DispatchMutator<T, S, D>;
   readonly onCallback?: DispatchMutator<T, S, D>;
 }
-export default class Module<T = StateType, S = StoreProps, D = DataProps>
-  implements IModule<T, S, D>
-{
+export class Module<T, S, D> implements IModule<T, S, D> {
   readonly name: string;
   private featureOnLoad?: DispatchMutator<T, S, D>;
   private featureOnRun?: DispatchMutator<T, S, D>;
