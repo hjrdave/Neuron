@@ -1,6 +1,6 @@
 /// <reference types="vitest" />
 import { defineConfig } from "vite";
-import tsconfigPaths from "vite-tsconfig-paths";
+//import tsconfigPaths from "vite-tsconfig-paths";
 import dts from "vite-plugin-dts";
 import react from "@vitejs/plugin-react";
 
@@ -60,5 +60,5 @@ export default defineConfig({
       ],
     },
   },
-  plugins: [dts({ insertTypesEntry: true }), tsconfigPaths(), react()],
+  plugins: [dts({ insertTypesEntry: true }), react()],
 });

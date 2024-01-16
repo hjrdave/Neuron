@@ -1,6 +1,6 @@
 /// <reference types="vitest" />
 import { defineConfig } from "vite";
-import tsconfigPaths from "vite-tsconfig-paths";
+//import tsconfigPaths from "vite-tsconfig-paths";
 import dts from "vite-plugin-dts";
 
 // https://vitejs.dev/config/
@@ -59,5 +59,5 @@ export default defineConfig({
       ],
     },
   },
-  plugins: [dts({ insertTypesEntry: true }), tsconfigPaths()],
+  plugins: [dts({ insertTypesEntry: true })],
 });
