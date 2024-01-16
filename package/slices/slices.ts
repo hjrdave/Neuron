@@ -117,5 +117,5 @@ const deepStateUpdate = (payload: Payload) => {
 
 export const Slices = createModule({
   name: "slices",
-  onRun: (payload) => deepStateUpdate(payload),
+  onRun: (payload) => deepStateUpdate(payload as Payload),
 });

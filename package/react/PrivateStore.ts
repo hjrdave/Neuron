@@ -12,7 +12,7 @@ interface IContext<S = { [key: string]: unknown }> {
 }
 
 export default class PrivateStore<S = { [key: string]: unknown }, M = unknown> {
-  private options?: { modules?: Module<unknown, S>[] };
+  private options?: { modules?: Module[] };
   private Context: React.Context<IContext<S>>;
   private ContextState: IContext<S>;
 
@@ -62,7 +62,7 @@ export default class PrivateStore<S = { [key: string]: unknown }, M = unknown> {
     }
   };
 
-  public constructor(options?: { modules?: Module<unknown, S>[] }) {
+  public constructor(options?: { modules?: Module[] }) {
     this.Context = createContext(null) as unknown as React.Context<IContext<S>>;
     this.options = options;
     this.ContextState = {

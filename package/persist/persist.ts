@@ -66,14 +66,14 @@ const getStateFromStorage = (payload: Payload) => {
 
 const Persist = createModule({
   name: moduleName,
-  onLoad: (payload: Payload) => {
-    const cachedState = getStateFromStorage(payload);
+  onLoad: (payload) => {
+    const cachedState = getStateFromStorage(payload as Payload);
     if (cachedState !== null && cachedState !== undefined) {
-      payload.state = cachedState;
+      payload = cachedState;
     }
   },
-  onCallback: (payload: Payload) => {
-    saveStateToStorage(payload);
+  onCallback: (payload) => {
+    saveStateToStorage(payload as Payload);
   },
 });
 export default Persist;

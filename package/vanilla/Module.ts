@@ -1,37 +1,33 @@
 import type { IPayload as Payload } from "./Payload";
-import type {
-  DataProps,
-  StateType,
-  StoreProps,
-  DispatchMutator,
-} from "./Interfaces";
+import type { DataProps, DispatchMutator, StateType } from "./Interfaces";
 
-export interface Params<T = StateType, S = StoreProps, D = DataProps> {
+export interface Params {
   name: string;
-  onLoad?: DispatchMutator<T, S, D>;
-  onRun?: DispatchMutator<T, S, D>;
-  onCallback?: DispatchMutator<T, S, D>;
+  onLoad?: DispatchMutator<unknown, StateType, DataProps>;
+  onRun?: DispatchMutator<unknown, StateType, DataProps>;
+  onCallback?: DispatchMutator<unknown, StateType, DataProps>;
 }
 
-export interface IModule<T = StateType, S = StoreProps, D = DataProps> {
+export interface IModule {
   readonly name: string;
-  readonly onLoad?: DispatchMutator<T, S, D>;
-  readonly onRun?: DispatchMutator<T, S, D>;
-  readonly onCallback?: DispatchMutator<T, S, D>;
+  readonly onLoad?: DispatchMutator<unknown, StateType, DataProps>;
+  readonly onRun?: DispatchMutator<unknown, StateType, DataProps>;
+  readonly onCallback?: DispatchMutator<unknown, StateType, DataProps>;
 }
-export class Module<T, S, D> implements IModule<T, S, D> {
+export class Module implements IModule {
   readonly name: string;
-  private featureOnLoad?: DispatchMutator<T, S, D>;
-  private featureOnRun?: DispatchMutator<T, S, D>;
-  private featureOnCallback?: DispatchMutator<T, S, D>;
+  private featureOnLoad?: DispatchMutator<unknown, StateType, DataProps>;
+  private featureOnRun?: DispatchMutator<unknown, StateType, DataProps>;
+  private featureOnCallback?: DispatchMutator<unknown, StateType, DataProps>;
 
-  readonly onLoad = (payload: Payload<T, S, D>) =>
+  readonly onLoad = (payload: Payload<unknown, StateType, DataProps>) =>
     this.featureOnLoad?.(payload);
-  readonly onRun = (payload: Payload<T, S, D>) => this.featureOnRun?.(payload);
-  readonly onCallback = (payload: Payload<T, S, D>) =>
+  readonly onRun = (payload: Payload<unknown, StateType, DataProps>) =>
+    this.featureOnRun?.(payload);
+  readonly onCallback = (payload: Payload<unknown, StateType, DataProps>) =>
     this.featureOnCallback?.(payload);
 
-  constructor(params: Params<T, S, D>) {
+  constructor(params: Params) {
     this.name = params.name;
     this.featureOnLoad = params?.onLoad;
     this.featureOnRun = params?.onRun;

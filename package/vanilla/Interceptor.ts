@@ -13,7 +13,7 @@ import {
 
 export interface Params<T = StateType, S = StoreProps, D = DataProps> {
   payload: Payload<T, S, D>;
-  modules: Map<string, Module<StateType, S>>;
+  modules: Map<string, Module>;
 }
 export interface IInterceptor {
   readonly isStateNotPrevState_PrimitiveCheckOnly: () => boolean;
@@ -25,10 +25,10 @@ export interface IInterceptor {
 export class Interceptor<T, S, D> implements IInterceptor {
   private payload: Payload<T, S, D>;
   private features?: Features<T, S>;
-  private modules?: Map<string, Module<StateType, S>>;
+  private modules?: Map<string, Module>;
   private runModules = (type: InterceptorTypes) =>
     this.modules?.forEach((module) =>
-      module[type]?.(this.payload as Payload<StateType, S>)
+      module[type]?.(this.payload as Payload<unknown, unknown>)
     );
   private runFeatures = (type: InterceptorTypes) =>
     this.features?.[type]?.(this.payload as Payload<T, S>);

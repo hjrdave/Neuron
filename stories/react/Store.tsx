@@ -1,5 +1,5 @@
 import React from "react";
-import Neuron from "../../package/react";
+import { createStore } from "../../package/react";
 
 interface IState {
   fruit: string;
@@ -25,7 +25,7 @@ export interface ScoreActions {
   decrement: () => void;
 }
 
-export const { State, Module, bridge, useNeuron } = Neuron.Store<IState>();
+export const { State, Module, bridge, useNeuron } = createStore<IState>();
 
 export default function Store() {
   return (

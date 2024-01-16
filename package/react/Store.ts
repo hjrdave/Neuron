@@ -4,7 +4,6 @@ import type {
   SelectorKey,
   Module as IModule,
   DispatchCallback,
-  StateType,
   StoreItem,
 } from "../vanilla";
 import type { Selector } from "../slices";
@@ -51,7 +50,7 @@ export default class Store<S = { [key: string]: unknown }, M = unknown> {
 
   bridge = { connect: () => this.Core };
 
-  public constructor(params?: { modules?: IModule<StateType, S>[] }) {
+  public constructor(params?: { modules?: IModule[] }) {
     this.Core = new CoreStore<S>(params);
   }
 }

@@ -28,8 +28,8 @@ import type {
   ResetState,
 } from "./Interfaces";
 
-export interface Params<S = StoreProps> {
-  modules?: IModule<StateType, S, DataProps>[];
+export interface Params {
+  modules?: IModule[];
 }
 export interface IStore<S = StoreProps> {
   readonly use: UseModule;
@@ -62,10 +62,7 @@ export class Store<S = StoreProps> implements IStore<S> {
   ) => {
     const interceptor = new Interceptor<T, S, D>({
       payload: payload,
-      modules: this.moduleInventory as unknown as Map<
-        string,
-        IModule<unknown, S>
-      >,
+      modules: this.moduleInventory as unknown as Map<string, IModule>,
     });
     type === InterceptorTypes.OnLoad
       ? interceptor.onload()
@@ -235,15 +232,13 @@ export class Store<S = StoreProps> implements IStore<S> {
     );
   };
 
-  constructor(params?: Params<S>) {
+  constructor(params?: Params) {
     this.stateInventory = new Map();
     this.initialStateInventory = new Map();
     this.featureInventory = new Map();
     this.actionsInventory = new Map();
     this.moduleInventory = new Map();
     this.dispatcher = new Dispatcher();
-    params?.modules?.forEach((module) =>
-      this.use(module as unknown as IModule)
-    );
+    params?.modules?.forEach((module) => this.use(module));
   }
 }
