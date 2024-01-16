@@ -14,7 +14,7 @@ export default defineConfig({
     sourcemap: true,
     emptyOutDir: false,
     lib: {
-      entry: "./package/slices/index.ts",
+      entry: "./package/slices.ts",
       name: "NeuronSlices",
       fileName: "index",
     },
@@ -23,41 +23,41 @@ export default defineConfig({
       output: [
         {
           dir: "./dist/slices/",
-          name: "index",
+          name: "slices",
           entryFileNames: "index.js",
         },
         {
           dir: "./dist/slices/",
-          name: "index",
+          name: "slices",
           format: "cjs",
           entryFileNames: "index.cjs",
         },
         {
           dir: "./dist/slices/umd/",
-          name: "index",
+          name: "slices",
           format: "umd",
           entryFileNames: "index.js",
         },
         {
           dir: "./dist/slices/esm/",
-          name: "index",
+          name: "slices",
           format: "esm",
           entryFileNames: "index.js",
         },
         {
           dir: "./dist/slices/iife/",
-          name: "index",
+          name: "slices",
           format: "iife",
           entryFileNames: "index.js",
         },
         {
           dir: "./dist/slices/system/",
-          name: "index",
+          name: "slices",
           format: "system",
           entryFileNames: "index.js",
         },
       ],
     },
   },
-  plugins: [dts({ insertTypesEntry: true })],
+  plugins: [dts()],
 });

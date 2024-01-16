@@ -40,75 +40,57 @@
         "default": "./index.js"
       }
     },
-    "./vanilla": {
-      "require": {
-        "types": "./index.d.ts",
-        "default": "./index.cjs"
-      },
-      "import": {
-        "types": "./index.d.ts",
-        "default": "./index.js"
-      },
-      "module": {
-        "types": "./index.d.ts",
-        "default": "./index.js"
-      },
-      "default": {
-        "types": "./index.d.ts",
-        "default": "./index.js"
-      }
-    },
     "./react": {
       "require": {
-        "types": "./react/index.d.ts",
+        "types": "./react.d.ts",
         "default": "./react/index.cjs"
       },
       "import": {
-        "types": "./react/index.d.ts",
+        "types": "./react.d.ts",
         "default": "./react/index.js"
       },
       "module": {
-        "types": "./react/index.d.ts",
+        "types": "./react.d.ts",
         "default": "./react/index.js"
       },
       "default": {
-        "types": "./react/index.d.ts",
+        "types": "./react.d.ts",
         "default": "./react/index.js"
       }
     },
     "./slices": {
       "require": {
-        "types": "./slices/index.d.ts",
+        "types": "./slices.d.ts",
         "default": "./slices/index.cjs"
       },
       "import": {
-        "types": "./slices/index.d.ts",
+        "types": "./slices.d.ts",
         "default": "./slices/index.js"
       },
       "module": {
-        "types": "./slices/index.d.ts",
+        "types": "./slices.d.ts",
         "default": "./slices/index.js"
       },
       "default": {
-        "types": "./slices/index.d.ts",
+        "types": "./slices.d.ts",
         "default": "./slices/index.js"
       }
     },
     "./persist": {
       "require": {
-        "types": "./persist/index.d.ts",
+        "types": "./persist.d.ts",
         "default": "./persist/index.cjs"
       },
       "import": {
-        "types": "./persist/index.d.ts",
+        "types": "./persist.d.ts",
         "default": "./persist/index.js"
       },
       "module": {
-        "types": "./persist/index.d.ts",
+        "types": "./persist.d.ts",
         "default": "./persist/index.js"
       },
       "default": {
-        "types": "./persist/index.d.ts",
+        "types": "./persist.d.ts",
         "default": "./persist/index.js"
       }
     }

@@ -15,7 +15,7 @@ export default defineConfig({
     sourcemap: true,
     emptyOutDir: false,
     lib: {
-      entry: "./package/react/index.ts",
+      entry: "./package/react.ts",
       name: "Neuron",
       fileName: "index",
     },
@@ -24,41 +24,41 @@ export default defineConfig({
       output: [
         {
           dir: "./dist/react/",
-          name: "index",
+          name: "react",
           entryFileNames: "index.js",
         },
         {
           dir: "./dist/react/",
-          name: "index",
+          name: "react",
           format: "cjs",
           entryFileNames: "index.cjs",
         },
         {
           dir: "./dist/react/umd/",
-          name: "index",
+          name: "react",
           format: "umd",
           entryFileNames: "index.js",
         },
         {
           dir: "./dist/react/esm/",
-          name: "index",
+          name: "react",
           format: "esm",
           entryFileNames: "index.js",
         },
         {
           dir: "./dist/react/iife/",
-          name: "index",
+          name: "react",
           format: "iife",
           entryFileNames: "index.js",
         },
         {
           dir: "./dist/react/system/",
-          name: "index",
+          name: "react",
           format: "system",
           entryFileNames: "index.js",
         },
       ],
     },
   },
-  plugins: [dts({ insertTypesEntry: true }), react()],
+  plugins: [dts(), react()],
 });

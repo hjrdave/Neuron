@@ -14,7 +14,7 @@ export default defineConfig({
     sourcemap: true,
     emptyOutDir: false,
     lib: {
-      entry: "./package/persist/index.ts",
+      entry: "./package/persist.ts",
       name: "NeuronPersist",
       fileName: "index",
     },
@@ -23,41 +23,41 @@ export default defineConfig({
       output: [
         {
           dir: "./dist/persist/",
-          name: "index",
+          name: "persist",
           entryFileNames: "index.js",
         },
         {
           dir: "./dist/persist/",
-          name: "index",
+          name: "persist",
           format: "cjs",
           entryFileNames: "index.cjs",
         },
         {
           dir: "./dist/persist/umd/",
-          name: "index",
+          name: "persist",
           format: "umd",
           entryFileNames: "index.js",
         },
         {
           dir: "./dist/persist/esm/",
-          name: "index",
+          name: "persist",
           format: "esm",
           entryFileNames: "index.js",
         },
         {
           dir: "./dist/persist/iife/",
-          name: "index",
+          name: "persist",
           format: "iife",
           entryFileNames: "index.js",
         },
         {
           dir: "./dist/persist/system/",
-          name: "index",
+          name: "persist",
           format: "system",
           entryFileNames: "index.js",
         },
       ],
     },
   },
-  plugins: [dts({ insertTypesEntry: true })],
+  plugins: [dts()],
 });
