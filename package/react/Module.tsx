@@ -6,7 +6,7 @@ interface Props<S = { [key: string]: unknown }> extends ModuleProps {
   Store: Store<S>;
 }
 
-export default function Module<S = { [key: string]: unknown }>({
+export function Module<S = { [key: string]: unknown }>({
   use,
   Store,
 }: Props<S>) {

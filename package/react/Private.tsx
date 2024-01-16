@@ -13,7 +13,7 @@ interface Props<S = { [key: string]: unknown }> {
   useDispatch: UseDispatch<S>;
 }
 
-export default function Private<S = { [key: string]: unknown }>({
+export function Private<S = { [key: string]: unknown }>({
   children,
   context: Context,
   useNeuron,

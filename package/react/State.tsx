@@ -19,7 +19,7 @@ interface Props<T = unknown, A = ActionProps, S = { [key: string]: unknown }>
   Store: Store<S>;
 }
 
-export default function State<
+export function State<
   T = unknown,
   A = ActionProps,
   S = { [key: string]: unknown },

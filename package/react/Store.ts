@@ -7,15 +7,15 @@ import type {
   StoreItem,
 } from "../vanilla";
 import type { Selector } from "../slices";
-import State from "./State";
+import { State } from "./State";
 import type { StateProps } from "./State";
-import Module from "./Module";
+import { Module } from "./Module";
 import type { ModuleProps } from "./Module";
-import useNeuron from "./useNeuron";
-import useWeakNeuron from "./useWeakNeuron";
-import useDispatch from "./useDispatch";
+import { useNeuron } from "./useNeuron";
+import { useWeakNeuron } from "./useWeakNeuron";
+import { useDispatch } from "./useDispatch";
 import type { ActionProps } from "../vanilla/Interfaces";
-export default class Store<S = { [key: string]: unknown }, M = unknown> {
+export class Store<S = { [key: string]: unknown }, M = unknown> {
   private Core: ICoreStore<S>;
 
   Module = (props: ModuleProps) =>

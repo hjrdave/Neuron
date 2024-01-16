@@ -1,8 +1,8 @@
 import React, { useContext, createContext } from "react";
 import type { SelectorKey, Module, DispatchMutator } from "../vanilla";
 import type { Selector } from "../slices";
-import Store from "./Store";
-import Private from "./Private";
+import { Store } from "./Store";
+import { Private } from "./Private";
 import type { UseNeuron } from "./useNeuron";
 import type { UseDispatch } from "./useDispatch";
 
@@ -11,7 +11,7 @@ interface IContext<S = { [key: string]: unknown }> {
   useDispatch: UseDispatch<S>;
 }
 
-export default class PrivateStore<S = { [key: string]: unknown }, M = unknown> {
+export class PrivateStore<S = { [key: string]: unknown }, M = unknown> {
   private options?: { modules?: Module[] };
   private Context: React.Context<IContext<S>>;
   private ContextState: IContext<S>;

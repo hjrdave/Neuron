@@ -1,9 +1,9 @@
-import { default as ReactStore } from "./Store";
-import { default as ReactPrivateStore } from "./PrivateStore";
+import { Store as ReactStore } from "./Store";
+import { PrivateStore as ReactPrivateStore } from "./PrivateStore";
 import type { Module } from "../vanilla";
 import { Slices } from "../slices";
 
-const DefaultModules = [Slices] as Module[];
+const DefaultModules = [Slices];
 
 export function createStore<
   S = { [key: string]: unknown },

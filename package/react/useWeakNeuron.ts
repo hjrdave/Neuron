@@ -5,7 +5,7 @@ export type UseNeuron<S = { [key: string]: unknown }> = <T, A>(
   selector: SelectorKey<S>
 ) => [T, (value: T | ((prevState: T) => T)) => void, A];
 
-const useWeakNeuron = <
+export const useWeakNeuron = <
   T = unknown,
   A = { [key: string]: unknown },
   S = { [key: string]: unknown }
@@ -33,4 +33,3 @@ const useWeakNeuron = <
   }, [Store, selectorKey]);
   return [state, setState, actions] as [T, typeof setState, A];
 };
-export default useWeakNeuron;
