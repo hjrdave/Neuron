@@ -10,7 +10,7 @@
   "homepage": "https://sandstack.dev/neuron",
   "type": "module",
   "sideEffects": false,
-  "main": "./index.js",
+  "main": "./vanilla/index.js",
   "types": "./index.d.ts",
   "browserslist": [
     ">0.2%",
@@ -25,19 +25,19 @@
     ".": {
       "require": {
         "types": "./index.d.ts",
-        "default": "./index.cjs"
+        "default": "./vanilla/index.cjs"
       },
       "import": {
         "types": "./index.d.ts",
-        "default": "./index.js"
+        "default": "./vanilla/index.js"
       },
       "module": {
         "types": "./index.d.ts",
-        "default": "./index.js"
+        "default": "./vanilla/index.js"
       },
       "default": {
         "types": "./index.d.ts",
-        "default": "./index.js"
+        "default": "./vanilla/index.js"
       }
     },
     "./react": {
