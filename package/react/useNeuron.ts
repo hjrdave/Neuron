@@ -7,16 +7,14 @@ import {
   convertSelector,
 } from "../slices";
 import type { Selector } from "../slices";
+import { StateProps } from "./State";
+import { ActionProps } from "../vanilla/Interfaces";
 
-export type UseNeuron<S = { [key: string]: unknown }> = <T, A>(
+export type UseNeuron<S = StateProps> = <T = unknown, A = ActionProps>(
   selector: SelectorKey<S> | Selector<S, T>
 ) => [T, (value: T | ((prevState: T) => T)) => void, A];
 
-export const useNeuron = <
-  T = unknown,
-  A = { [key: string]: unknown },
-  S = { [key: string]: unknown }
->(
+export const useNeuron = <T = unknown, A = ActionProps, S = StateProps>(
   selector: SelectorKey<S> | Selector<S, T>,
   Store: CoreStore<S>
 ) => {

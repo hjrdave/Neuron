@@ -1,8 +1,8 @@
 import React from "react";
 import type { Store as CoreStore, SelectorKey } from "../vanilla";
 
-export type UseNeuron<S = { [key: string]: unknown }> = <T, A>(
-  selector: SelectorKey<S>
+export type UseWeakNeuron = <T, A>(
+  selector: string
 ) => [T, (value: T | ((prevState: T) => T)) => void, A];
 
 export const useWeakNeuron = <

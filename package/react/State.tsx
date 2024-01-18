@@ -1,4 +1,3 @@
-import React from "react";
 import type { Store, SelectorKey, Actions, DispatchMutator } from "../vanilla";
 import type { ActionProps } from "../vanilla/Interfaces";
 
@@ -46,5 +45,5 @@ export function State<
     },
   });
 
-  return <React.Fragment></React.Fragment>;
+  return null;
 }

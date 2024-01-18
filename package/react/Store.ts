@@ -1,4 +1,5 @@
 import type { Store as ICoreStore } from "../vanilla";
+import type { SetState, AddState, OnDispatch } from "../vanilla/Interfaces";
 import { Store as CoreStore } from "../vanilla/Store";
 import type {
   SelectorKey,
@@ -11,27 +12,41 @@ import { State } from "./State";
 import type { StateProps } from "./State";
 import { Module } from "./Module";
 import type { ModuleProps } from "./Module";
+import type { UseNeuron } from "./useNeuron";
 import { useNeuron } from "./useNeuron";
+import type { UseDispatch } from "./useDispatch";
+import type { UseWeakNeuron } from "./useWeakNeuron";
 import { useWeakNeuron } from "./useWeakNeuron";
 import { useDispatch } from "./useDispatch";
 import type { ActionProps } from "../vanilla/Interfaces";
-export class Store<S = { [key: string]: unknown }, M = unknown> {
+export interface IStore<S, M> {
+  readonly Module: (props: ModuleProps) => null;
+  readonly State: <T = unknown, A = ActionProps>(
+    props: StateProps<T, A, S> & M
+  ) => null;
+  readonly useNeuron: UseNeuron<S>;
+  readonly useWeakNeuron: UseWeakNeuron;
+  readonly useDispatch: UseDispatch<S>;
+  readonly setState: SetState<S>;
+  readonly addState: AddState<S>;
+  readonly onDispatch: OnDispatch<S>;
+  readonly bridge: { connect: () => void };
+}
+export class Store<S = StateProps, M = ModuleProps> implements IStore<S, M> {
   private Core: ICoreStore<S>;
 
   Module = (props: ModuleProps) =>
     Module({ ...props, ...{ Store: this.Core } });
 
-  State = <T = unknown, A = { [key: string]: unknown }>(
-    props: StateProps<T, A, S> & M
-  ) => State<T, A, S, M>({ ...props, ...{ Store: this.Core } });
+  State = <T = unknown, A = ActionProps>(props: StateProps<T, A, S> & M) =>
+    State<T, A, S, M>({ ...props, ...{ Store: this.Core } });
 
-  useNeuron = <T = unknown, A = { [key: string]: unknown }>(
+  useNeuron = <T = unknown, A = ActionProps>(
     selector: SelectorKey<S> | Selector<S, T>
   ) => useNeuron<T, A, S>(selector, this.Core);
 
-  useWeakNeuron = <T = unknown, A = { [key: string]: unknown }>(
-    selector: string
-  ) => useWeakNeuron<T, A, S>(selector as SelectorKey<unknown>, this.Core);
+  useWeakNeuron = <T = unknown, A = ActionProps>(selector: string) =>
+    useWeakNeuron<T, A, S>(selector as SelectorKey<unknown>, this.Core);
 
   useDispatch = <T = unknown, D = { [key: string]: unknown }>(
     selector: SelectorKey<S>

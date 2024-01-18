@@ -5,13 +5,26 @@ import { Store } from "./Store";
 import { Private } from "./Private";
 import type { UseNeuron } from "./useNeuron";
 import type { UseDispatch } from "./useDispatch";
+import type { StateProps } from "./State";
+import type { ModuleProps } from "./Module";
+import { ActionProps, DataProps } from "../vanilla/Interfaces";
 
 interface IContext<S = { [key: string]: unknown }> {
   useNeuron: UseNeuron<S>;
   useDispatch: UseDispatch<S>;
 }
-
-export class PrivateStore<S = { [key: string]: unknown }, M = unknown> {
+export type UsePrivateNeuron<S = StateProps> = <T = unknown, A = ActionProps>(
+  selector: SelectorKey<S> | Selector<S, T>
+) => [T, (value: T | ((prevState: T) => T)) => void, A] | undefined;
+export interface IPrivateStore<S> {
+  readonly usePrivateStore: () => void;
+  readonly Private: (props: { children?: React.ReactNode }) => JSX.Element;
+  readonly useNeuron: UsePrivateNeuron<S>;
+  readonly useDispatch: UseDispatch<S>;
+}
+export class PrivateStore<S = StateProps, M = ModuleProps>
+  implements IPrivateStore<S>
+{
   private options?: { modules?: Module[] };
   private Context: React.Context<IContext<S>>;
   private ContextState: IContext<S>;
@@ -33,7 +46,7 @@ export class PrivateStore<S = { [key: string]: unknown }, M = unknown> {
       useDispatch: this.ContextState.useDispatch,
     });
 
-  useNeuron = <T = unknown, A = { [key: string]: unknown }>(
+  useNeuron = <T = unknown, A = ActionProps>(
     selector: SelectorKey<S> | Selector<S, T>
   ) => {
     try {
@@ -47,9 +60,7 @@ export class PrivateStore<S = { [key: string]: unknown }, M = unknown> {
     }
   };
 
-  useDispatch = <T = unknown, D = { [key: string]: unknown }>(
-    selector: SelectorKey<S>
-  ) => {
+  useDispatch = <T = unknown, D = DataProps>(selector: SelectorKey<S>) => {
     try {
       const context = useContext(this.Context);
       return (mutator: DispatchMutator<T, S, D>) =>
