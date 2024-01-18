@@ -22,15 +22,15 @@ export default defineConfig({
       external: ["../vanilla"],
       output: [
         {
-          dir: "./dist/persist/",
+          dir: "./dist",
           name: "persist",
-          entryFileNames: "index.js",
+          entryFileNames: "persist.js",
         },
         {
-          dir: "./dist/persist/",
+          dir: "./dist",
           name: "persist",
           format: "cjs",
-          entryFileNames: "index.cjs",
+          entryFileNames: "persist.cjs",
         },
         {
           dir: "./dist/persist/umd/",

@@ -23,15 +23,15 @@ export default defineConfig({
       external: ["react", "react/jsx-runtime", "../vanilla", "../slices"],
       output: [
         {
-          dir: "./dist/react/",
+          dir: "./dist",
           name: "react",
-          entryFileNames: "index.js",
+          entryFileNames: "react.js",
         },
         {
-          dir: "./dist/react/",
+          dir: "./dist",
           name: "react",
           format: "cjs",
-          entryFileNames: "index.cjs",
+          entryFileNames: "react.cjs",
         },
         {
           dir: "./dist/react/umd/",

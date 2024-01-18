@@ -10,7 +10,7 @@
   "homepage": "https://sandstack.dev/neuron",
   "type": "module",
   "sideEffects": false,
-  "main": "./vanilla/index.js",
+  "main": "./index.js",
   "types": "./index.d.ts",
   "browserslist": [
     ">0.2%",
@@ -25,73 +25,73 @@
     ".": {
       "require": {
         "types": "./index.d.ts",
-        "default": "./vanilla/index.cjs"
+        "default": "./index.cjs"
       },
       "import": {
         "types": "./index.d.ts",
-        "default": "./vanilla/index.js"
+        "default": "./index.js"
       },
       "module": {
         "types": "./index.d.ts",
-        "default": "./vanilla/index.js"
+        "default": "./index.js"
       },
       "default": {
         "types": "./index.d.ts",
-        "default": "./vanilla/index.js"
+        "default": "./index.js"
       }
     },
     "./react": {
       "require": {
         "types": "./react.d.ts",
-        "default": "./react/index.cjs"
+        "default": "./react.cjs"
       },
       "import": {
         "types": "./react.d.ts",
-        "default": "./react/index.js"
+        "default": "./react.js"
       },
       "module": {
         "types": "./react.d.ts",
-        "default": "./react/index.js"
+        "default": "./react.js"
       },
       "default": {
         "types": "./react.d.ts",
-        "default": "./react/index.js"
+        "default": "./react.js"
       }
     },
     "./slices": {
       "require": {
         "types": "./slices.d.ts",
-        "default": "./slices/index.cjs"
+        "default": "./slices.cjs"
       },
       "import": {
         "types": "./slices.d.ts",
-        "default": "./slices/index.js"
+        "default": "./slices.js"
       },
       "module": {
         "types": "./slices.d.ts",
-        "default": "./slices/index.js"
+        "default": "./slices.js"
       },
       "default": {
         "types": "./slices.d.ts",
-        "default": "./slices/index.js"
+        "default": "./slices.js"
       }
     },
     "./persist": {
       "require": {
         "types": "./persist.d.ts",
-        "default": "./persist/index.cjs"
+        "default": "./persist.cjs"
       },
       "import": {
         "types": "./persist.d.ts",
-        "default": "./persist/index.js"
+        "default": "./persist.js"
       },
       "module": {
         "types": "./persist.d.ts",
-        "default": "./persist/index.js"
+        "default": "./persist.js"
       },
       "default": {
         "types": "./persist.d.ts",
-        "default": "./persist/index.js"
+        "default": "./persist.js"
       }
     }
   },

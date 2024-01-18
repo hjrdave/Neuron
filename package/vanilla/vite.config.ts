@@ -21,15 +21,27 @@ export default defineConfig({
     rollupOptions: {
       output: [
         {
-          dir: "./dist/vanilla",
+          dir: "./dist",
           name: "vanilla",
           entryFileNames: "index.js",
         },
         {
-          dir: "./dist/vanilla",
+          dir: "./dist",
           name: "vanilla",
           format: "cjs",
           entryFileNames: "index.cjs",
+          exports: "named",
+        },
+        {
+          dir: "./dist",
+          name: "vanilla",
+          entryFileNames: "vanilla.js",
+        },
+        {
+          dir: "./dist",
+          name: "vanilla",
+          format: "cjs",
+          entryFileNames: "vanilla.cjs",
           exports: "named",
         },
         {

@@ -22,15 +22,15 @@ export default defineConfig({
       external: ["../vanilla"],
       output: [
         {
-          dir: "./dist/slices/",
+          dir: "./dist",
           name: "slices",
-          entryFileNames: "index.js",
+          entryFileNames: "slices.js",
         },
         {
-          dir: "./dist/slices/",
+          dir: "./dist",
           name: "slices",
           format: "cjs",
-          entryFileNames: "index.cjs",
+          entryFileNames: "slices.cjs",
         },
         {
           dir: "./dist/slices/umd/",
