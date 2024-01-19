@@ -11,7 +11,7 @@
   "type": "module",
   "sideEffects": false,
   "main": "./index.js",
-  "types": "./index.d.ts",
+  "types": "./vanilla/index.d.ts",
   "browserslist": [
     ">0.2%",
     "not dead"
@@ -19,82 +19,6 @@
   "files": [
     "**"
   ],
-  "exports": {
-    "./package.json": "./package.json",
-    "./CONTRIBUTING.md": "./CONTRIBUTING.md",
-    ".": {
-      "require": {
-        "types": "./index.d.ts",
-        "default": "./index.cjs"
-      },
-      "import": {
-        "types": "./index.d.ts",
-        "default": "./index.js"
-      },
-      "module": {
-        "types": "./index.d.ts",
-        "default": "./index.js"
-      },
-      "default": {
-        "types": "./index.d.ts",
-        "default": "./index.js"
-      }
-    },
-    "./react": {
-      "require": {
-        "types": "./react.d.ts",
-        "default": "./react.cjs"
-      },
-      "import": {
-        "types": "./react.d.ts",
-        "default": "./react.js"
-      },
-      "module": {
-        "types": "./react.d.ts",
-        "default": "./react.js"
-      },
-      "default": {
-        "types": "./react.d.ts",
-        "default": "./react.js"
-      }
-    },
-    "./slices": {
-      "require": {
-        "types": "./slices.d.ts",
-        "default": "./slices.cjs"
-      },
-      "import": {
-        "types": "./slices.d.ts",
-        "default": "./slices.js"
-      },
-      "module": {
-        "types": "./slices.d.ts",
-        "default": "./slices.js"
-      },
-      "default": {
-        "types": "./slices.d.ts",
-        "default": "./slices.js"
-      }
-    },
-    "./persist": {
-      "require": {
-        "types": "./persist.d.ts",
-        "default": "./persist.cjs"
-      },
-      "import": {
-        "types": "./persist.d.ts",
-        "default": "./persist.js"
-      },
-      "module": {
-        "types": "./persist.d.ts",
-        "default": "./persist.js"
-      },
-      "default": {
-        "types": "./persist.d.ts",
-        "default": "./persist.js"
-      }
-    }
-  },
   "keywords": [
     "npm",
     "module",

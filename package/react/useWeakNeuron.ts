@@ -1,5 +1,6 @@
 import React from "react";
-import type { Store as CoreStore, SelectorKey } from "../vanilla";
+import type { Store as CoreStore } from "../vanilla";
+import { SelectorKey } from "../vanilla/Interfaces";
 
 export type UseWeakNeuron = <T, A>(
   selector: string

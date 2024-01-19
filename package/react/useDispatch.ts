@@ -1,9 +1,9 @@
+import type { Store } from "../vanilla";
 import type {
   SelectorKey,
-  Store,
   DispatchPayload,
   DispatchMutator,
-} from "../vanilla";
+} from "../vanilla/Interfaces";
 
 export type UseDispatch<S = { [key: string]: unknown }> = DispatchPayload<S>;
 

@@ -1,14 +1,14 @@
 import React from "react";
-import type { Store as CoreStore, SelectorKey } from "../vanilla";
+import type { Store as CoreStore } from "../vanilla";
 import {
   getSlice,
   setSlice,
   updateStateWithSlice,
   convertSelector,
 } from "../slices";
-import type { Selector } from "../slices";
-import { StateProps } from "./State";
-import { ActionProps } from "../vanilla/Interfaces";
+import { Selector } from "../slices";
+import type { StateProps } from "./State";
+import { ActionProps, SelectorKey } from "../vanilla/Interfaces";
 
 export type UseNeuron<S = StateProps> = <T = unknown, A = ActionProps>(
   selector: SelectorKey<S> | Selector<S, T>

@@ -10,9 +10,9 @@ import type {
   DispatchMutator,
   DispatchPayload,
   DispatchCallback,
+  Features,
 } from "./vanilla/index";
 import { createStore, createModule } from "./vanilla/index";
-
 export type {
   Store,
   Module,
@@ -25,5 +25,6 @@ export type {
   DispatchMutator,
   DispatchPayload,
   DispatchCallback,
+  Features,
 };
-export { createStore, createModule };
+export { createModule, createStore };

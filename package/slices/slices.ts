@@ -1,17 +1,15 @@
-import { createModule, SelectorKey, Store, Payload } from "../vanilla";
+import { createModule, Store } from "../vanilla";
+import type { Payload } from "../vanilla";
+import type { SelectorKey, StateType } from "../vanilla/Interfaces";
 
-export type Selector<State = { [key: string]: unknown }, T = unknown> = (
-  store: State
-) => T;
+export type Selector<S = StateType, T = unknown> = (store: S) => T;
 
-interface DispatchData<State> {
-  selector: Selector<State>;
+interface DispatchData<S> {
+  selector: Selector<S>;
   newSliceState?: unknown;
 }
 
-export const convertSelector = <State>(
-  selector: SelectorKey<State> | Selector<State>
-) => {
+export const convertSelector = <S>(selector: SelectorKey<S> | Selector<S>) => {
   const selectorArray =
       (
         selector?.toString().match(/return\s+([a-zA-Z0-9_$.]+)\s*;/)?.[1] ??
@@ -19,7 +17,7 @@ export const convertSelector = <State>(
       )?.split(".") || [],
     selectorKey = (
       selectorArray.length <= 1 ? selector : selectorArray[1]
-    ) as SelectorKey<State>,
+    ) as SelectorKey<S>,
     isSlice = selectorArray.length > 2;
 
   return {
@@ -28,24 +26,21 @@ export const convertSelector = <State>(
   };
 };
 
-export const getSlice = <T, State>(
-  selector: Selector<State>,
-  Store: Store<State>
-): T => {
-  const state: State = Store.getStore().reduce(
+export const getSlice = <T, S>(selector: Selector<S>, Store: Store<S>): T => {
+  const state: S = Store.getStore().reduce(
     (acc, item) => ({ ...acc, [item.key]: item.state }),
-    {} as State
+    {} as S
   );
   return selector(state) as T;
 };
 
-export const setSlice = <T, State>(
-  selector: Selector<State>,
+export const setSlice = <T, S>(
+  selector: Selector<S>,
   newState: T,
-  Store: Store<State>
+  Store: Store<S>
 ) => {
-  Store.dispatch<DispatchData<State>>(
-    convertSelector<State>(selector).key,
+  Store.dispatch<DispatchData<S>>(
+    convertSelector<S>(selector).key,
     (payload) => {
       payload.data = {
         selector: selector,

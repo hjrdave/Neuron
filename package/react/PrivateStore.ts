@@ -1,5 +1,5 @@
 import React, { useContext, createContext } from "react";
-import type { SelectorKey, Module, DispatchMutator } from "../vanilla";
+import type { Module } from "../vanilla";
 import type { Selector } from "../slices";
 import { Store } from "./Store";
 import { Private } from "./Private";
@@ -7,7 +7,12 @@ import type { UseNeuron } from "./useNeuron";
 import type { UseDispatch } from "./useDispatch";
 import type { StateProps } from "./State";
 import type { ModuleProps } from "./Module";
-import { ActionProps, DataProps } from "../vanilla/Interfaces";
+import {
+  ActionProps,
+  DataProps,
+  SelectorKey,
+  DispatchMutator,
+} from "../vanilla/Interfaces";
 
 interface IContext<S = { [key: string]: unknown }> {
   useNeuron: UseNeuron<S>;

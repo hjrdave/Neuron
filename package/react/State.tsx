@@ -1,5 +1,10 @@
-import type { Store, SelectorKey, Actions, DispatchMutator } from "../vanilla";
-import type { ActionProps } from "../vanilla/Interfaces";
+import type { Store } from "../vanilla";
+import type {
+  ActionProps,
+  SelectorKey,
+  Actions,
+  DispatchMutator,
+} from "../vanilla/Interfaces";
 
 export interface StateProps<
   T = unknown,

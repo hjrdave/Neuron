@@ -1,12 +1,6 @@
 import type { Store as ICoreStore } from "../vanilla";
-import type { SetState, AddState, OnDispatch } from "../vanilla/Interfaces";
 import { Store as CoreStore } from "../vanilla/Store";
-import type {
-  SelectorKey,
-  Module as IModule,
-  DispatchCallback,
-  StoreItem,
-} from "../vanilla";
+import type { Module as IModule } from "../vanilla";
 import type { Selector } from "../slices";
 import { State } from "./State";
 import type { StateProps } from "./State";
@@ -18,7 +12,15 @@ import type { UseDispatch } from "./useDispatch";
 import type { UseWeakNeuron } from "./useWeakNeuron";
 import { useWeakNeuron } from "./useWeakNeuron";
 import { useDispatch } from "./useDispatch";
-import type { ActionProps } from "../vanilla/Interfaces";
+import type {
+  ActionProps,
+  SelectorKey,
+  DispatchCallback,
+  StoreItem,
+  SetState,
+  AddState,
+  OnDispatch,
+} from "../vanilla/Interfaces";
 export interface IStore<S, M> {
   readonly Module: (props: ModuleProps) => null;
   readonly State: <T = unknown, A = ActionProps>(
