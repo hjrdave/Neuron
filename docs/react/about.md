@@ -17,9 +17,9 @@ yarn add @sandstack/neuron
 You will import the React configuration into your app instead of the base configuration.
 
 ```javascript
-import Neuron from "@sandstack/neuron/react";
+import { createStore } from "@sandstack/neuron/react";
 
-const Store = Neuron.Store();
+const Store = createStore();
 ```
 
 Note - Neuron React does not use React Context to manage state. The exception to this is private stores, which does use React Context under the hood.

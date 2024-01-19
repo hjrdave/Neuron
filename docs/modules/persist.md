@@ -3,10 +3,10 @@
 Persist allows for state persistance in state. This is opt in and you must set the `persist` prop to `true`.
 
 ```jsx
-import Neuron from "@sandstack/neuron/react";
-import Persist from "@sandstack/neuron/persist";
+import { createStore } from "@sandstack/neuron/react";
+import { Persist } from "@sandstack/neuron/persist";
 
-export const { State, Module, useNeuron } = Neuron.Store();
+export const { State, Module, useNeuron } = createStore();
 
 export default function AppStore() {
   return (

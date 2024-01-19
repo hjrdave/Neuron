@@ -35,9 +35,9 @@ I decided to create my own solution for managing client state, and thus Neuron w
 The vanilla package is just pure javascript. You can use this by importing `@sandstack/neuron` into your file.
 
 ```javascript
-import Neuron from "@sandstack/neuron";
+import { createStore } from "@sandstack/neuron";
 
-const Store = Neuron.Store();
+const Store = createStore();
 
 //add state to store
 Store.add({

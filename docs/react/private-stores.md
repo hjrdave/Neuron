@@ -7,10 +7,10 @@ By default Neuron stores are globally instantiated. This means any component in 
 Instead of instantiating a `Neuron.Store` we will instantiate a `Neuron.PrivateStore` in our store file.
 
 ```jsx
-import Neuron from "@sandstack/neuron/react";
+import { createPrivateStore } from "@sandstack/neuron/react";
 
 // Private store must be instantiated outside of Store component;
-export const {} = Neuron.PrivateStore();
+export const {} = createPrivateStore();
 ```
 
 #### usePrivateStore
@@ -18,9 +18,9 @@ export const {} = Neuron.PrivateStore();
 The `PrivateStore` instance returns a `usePrivateStore` hook. This will be called in our store component. It is basically the normal `Store` instance and returns methods and components to create our store. The reason for this is because the actual store will need to be called within our component so it can be mounted, unmounted, and make use of children components.
 
 ```jsx
-import Neuron from "@sandstack/neuron/react";
+import { createPrivateStore } from "@sandstack/neuron/react";
 
-export const { usePrivateStore } = Neuron.PrivateStore();
+export const { usePrivateStore } = createPrivateStore();
 
 export default function AppStore() {
   const { State } = usePrivateStore();
@@ -38,9 +38,9 @@ export default function AppStore() {
 The `PrivateStore` instance also returns a `Private` component. This will be called within our store component and it will accept children. This allows our store to be used like a traditional state provider and wrap around children components. Only the children components will be able to read and update our store.
 
 ```jsx
-import Neuron from "@sandstack/neuron/react";
+import { createPrivateStore } from "@sandstack/neuron/react";
 
-export const { usePrivateStore, Private } = Neuron.PrivateStore();
+export const { usePrivateStore, Private } = createPrivateStore();
 
 export default function AppStore({ children }) {
   const { State } = usePrivateStore();
@@ -81,7 +81,7 @@ export default function App(){
 You can get and set state in children components just like a regular store. Make sure your private store is exporting the `useNeuron` hook.
 
 ```jsx
-export { useNeuron } = Neuron.PrivateStore();
+export { useNeuron } = createPrivateStore();
 ```
 
 ```jsx

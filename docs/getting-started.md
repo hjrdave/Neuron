@@ -19,9 +19,9 @@ You can also include a cdn in your html file.
 Neuron can be imported into your js file through ESM Imports or CommonJS.
 
 ```javascript
-import Neuron from "@sandstack/neuron";
+import { createStore } from "@sandstack/neuron";
 
-const Neuron = require("@sandstack/neuron");
+const { createStore } = require("@sandstack/neuron");
 ```
 
 ## Choose Neuron Flavor

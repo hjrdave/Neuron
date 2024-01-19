@@ -20,9 +20,9 @@ See [Neuron React](#neuron-react) as an example.
 ### Create a new Store
 
 ```javascript
-import Neuron from "@sandstack/neuron";
+import { createStore } from "@sandstack/neuron";
 
-export const Store = Neuron.Store();
+export const Store = createStore();
 ```
 
 ### Add initial state to Store

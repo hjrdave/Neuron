@@ -7,9 +7,9 @@ Updating state in Neuron is very easy. The store returns a `useNeuron` hook that
 Make sure the `useNeuron` hook is being exported from your store file.
 
 ```jsx
-import Neuron from "@sandstack/neuron/react";
+import { createStore } from "@sandstack/neuron/react";
 
-export const { useNeuron } = Neuron.Store();
+export const { useNeuron } = createStore();
 ```
 
 You can now import this hook into your component and call it. The hook takes a selector parameter that is the name of the state you are selecting. This hook is modeled after React's `useState` hook. The first parameter is the state, the second one is your setter function. See below.
@@ -35,7 +35,7 @@ Along with the magic string selectors you can select your state with an arrow fu
 Example Store
 
 ```jsx
-export const { State, useNeuron } = Neuron.Store();
+export const { State, useNeuron } = createStore();
 
 export default function AppStore() {
   return (

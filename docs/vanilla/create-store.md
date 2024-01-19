@@ -5,9 +5,9 @@ Neuron stores are easy to set up and only require a key/value pair to instantiat
 ### Create a new store
 
 ```javascript
-import Neuron from "@sandstack/neuron";
+import { createStore } from "@sandstack/neuron";
 
-export const Store = Neuron.Store();
+export const Store = createStore();
 ```
 
 ### Add initial state to store

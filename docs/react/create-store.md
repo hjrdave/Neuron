@@ -9,9 +9,9 @@ Note - If you are using React without JSX (I do not recommend this), then Neuron
 It is recommend to create a new file called `Store.jsx` or `App.store.jsx` file. You will need to import Neuron and instantiate your store. Make sure that your store is exported from the file.
 
 ```jsx
-import Neuron from "@sandstack/neuron/react";
+import { createStore } from "@sandstack/neuron/react";
 
-export const { State } = Neuron.Store();
+export const { State } = createStore();
 ```
 
 ## Create store component
@@ -19,7 +19,7 @@ export const { State } = Neuron.Store();
 Neuron state are set up as children components under the instantiated store. You can name this store component something that pertains to it's purpose. You need to give this component the default export.
 
 ```jsx
-import Neuron from "@sandstack/neuron/react";
+import { createStore } from "@sandstack/neuron/react";
 
 export const {} = Neuron.Store();
 
@@ -33,7 +33,7 @@ export default function AppStore() {
 The instantiated `Neuron.Store` returns a component called `State`. You can add state to your store by calling this component. It takes 2 props called `name`, which is the state key and `state`, which holds the default state value.
 
 ```jsx
-import Neuron from "@sandstack/neuron/react";
+import {createStore} from "@sandstack/neuron/react";
 
 export const { State } = Neuron.Store();
 

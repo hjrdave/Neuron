@@ -9,18 +9,17 @@ Modules can be added to a store by using the `use` method. This method takes the
 The Persist module is a good example of a Neuron module. This allows state to be persisted between page refreshes. It adds a prop to the store features called `persist`. This allows for each store item to have state persistence toggled onto it. See below.
 
 ```javascript
-import Persist from @sandstack/neuron/modules/persist;
+import { Persist } from "@sandstack/neuron/persist";
 
-const Store = Neuron.Store();
+const Store = createStore();
 
 Store.use(Persist);
 
 Store.add({
-    key: 'trainer',
-    state: 'Ash Ketchum',
-    features:{
-        persist: true
-    }
+  key: "trainer",
+  state: "Ash Ketchum",
+  features: {
+    persist: true,
+  },
 });
-
 ```
