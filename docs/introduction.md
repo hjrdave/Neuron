@@ -68,9 +68,9 @@ onDispatch((payload) => {
 Neuron has first class support for React. You can use the React specific package by importing `@sandstack/neuron/react` into your file.
 
 ```jsx
-import Neuron from '@sandstack/neuron/react'
+import {createStore} from '@sandstack/neuron/react'
 
-const {State, useNeuron} = Neuron.Store();
+const {State, useNeuron} = createStore();
 
 function Store(){
   return(

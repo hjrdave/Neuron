@@ -4,7 +4,7 @@ Modules are a way to hook into store middleware and extend Neuron with features 
 
 ```jsx
 import { createStore } from "@sandstack/neuron/react";
-import Persist from "@sandstack/neuron/persist";
+import { Persist } from "@sandstack/neuron/persist";
 
 export const { State, Module, useNeuron } = createStore();
 

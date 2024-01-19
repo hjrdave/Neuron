@@ -21,7 +21,7 @@ Neuron state are set up as children components under the instantiated store. You
 ```jsx
 import { createStore } from "@sandstack/neuron/react";
 
-export const {} = Neuron.Store();
+export const {} = createStore();
 
 export default function AppStore() {
   return <>{/** state will go here **/}</>;
@@ -35,7 +35,7 @@ The instantiated `Neuron.Store` returns a component called `State`. You can add 
 ```jsx
 import {createStore} from "@sandstack/neuron/react";
 
-export const { State } = Neuron.Store();
+export const { State } = createStore();
 
 export default function AppStore() {
   return(
