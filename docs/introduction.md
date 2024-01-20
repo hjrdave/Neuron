@@ -10,9 +10,11 @@ subnav:
 
 ![Neuron Global State Manager](https://sandstack.dev/readme-neuron.png "a title")
 
-<div style="background-color: #fff3cd; border: 1px solid #ffeeba; padding: 1em;">
-  <strong>Warning:</strong> This library is still experimental and is not ready for production.
-</div>
+---
+
+## **Warning:** This library is still experimental and is not ready for production.
+
+---
 
 # Introduction
 

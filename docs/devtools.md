@@ -4,9 +4,11 @@
 
 Neuron has it's own dedicated Devtools that can be used to keep track of state in your app. As of now the Devtools are only compatible with Neuron React.
 
-<div style="background-color: #fff3cd; border: 1px solid #ffeeba; padding: 1em;">
-  <strong>Warning:</strong> This library is still experimental and is not ready for production.
-</div>
+---
+
+## **Warning:** This library is still experimental and is not ready for production.
+
+---
 
 ## Install
 
