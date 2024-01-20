@@ -39,6 +39,11 @@
         "parent": "Vanilla",
         "title": "Modules",
         "filename": "vanilla/modules"
+      },
+      {
+        "section": "Vanilla",
+        "title": "Typescript",
+        "filename": "typescript"
       }
     ]
   },
@@ -79,6 +84,11 @@
         "parent": "React",
         "title": "Modules",
         "filename": "react/modules"
+      },
+      {
+        "section": "React",
+        "title": "Typescript",
+        "filename": "typescript"
       }
     ]
   },

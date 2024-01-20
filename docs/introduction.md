@@ -10,6 +10,10 @@ subnav:
 
 ![Neuron Global State Manager](https://sandstack.dev/readme-neuron.png "a title")
 
+<div style="background-color: #fff3cd; border: 1px solid #ffeeba; padding: 1em;">
+  <strong>Warning:</strong> This library is still experimental and is not ready for production.
+</div>
+
 # Introduction
 
 The Neuron State Manager is a small, bare bones, framework agnostic library for managing client state in javascript user interfaces. It is simple enough to be used by itself or tailor fitted to be used with any UI Framework of your choice. The vanilla npm package is less than _2KBs_ and can be configured anyway to your tech stack or project needs.

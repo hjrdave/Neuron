@@ -1,9 +1,5 @@
 <div><img src='https://sandstack.dev/readme-devtools.png' /></div>
 
-[![npm version](https://badge.fury.io/js/@sandstack%2Fneuron-devtools.svg)](https://badge.fury.io/js/@sandstack%2Fneuron-devtools)
-[![build](https://github.com/hjrdave/Neuron.Devtools/actions/workflows/npm-publish.yml/badge.svg)](https://github.com/hjrdave/Neuron.Devtools/actions/workflows/npm-publish.yml)
-![npm bundle size](https://img.shields.io/bundlephobia/minzip/%40sandstack%2Fneuron-devtools)
-
 # Neuron Devtools
 
 Neuron has it's own dedicated Devtools that can be used to keep track of state in your app. As of now the Devtools are only compatible with Neuron React.
@@ -11,6 +7,14 @@ Neuron has it's own dedicated Devtools that can be used to keep track of state i
 <div style="background-color: #fff3cd; border: 1px solid #ffeeba; padding: 1em;">
   <strong>Warning:</strong> This library is still experimental and is not ready for production.
 </div>
+
+## Install
+
+Install Neuron Devtools package into your project.
+
+```bash
+npm install @sandstack/neuron-devtools
+```
 
 ## Setup
 
