@@ -4,11 +4,7 @@
 
 Neuron has it's own dedicated Devtools that can be used to keep track of state in your app. As of now the Devtools are only compatible with Neuron React.
 
----
-
-## **Warning:** This library is still experimental and is not ready for production.
-
----
+> **Warning:** This library is still experimental and is not ready for production.
 
 ## Install
 

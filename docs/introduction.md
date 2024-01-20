@@ -10,11 +10,7 @@ subnav:
 
 ![Neuron Global State Manager](https://sandstack.dev/readme-neuron.png "a title")
 
----
-
-## **Warning:** This library is still experimental and is not ready for production.
-
----
+> **Warning:** This library is still experimental and is not ready for production.
 
 # Introduction
 
