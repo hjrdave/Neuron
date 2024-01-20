@@ -91,5 +91,9 @@
         "filename": "modules/persist"
       }
     ]
+  },
+  {
+    "section": "Devtools",
+    "filename": "devtools"
   }
 ]
