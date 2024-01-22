@@ -9,7 +9,7 @@
 The Neuron Global State Manager is a small, bare bones, framework agnostic library for building framework specific global state managers.
 
 Neuron Vanilla can be used in any js application by itself or you can tailor it to your framework of choice. My goal is to create framework specific version of this that use vanilla under the hood.
-See [Neuron React](#neuron-react) as an example.
+See [Neuron React](https://sandstack.dev/neuron/docs/react/about) as an example.
 
 <div style="background-color: #fff3cd; border: 1px solid #ffeeba; padding: 1em;">
   <strong>Warning:</strong> This library is still experimental and is not ready for production.
