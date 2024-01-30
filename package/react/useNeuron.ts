@@ -35,21 +35,21 @@ export const useNeuron = <T = unknown, A = ActionProps, S = StateProps>(
             Store
           )
         : Store.set<T>(selectorKey, value);
-  React.useEffect(() => {
-    Store?.onDispatch((payload) => {
-      if (payload.key === selectorKey) {
-        if (selectorIsSlice) {
-          const newSliceState = updateStateWithSlice<S>(
-            selector as Selector<S, T>,
-            payload.state as S
-          );
-          _setState(newSliceState as React.SetStateAction<T>);
-        } else {
-          const newState = payload.state as T;
-          _setState(newState);
-        }
+
+  Store?.onDispatch((payload) => {
+    if (payload.key === selectorKey) {
+      if (selectorIsSlice) {
+        const newSliceState = updateStateWithSlice<S>(
+          selector as Selector<S, T>,
+          payload.state as S
+        );
+        _setState(newSliceState as React.SetStateAction<T>);
+      } else {
+        const newState = payload.state as T;
+        _setState(newState);
       }
-    });
-  }, []);
+    }
+  });
+
   return [state, setState, actions] as [T, typeof setState, A];
 };
