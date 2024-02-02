@@ -38,8 +38,8 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
 The `Devtools` module needs to be added to each `Store` you want to track with the Devtools Panel. You must add the store name to the Devtools Module.
 
 ```jsx
-import {createStore} from "@sandstack/neuron/react";
-import {Devtools} from "@sandstack/neuron-devtools";
+import { createStore } from "@sandstack/neuron/react";
+import { Devtools } from "@sandstack/neuron-devtools";
 
 export const { State, Module } = createStore();
 
@@ -47,10 +47,9 @@ export default function Store() {
   return (
     <>
       <Module use={Devtools({ storeName: "PokemonStore" })} />
-      <State name={"trainer"} state={"Goh"}/>
-      <State name={"pokemon"} state={"Mewtwo"}} />
+      <State name={"trainer"} state={"Goh"} />
+      <State name={"pokemon"} state={"Mewtwo"} />
     </>
   );
 }
-
 ```
