@@ -67,4 +67,4 @@ Store.onDispatch((dispatchItem) => {
 //name: Gary Oak
 ```
 
-You can learn more about Neuron [here](https://sandstack.dev/neuron).
+Learn more about [Vanilla Neuron](https://sandstack.dev/neuron) and [Neuron React](https://sandstack.dev/neuron/docs/react/about).
