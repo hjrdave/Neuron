@@ -60,3 +60,5 @@ export function createStore<S = { [key: string]: unknown }>(options?: Options) {
 export function createModule(params: Params) {
   return new ModuleInstance(params);
 }
+
+window["neuron"] = { createStore, createModule };
