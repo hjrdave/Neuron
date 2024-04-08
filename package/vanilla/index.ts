@@ -61,4 +61,5 @@ export function createModule(params: Params) {
   return new ModuleInstance(params);
 }
 
-window["neuron"] = { createStore, createModule };
+//used for cdns that are used in browser script tags
+globalThis["Neuron"] = { createStore, createModule };

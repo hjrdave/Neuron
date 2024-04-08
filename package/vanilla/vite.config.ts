@@ -18,6 +18,7 @@ export default defineConfig({
       name: "Neuron",
       fileName: "index",
     },
+
     rollupOptions: {
       output: [
         {
