@@ -105,5 +105,9 @@
   {
     "section": "Devtools",
     "filename": "devtools"
+  },
+  {
+    "section": "Tutorials",
+    "filename": "tutorials"
   }
 ]
