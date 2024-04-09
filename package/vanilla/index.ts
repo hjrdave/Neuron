@@ -60,6 +60,3 @@ export function createStore<S = { [key: string]: unknown }>(options?: Options) {
 export function createModule(params: Params) {
   return new ModuleInstance(params);
 }
-
-//used for cdns that are used in browser script tags
-globalThis["Neuron"] = { createStore, createModule };

@@ -28,3 +28,6 @@ export type {
   Features,
 };
 export { createModule, createStore };
+
+//used for cdns that are used in browser script tags
+globalThis["Neuron"] = { createStore, createModule };
