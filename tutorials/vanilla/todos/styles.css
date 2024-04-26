@@ -1,0 +1,95 @@
+body {
+  background-color: #212529;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+#todoFormContainer {
+  width: 500px;
+  background-color: #57c09b;
+  padding: 1rem;
+  border-radius: 0.5rem;
+}
+
+#titleControlGroup {
+  display: flex;
+  flex-direction: column;
+}
+#titleControlGroup label {
+  padding-bottom: 0.5rem;
+}
+#descriptionControlGroup {
+  display: flex;
+  flex-direction: column;
+  padding-top: 1rem;
+}
+#descriptionControlGroup label {
+  padding-bottom: 0.5rem;
+}
+#descriptionControlGroup textarea,
+#titleControlGroup input {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+#addTodoButton {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #219ebc;
+  background-color: #219ebc;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 1rem;
+}
+#addTodoButton:hover {
+  background-color: #0c7b93;
+}
+#addTodoButtonGroup {
+  display: flex;
+  justify-content: center;
+}
+.todoContainerLabel {
+  margin-top: 3rem;
+  color: white;
+  text-align: right;
+}
+.todoContainer {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  width: 1000px;
+  height: 400px;
+  overflow-y: auto;
+}
+.todoCard {
+  background-color: #57c09b;
+  margin: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+}
+.todoCard h3 {
+  margin-bottom: 0rem;
+}
+.todoCard p {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+}
+.todoCard button {
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #219ebc;
+  background-color: #219ebc;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+.todoCard button:hover {
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #0c7b93;
+  background-color: #0c7b93;
+  font-size: 0.9rem;
+  cursor: pointer;
+}

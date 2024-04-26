@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Todo - Neuron Vanilla</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div id="todoFormContainer">
+        <form name="todoForm">
+          <h1>Todo Form | Neuron Vanilla</h1>
+          <div id="titleControlGroup">
+            <label for="titleControl">Title</label>
+            <input
+              type="text"
+              name="titleControl"
+              id="titleControl"
+              onchange="() => null"
+            />
+          </div>
+          <div id="descriptionControlGroup">
+            <label for="descriptionControl">Description</label>
+            <textarea
+              name="descriptionControl"
+              id="descriptionControl"
+              rows="4"
+              cols="50"
+            ></textarea>
+          </div>
+          <div id="addTodoButtonGroup">
+            <button id="addTodoButton">Add Todo</button>
+          </div>
+        </form>
+      </div>
+      <div>
+        <h2 class="todoContainerLabel">Todo List</h2>
+      </div>
+      <div class="todoContainer"></div>
+    </div>
+    <script
+      src="https://cdn.jsdelivr.net/npm/@sandstack/neuron@0.0.0-beta.0.74"
+      type="module"
+    ></script>
+    <script src="./scripts.js" type="module"></script>
+  </body>
+</html>

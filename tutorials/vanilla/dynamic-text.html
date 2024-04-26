@@ -74,22 +74,25 @@
         const Store = Neuron.createStore();
         Store.add({
           key: "dynamicText",
-          state: "",
+          state: "Hello World!",
         });
         function onChange(e) {
             Store.set("dynamicText", e.target.value);
         } 
-        const dynamicText = document.querySelector("#dynamicText");    
+        const dynamicText = document.querySelector("#dynamicText");
+        dynamicText.innerHTML = Store.get("dynamicText");    
         Store.onDispatch((payload) => {
           if (payload.key === "dynamicText") {
             dynamicText.innerHTML = payload.state;
           }
         });
-
+        
         //attach events
         document
           .querySelector("#dynamicTextControl")
           .addEventListener("input", onChange);
+
+          
       };
     </script>
   </body>
