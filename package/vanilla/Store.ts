@@ -149,10 +149,14 @@ export class Store<S = StoreProps> implements IStore<S> {
 
   /**
    * Get the current state from a store item.
+   * Selected state is immutable.
    * @param {string} selector - key of the store item you want to select.
    */
-  readonly get = <T = StateType>(selector: SelectorKey<S>) =>
-    this.stateInventory.get(selector) as T;
+  readonly get = <T = StateType>(selector: SelectorKey<S>) => {
+    const state = this.stateInventory.get(selector) as T;
+    const clonedState = structuredClone?.(state) ?? state;
+    return clonedState;
+  };
 
   /**
    * Get actions from a store item.
