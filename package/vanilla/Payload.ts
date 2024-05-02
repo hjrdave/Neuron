@@ -10,7 +10,6 @@ import type {
   GetState,
   SetState,
   GetStore,
-  ResetState,
 } from "./Interfaces";
 export interface Params<T = StateType, S = StoreProps, D = DataProps> {
   key: SelectorKey<S>;
@@ -20,7 +19,6 @@ export interface Params<T = StateType, S = StoreProps, D = DataProps> {
   data?: D;
   get: GetState<S>;
   set: SetState<S>;
-  reset: ResetState<S>;
   getStore: GetStore<unknown, S>;
 }
 
@@ -32,7 +30,6 @@ export interface IPayload<T = StateType, S = StoreProps, D = DataProps> {
   data?: D;
   readonly get: GetState<S>;
   readonly set: SetState<S>;
-  readonly reset: ResetState<S>;
   readonly getStore: GetStore<unknown, S>;
   readonly cancelDispatch: () => void;
   readonly isDispatchCancelled: () => boolean;
@@ -49,7 +46,6 @@ export class Payload<T = StateType, S = StoreProps, D = DataProps>
   private dispatchCancelled = false;
   readonly get: GetState<S>;
   readonly set: SetState<S>;
-  readonly reset: ResetState<S>;
   readonly getStore: GetStore<unknown, S>;
   readonly cancelDispatch = () => {
     this.dispatchCancelled = true;
@@ -64,7 +60,6 @@ export class Payload<T = StateType, S = StoreProps, D = DataProps>
     this.features = Object.freeze(params.features);
     this.get = Object.freeze(params.get);
     this.set = Object.freeze(params.set);
-    this.reset = Object.freeze(params.reset);
     this.getStore = Object.freeze(params.getStore);
   }
 }
