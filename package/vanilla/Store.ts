@@ -35,6 +35,7 @@ export interface IStore<S = StoreProps> {
   readonly getStore: GetStore<unknown, S>;
   readonly add: AddState<S>;
   readonly get: GetState<S>;
+  readonly getRef: GetState<S>;
   readonly getActions: GetActions<S>;
   readonly set: SetState<S>;
   readonly has: HasState<S>;
@@ -151,6 +152,15 @@ export class Store<S = StoreProps> implements IStore<S> {
     const state = this.stateInventory.get(selector) as T;
     const clonedState = structuredClone?.(state) ?? state;
     return clonedState;
+  };
+
+  /**
+   * Get the current state from a store item.
+   * Selected state is a mutable reference.
+   * @param {string} selector - key of the store item you want to select.
+   */
+  readonly getRef = <T = StateType>(selector: SelectorKey<S>) => {
+    return this.stateInventory.get(selector) as T;
   };
 
   /**
