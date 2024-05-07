@@ -59,8 +59,6 @@ export type GetStore<
 
 export type HasState<S = StoreProps> = (key: SelectorKey<S>) => boolean;
 
-export type ResetState<S = StoreProps> = (key?: SelectorKey<S>) => void;
-
 export type UseModule = (module: Module) => void;
 
 export type GetActions<S = StoreProps> = <A = ActionProps>(

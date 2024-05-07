@@ -25,7 +25,6 @@ import type {
   UseModule,
   GetActions,
   HasState,
-  ResetState,
 } from "./Interfaces";
 
 export interface Params {
@@ -36,17 +35,16 @@ export interface IStore<S = StoreProps> {
   readonly getStore: GetStore<unknown, S>;
   readonly add: AddState<S>;
   readonly get: GetState<S>;
+  readonly getRef: GetState<S>;
   readonly getActions: GetActions<S>;
   readonly set: SetState<S>;
   readonly has: HasState<S>;
-  readonly reset: ResetState<S>;
   readonly dispatch: DispatchPayload<S>;
   readonly onDispatch: OnDispatch<S>;
 }
 
 export class Store<S = StoreProps> implements IStore<S> {
   private stateInventory: Map<SelectorKey<S>, StateType>;
-  private initialStateInventory: Map<SelectorKey<S>, StateType>;
   private featureInventory: Map<SelectorKey<S>, Features<StateType, S>>;
   private actionsInventory: Map<
     SelectorKey<S>,
@@ -90,7 +88,6 @@ export class Store<S = StoreProps> implements IStore<S> {
       features: params.features ?? this.featureInventory.get(params.key),
       get: this.get,
       set: this.set,
-      reset: this.reset,
       getStore: this.getStore,
     });
     return payload;
@@ -130,7 +127,6 @@ export class Store<S = StoreProps> implements IStore<S> {
         state: state,
         features: features,
       });
-      this.initialStateInventory.set(payload.key, payload.state);
       features
         ? this.featureInventory.set(
             payload.key,
@@ -149,10 +145,23 @@ export class Store<S = StoreProps> implements IStore<S> {
 
   /**
    * Get the current state from a store item.
+   * Selected state is immutable.
    * @param {string} selector - key of the store item you want to select.
    */
-  readonly get = <T = StateType>(selector: SelectorKey<S>) =>
-    this.stateInventory.get(selector) as T;
+  readonly get = <T = StateType>(selector: SelectorKey<S>) => {
+    const state = this.stateInventory.get(selector) as T;
+    const clonedState = structuredClone?.(state) ?? state;
+    return clonedState;
+  };
+
+  /**
+   * Get the current state from a store item.
+   * Selected state is a mutable reference.
+   * @param {string} selector - key of the store item you want to select.
+   */
+  readonly getRef = <T = StateType>(selector: SelectorKey<S>) => {
+    return this.stateInventory.get(selector) as T;
+  };
 
   /**
    * Get actions from a store item.
@@ -194,18 +203,6 @@ export class Store<S = StoreProps> implements IStore<S> {
   readonly has = (key: SelectorKey<S>) => this.stateInventory.has(key);
 
   /**
-   * Used to reset store item state to initial state. Resets state individually if a key is passed to it.
-   * If no key is passed then it will reset all state.
-   * @param {string} key - key of the store item you want to reset.
-   */
-  readonly reset = (key?: SelectorKey<S>) =>
-    key
-      ? this.set(key, this.initialStateInventory.get(key))
-      : this.initialStateInventory.forEach((_, key) =>
-          this.set(key, this.initialStateInventory.get(key))
-        );
-
-  /**
    * Dispatches a data object to a store item. This can be used to create a new state with middleware.
    * @param {string} key - key of the store item you want to select.
    * @param {T} data - data object that can be passed to store middleware.
@@ -234,7 +231,6 @@ export class Store<S = StoreProps> implements IStore<S> {
 
   constructor(params?: Params) {
     this.stateInventory = new Map();
-    this.initialStateInventory = new Map();
     this.featureInventory = new Map();
     this.actionsInventory = new Map();
     this.moduleInventory = new Map();

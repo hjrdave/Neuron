@@ -17,7 +17,7 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: 17
       - run: npm install --legacy-peer-deps
       - run: npm run test
 
@@ -28,7 +28,7 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: 17
       - run: npm install --legacy-peer-deps
       - run: npm run build:package
 
@@ -39,7 +39,7 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: 17
           registry-url: https://registry.npmjs.org/
       - name: Installing Packages
         run: npm install --legacy-peer-deps
