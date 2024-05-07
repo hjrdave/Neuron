@@ -40,6 +40,6 @@
     "tsc:watch": "tsc --noEmit --watch",
     "test:watch": "vitest",
     "test": "vitest run",
-    "build:package": "tsc && npm run test && vite build --config package/vanilla/vite.config.ts && vite build --config package/slices/vite.config.ts && vite build --config package/persist/vite.config.ts && vite build --config package/react/vite.config.ts && ncp package/package.json dist/package.json && ncp package/LICENSE dist/LICENSE && ncp package/CONTRIBUTING.md dist/CONTRIBUTING.md && ncp package/README.md dist/README.md"
+    "build:package": "tsc && npm run test && vite build --config package/vanilla/vite.config.ts && vite build --config package/slices/vite.config.ts && vite build --config package/persist/vite.config.ts && vite build --config package/react/vite.config.ts && ncp package/package.json dist/package.json && ncp package/LICENSE dist/LICENSE && ncp package/CONTRIBUTING.md dist/CONTRIBUTING.md && ncp README.md dist/README.md"
   }
 }

@@ -55,8 +55,8 @@ export class Payload<T = StateType, S = StoreProps, D = DataProps>
   constructor(params: Params<T, S, D>) {
     this.key = params.key;
     this.prevState = Object.freeze(params.prevState);
-    this.state = structuredClone?.(params.state) ?? params.state;
-    this.data = structuredClone?.(params.data) ?? params.data;
+    this.state = params.state;
+    this.data = params.data;
     this.features = Object.freeze(params.features);
     this.get = Object.freeze(params.get);
     this.set = Object.freeze(params.set);
