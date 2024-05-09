@@ -60,6 +60,7 @@ body {
 .todoContainer {
   display: grid;
   grid-template-columns: auto auto auto;
+  grid-auto-rows: max-content;
   width: 1000px;
   height: 400px;
   overflow-y: auto;
@@ -71,6 +72,7 @@ body {
   border-radius: 0.5rem;
 }
 .todoCard h3 {
+  margin-top: 0.25rem;
   margin-bottom: 0rem;
 }
 .todoCard p {

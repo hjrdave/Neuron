@@ -8,30 +8,23 @@
   <body>
     <div class="container">
       <div id="todoFormContainer">
-        <form name="todoForm">
-          <h1>Todo Form | Neuron Vanilla</h1>
-          <div id="titleControlGroup">
-            <label for="titleControl">Title</label>
-            <input
-              type="text"
-              name="titleControl"
-              id="titleControl"
-              onchange="() => null"
-            />
-          </div>
-          <div id="descriptionControlGroup">
-            <label for="descriptionControl">Description</label>
-            <textarea
-              name="descriptionControl"
-              id="descriptionControl"
-              rows="4"
-              cols="50"
-            ></textarea>
-          </div>
-          <div id="addTodoButtonGroup">
-            <button id="addTodoButton">Add Todo</button>
-          </div>
-        </form>
+        <h1>Todo Form | Neuron Vanilla</h1>
+        <div id="titleControlGroup">
+          <label for="titleControl">Title</label>
+          <input type="text" name="titleControl" id="titleControl" />
+        </div>
+        <div id="descriptionControlGroup">
+          <label for="descriptionControl">Description</label>
+          <textarea
+            name="descriptionControl"
+            id="descriptionControl"
+            rows="4"
+            cols="50"
+          ></textarea>
+        </div>
+        <div id="addTodoButtonGroup">
+          <button id="addTodoButton">Add Todo</button>
+        </div>
       </div>
       <div>
         <h2 class="todoContainerLabel">Todo List</h2>

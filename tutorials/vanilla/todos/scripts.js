@@ -1,68 +1,104 @@
 window.onload = () => {
+  //instantiate Neuron Store
   const Store = window.Neuron.createStore();
 
+  //Add todoForm store item
   Store.add({
     key: "todoForm",
-    state: { title: "", description: "" },
+    state: { id: "", title: "", description: "" },
     actions: (dispatch) => ({
       updateTitle: (title) =>
         dispatch((payload) => {
+          payload.state = payload.prevState;
           payload.state.title = title;
         }),
       updateDescription: (description) =>
         dispatch((payload) => {
+          payload.state = payload.prevState;
           payload.state.description = description;
         }),
-      resetForm: (dispatch) =>
+      resetForm: () =>
         dispatch((payload) => {
+          payload.state = payload.prevState;
+          payload.state.id = "";
           payload.state.title = "";
           payload.state.description = "";
         }),
     }),
   });
 
-  const defaultTodoState = [
-    {
-      id: crypto.getRandomValues(new Uint32Array(5))[0],
-      title: "Todo 1",
-      description: "This is the first todo",
-    },
-    {
-      id: crypto.getRandomValues(new Uint32Array(5))[0],
-      title: "Todo 2",
-      description: "This is the second todo",
-    },
-    {
-      id: crypto.getRandomValues(new Uint32Array(5))[0],
-      title: "Todo 3",
-      description: "This is the third todo",
-    },
-  ];
-
+  //Add todo list store item
   Store.add({
     key: "todos",
-    state: defaultTodoState,
+    state: [],
     actions: (dispatch) => ({
       removeTodo: (id) =>
         dispatch((payload) => {
-          payload.state.filter((todo) => todo.id !== id);
+          payload.state = payload.prevState.filter((todo) => todo.id !== id);
+        }),
+      addTodo: (todo) =>
+        dispatch((payload) => {
+          const id = crypto.randomUUID().slice(0, 5);
+          const newTodo = { ...todo, id: id };
+          payload.state = [...payload.prevState];
+          payload.state.push(newTodo);
         }),
     }),
   });
 
+  //Store actions
+  const todoFormActions = Store.getActions("todoForm");
+  const todoActions = Store.getActions("todos");
+
+  //Bind event handlers to html nodes
+  const todoFormBtn = document.querySelector("#addTodoButton");
+  const titleControl = document.querySelector("#titleControl");
+  const descriptionControl = document.querySelector("#descriptionControl");
+  titleControl.addEventListener("change", (e) => {
+    todoFormActions.updateTitle(e.target.value);
+  });
+  descriptionControl.addEventListener("change", (e) =>
+    todoFormActions.updateDescription(e.target.value)
+  );
+  todoFormBtn.addEventListener("click", () => {
+    const newTodo = Store.get("todoForm");
+    todoActions.addTodo(newTodo);
+    todoFormActions.resetForm();
+    titleControl.value = "";
+    descriptionControl.value = "";
+  });
+
+  //Initial render of todos on page load
+  renderTodos(Store.get("todos"));
+
+  //Listen to store changes and re render todos
+  Store.onDispatch((payload) => {
+    if (payload.key === "todos") {
+      renderTodos(payload.state);
+    }
+  });
+
+  //renders todos in todoContainer
   function renderTodos(todos) {
     const todoContainer = document.querySelector(".todoContainer");
     todoContainer.innerHTML = todos
       .map(
         (todo) => `
       <div class="todoCard">
-        <h3>${todo.title}</h3>
-        <p>${todo.description}</p>
-        <button>Remove</button>
+      <small><strong>id:</strong> ${todo.id}</small>
+      <h3>${todo.title}</h3>
+      <p>${todo.description}</p>
+      <button id="removeBtn_${todo.id}">Remove</button>
       </div>
-  `
+      `
       )
       .join("");
+    //add event handlers to each card remove button
+    todos.map((todo) => {
+      const removeBtn = document.querySelector(`#removeBtn_${todo.id}`);
+      removeBtn.addEventListener("click", () =>
+        todoActions.removeTodo(todo.id)
+      );
+    });
   }
-  renderTodos(Store.get("todos"));
 };
