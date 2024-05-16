@@ -1,5 +1,5 @@
 import React from "react";
-import Store, { useNeuron } from "./Store";
+import { useNeuron } from "./Store";
 
 const containerStyles: React.CSSProperties = {
   display: "flex",

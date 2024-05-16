@@ -19,7 +19,7 @@ export function createStore<
 export function createPrivateStore<
   S = { [key: string]: unknown },
   M = unknown
->(options: { modules?: Module[] }) {
+>(options?: { modules?: Module[] }) {
   const modules = options?.modules ?? [];
   return new ReactPrivateStore<S, M>({
     ...options,
