@@ -18,13 +18,10 @@ interface IContext<S = { [key: string]: unknown }> {
   useNeuron: UseNeuron<S>;
   useDispatch: UseDispatch<S>;
 }
-export type UsePrivateNeuron<S = StateProps> = <T = unknown, A = ActionProps>(
-  selector: SelectorKey<S> | Selector<S, T>
-) => [T, (value: T | ((prevState: T) => T)) => void, A] | undefined;
 export interface IPrivateStore<S> {
   readonly usePrivateStore: () => void;
   readonly Private: (props: { children?: React.ReactNode }) => JSX.Element;
-  readonly useNeuron: UsePrivateNeuron<S>;
+  readonly useNeuron: UseNeuron<S>;
   readonly useDispatch: UseDispatch<S>;
 }
 export class PrivateStore<S = StateProps, M = ModuleProps>
@@ -54,15 +51,11 @@ export class PrivateStore<S = StateProps, M = ModuleProps>
   useNeuron = <T = unknown, A = ActionProps>(
     selector: SelectorKey<S> | Selector<S, T>
   ) => {
-    try {
-      const context = useContext(this.Context);
-      return context?.useNeuron<T, A>(selector);
-    } catch (err) {
-      console.error(
-        console.error(`Neuron: Private store hooks must be called in scope.`),
-        err
-      );
+    const context = useContext(this.Context);
+    if (context === undefined || context === null) {
+      console.error(`Neuron: Private store hooks must be called in scope.`);
     }
+    return context?.useNeuron<T, A>(selector);
   };
 
   useDispatch = <T = unknown, D = DataProps>(selector: SelectorKey<S>) => {
