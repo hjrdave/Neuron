@@ -24,7 +24,7 @@ export const useNeuron = <T = unknown, A = ActionProps, S = StateProps>(
     [state, _setState] = React.useState<T>(
       selectorIsSlice
         ? getSlice<T, S>(selector as Selector<S, T>, Store)
-        : Store.get<T>(selectorKey)
+        : Store.getRef<T>(selectorKey)
     ),
     [actions] = React.useState<A>(stateActions),
     setState = (value: T | ((prevState: T) => T)) =>

@@ -59,6 +59,8 @@ export class Store<S = StateProps, M = ModuleProps> implements IStore<S, M> {
 
   getState = <T = unknown>(key: SelectorKey<S>) => this.Core.get<T>(key);
 
+  getStateRef = <T = unknown>(key: SelectorKey<S>) => this.Core.getRef<T>(key);
+
   addState = <T = unknown, A = ActionProps>(storeItem: StoreItem<T, S, A>) =>
     this.Core.add<T>(storeItem as StoreItem<T, S>);
 

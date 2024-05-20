@@ -15,13 +15,13 @@ export const useWeakNeuron = <
   Store: CoreStore<S>
 ) => {
   const stateActions = Store.getActions<A>(selectorKey);
-  const [state, _setState] = React.useState<T>(Store.get<T>(selectorKey));
+  const [state, _setState] = React.useState<T>(Store.getRef<T>(selectorKey));
   const [actions] = React.useState<A>(stateActions);
   const setState = (value: T | ((prevState: T) => T)) =>
     Store.set<T>(selectorKey, value);
 
   React.useEffect(() => {
-    _setState(Store.get<T>(selectorKey));
+    _setState(Store.getRef<T>(selectorKey));
   }, [Store, selectorKey]);
 
   React.useEffect(() => {
