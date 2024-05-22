@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Dynamic Text - Neuron Vanilla</title>
+    <meta charset="UTF-8" />
+    <style>
+      body {
+        background-color: #212529;
+        height: 75vh;
+      }
+      .container{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 1rem;
+      }
+      .dynamicText{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        background-color: #57c09b;
+        padding: 1rem;
+        border-radius: .5rem;
+      }
+      #dynamicTextControlContainer {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+      }
+      #dynamicTextControlContainer label {
+        margin-bottom: 10px;
+      }
+      #dynamicTextControlContainer textarea {
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        font-size: 1rem;
+      }
+      #dynamicText {
+        font-size: 2rem;
+        color: white;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        text-align: center;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="dynamicText">
+        <h1>Neuron Vanilla</h1>
+        <div id="dynamicTextControlContainer">
+            <label for="dynamicTextControl">Type a message to display in the box below.</label>
+            <textarea
+              id="dynamicTextControl"
+              rows="4"
+              cols="50"
+            ></textarea>
+          </div>
+        </div>
+      </div>
+      <div>
+        <p id="dynamicText"></p>
+      </div>
+    </div>
+    <script
+      src="https://cdn.jsdelivr.net/npm/@sandstack/neuron@0.0.0-beta.0.74"
+      type="module"
+    ></script>
+    <script>
+      window.onload = (event) => {
+        const Store = Neuron.createStore();
+        Store.add({
+          key: "dynamicText",
+          state: "Hello World!",
+        });
+        function onChange(e) {
+            Store.set("dynamicText", e.target.value);
+        } 
+        const dynamicText = document.querySelector("#dynamicText");
+        dynamicText.innerHTML = Store.get("dynamicText");    
+        Store.onDispatch((payload) => {
+          if (payload.key === "dynamicText") {
+            dynamicText.innerHTML = payload.state;
+          }
+        });
+        
+        //attach events
+        document
+          .querySelector("#dynamicTextControl")
+          .addEventListener("input", onChange);
+      };
+    </script>
+  </body>
+</html>
