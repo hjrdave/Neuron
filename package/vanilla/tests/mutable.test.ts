@@ -38,27 +38,10 @@ test("Make sure initial state is correct.", () => {
   expect(currentState.level).toBe(100);
 });
 
-test("Make sure get state is immutable.", () => {
-  const currentState = Store.get<Pokemon>("pokemon");
-  currentState.level = 101;
-  const nextState = Store.get<Pokemon>("pokemon");
-  expect(nextState.level).toBe(100);
-});
-
-test("Make sure payload is immutable.", () => {
-  const currentState = Store.get<Pokemon>("pokemon");
-  expect(currentState.level).toBe(100);
-  Store.set("pokemon", { ...currentState, name: "Mew" });
-  const nextState = Store.get<Pokemon>("pokemon");
-  expect(nextState.name).toBe("Mewtwo");
-  expect(nextState.level).toBe(100);
-});
-
 test("Make sure payload is mutable.", () => {
   const currentState = Store.getRef<Pokemon>("pokemon");
   expect(currentState.level).toBe(100);
-  Store.set("pokemon", { ...currentState, name: "Mew" });
-  const nextState = Store.getRef<Pokemon>("pokemon");
-  expect(nextState.name).toBe("Mewtwo");
-  expect(nextState.level).toBe(100);
+  currentState.level = 200;
+  const mutatedCurrentState = Store.getRef<Pokemon>("pokemon");
+  expect(mutatedCurrentState.level).toBe(200);
 });

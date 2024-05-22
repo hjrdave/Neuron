@@ -1,23 +1,41 @@
 import React from "react";
-import Store from "./Grid.store";
+import Store, { RowData } from "./Grid.store";
 import GridProvider from "./GridProvider";
 import Columns from "./Columns";
-import RenderRow from "./RenderRows";
+import RenderRows from "./RenderRows";
+import Search from "./Search";
 interface Props {
   columns: string[];
-  data: {
-    [key: string]: string | number;
-  }[];
+  data: RowData[];
 }
 export default function Grid({ columns, data }: Props) {
   return (
     <>
       <Store>
         <GridProvider columns={columns} data={data} />
-        <table>
-          <Columns />
-          <RenderRow />
-        </table>
+        <div style={{}}>
+          <Search />
+          <div
+            style={{
+              overflowY: "scroll",
+              maxHeight: "600px",
+              display: "block",
+            }}
+          >
+            <table
+              style={{
+                width: "100%",
+              }}
+            >
+              <thead>
+                <Columns />
+              </thead>
+              <tbody>
+                <RenderRows />
+              </tbody>
+            </table>
+          </div>
+        </div>
       </Store>
     </>
   );

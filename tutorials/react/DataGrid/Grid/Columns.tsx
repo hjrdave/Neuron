@@ -17,7 +17,10 @@ export default function Columns() {
                 backgroundColor: "grey",
               }}
             >
-              {column}
+              {column
+                .slice(0, 1)
+                .toUpperCase()
+                .concat(column.slice(1, column.length))}
             </th>
           </Fragment>
         ))}
