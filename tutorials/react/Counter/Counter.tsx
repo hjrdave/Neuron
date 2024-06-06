@@ -39,7 +39,7 @@ const btnStyles: React.CSSProperties = {
   cursor: "pointer",
 };
 export default function Counter() {
-  const [counter, setCounter] = useNeuron((state) => state.counter);
+  const [counter, setCounter] = useNeuron<number>("counter");
   return (
     <>
       <div style={containerStyles}>

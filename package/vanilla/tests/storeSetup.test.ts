@@ -22,7 +22,6 @@ const Store = createStore<State>();
 Store.add<string>({
   key: StateKeys.Fruit,
   state: StateValues.Fruit,
-  features: undefined,
 });
 
 Store.add<string>({
@@ -48,10 +47,7 @@ test("Make sure getStore methods work as expected.", () => {
   const expectedValue = {
     key: "fruit",
     state: StateValues.Fruit,
-    type: "string",
-    features: undefined,
   };
   expect(storeItem.key).toBe(expectedValue.key);
   expect(storeItem.state).toBe(expectedValue.state);
-  expect(storeItem.features).toBe(expectedValue.features);
 });
