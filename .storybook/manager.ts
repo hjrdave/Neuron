@@ -17,7 +17,7 @@ addons.setConfig({
   toolbar: {
     title: { hidden: true },
     zoom: { hidden: true },
-    eject: { hidden: true },
+    eject: { hidden: false },
     copy: { hidden: true },
     fullscreen: { hidden: false },
   },
