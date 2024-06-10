@@ -1,6 +1,6 @@
 import { expect, test } from "vitest";
-import { createStore } from "../../vanilla";
-import { Slices, getSlice, setSlice, convertSelector } from "../slices";
+import { createStore } from "../vanilla";
+import { Slices, getSlice, setSlice, convertSelector } from "./slices";
 
 interface Person {
   name: string;
