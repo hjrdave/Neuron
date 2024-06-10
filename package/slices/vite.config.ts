@@ -19,6 +19,7 @@ export default defineConfig({
       fileName: "index",
     },
     rollupOptions: {
+      external: ["../vanilla"],
       output: [
         {
           dir: "./dist",
