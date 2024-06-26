@@ -1,33 +1,36 @@
 import type { IPayload as Payload } from "./Payload";
-import type { DataProps, DispatchMutator, StateType } from "./Interfaces";
+import type { DispatchMutator } from "./Interfaces";
 
-export interface Params {
+export interface Params<S, A> {
   name: string;
-  onLoad?: DispatchMutator<unknown, StateType, DataProps>;
-  onRun?: DispatchMutator<unknown, StateType, DataProps>;
-  onCallback?: DispatchMutator<unknown, StateType, DataProps>;
+  onLoad?: DispatchMutator<S, A>;
+  onRun?: DispatchMutator<S, A>;
+  onCallback?: DispatchMutator<S, A>;
 }
 
-export interface IModule {
+export interface IModule<S, A> {
   readonly name: string;
-  readonly onLoad?: DispatchMutator<unknown, StateType, DataProps>;
-  readonly onRun?: DispatchMutator<unknown, StateType, DataProps>;
-  readonly onCallback?: DispatchMutator<unknown, StateType, DataProps>;
+  readonly onLoad?: DispatchMutator<S, A>;
+  readonly onRun?: DispatchMutator<S, A>;
+  readonly onCallback?: DispatchMutator<S, A>;
 }
-export class Module implements IModule {
+export class Module<S, A> implements IModule<S, A> {
   readonly name: string;
-  private featureOnLoad?: DispatchMutator<unknown, StateType, DataProps>;
-  private featureOnRun?: DispatchMutator<unknown, StateType, DataProps>;
-  private featureOnCallback?: DispatchMutator<unknown, StateType, DataProps>;
+  private featureOnLoad?: DispatchMutator<S, A>;
+  private featureOnRun?: DispatchMutator<S, A>;
+  private featureOnCallback?: DispatchMutator<S, A>;
 
-  readonly onLoad = (payload: Payload<unknown, StateType, DataProps>) =>
-    this.featureOnLoad?.(payload);
-  readonly onRun = (payload: Payload<unknown, StateType, DataProps>) =>
-    this.featureOnRun?.(payload);
-  readonly onCallback = (payload: Payload<unknown, StateType, DataProps>) =>
-    this.featureOnCallback?.(payload);
+  readonly onLoad = <SelectorKey extends keyof S>(
+    payload: Payload<S, A, SelectorKey>
+  ) => this.featureOnLoad?.(payload);
+  readonly onRun = <SelectorKey extends keyof S>(
+    payload: Payload<S, A, SelectorKey>
+  ) => this.featureOnRun?.(payload);
+  readonly onCallback = <SelectorKey extends keyof S>(
+    payload: Payload<S, A, SelectorKey>
+  ) => this.featureOnCallback?.(payload);
 
-  constructor(params: Params) {
+  constructor(params: Params<S, A>) {
     this.name = params.name;
     this.featureOnLoad = params?.onLoad;
     this.featureOnRun = params?.onRun;

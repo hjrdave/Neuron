@@ -1,65 +1,52 @@
 /**
  * This class hold data necessary for updating state and running middleware.
  */
-import type {
-  SelectorKey,
-  Features,
-  StateType,
-  StoreProps,
-  DataProps,
-  GetState,
-  SetState,
-  GetStore,
-} from "./Interfaces";
-export interface Params<T = StateType, S = StoreProps, D = DataProps> {
-  key: SelectorKey<S>;
-  prevState: T;
-  state: T;
-  features?: Features<T, S>;
-  data?: D;
+import type { Features, GetState, SetState } from "./Interfaces";
+export interface Params<S, A, SelectorKey extends keyof S> {
+  key: SelectorKey;
+  prevState: S[SelectorKey];
+  state: S[SelectorKey];
+  features?: Features<S, A>;
+  data?: unknown;
   get: GetState<S>;
   set: SetState<S>;
-  getStore: GetStore<unknown, S>;
 }
 
-export interface IPayload<T = StateType, S = StoreProps, D = DataProps> {
-  readonly key: SelectorKey<S>;
-  readonly features?: Features<T, S>;
-  readonly prevState: T;
-  state: T;
-  data?: D;
+export interface IPayload<S, A, SelectorKey extends keyof S> {
+  readonly key: Readonly<SelectorKey>;
+  readonly features?: Readonly<Features<S, A>>;
+  readonly prevState: Readonly<S[SelectorKey]>;
+  state: S[SelectorKey];
+  data?: unknown;
   readonly get: GetState<S>;
   readonly set: SetState<S>;
-  readonly getStore: GetStore<unknown, S>;
   readonly cancelDispatch: () => void;
   readonly isDispatchCancelled: () => boolean;
 }
 
-export class Payload<T = StateType, S = StoreProps, D = DataProps>
-  implements IPayload<T, S, D>
+export class Payload<S, A, SelectorKey extends keyof S>
+  implements IPayload<S, A, SelectorKey>
 {
-  readonly key: SelectorKey<S>;
-  readonly features?: Features<T, S>;
-  readonly prevState: T;
-  state: T;
-  data?: D;
+  readonly key: Readonly<SelectorKey>;
+  readonly features?: Readonly<Features<S, A>>;
+  readonly prevState: Readonly<S[SelectorKey]>;
+  state: S[SelectorKey];
+  data?: unknown;
   private dispatchCancelled = false;
   readonly get: GetState<S>;
   readonly set: SetState<S>;
-  readonly getStore: GetStore<unknown, S>;
   readonly cancelDispatch = () => {
     this.dispatchCancelled = true;
   };
   readonly isDispatchCancelled = () => this.dispatchCancelled;
 
-  constructor(params: Params<T, S, D>) {
+  constructor(params: Params<S, A, SelectorKey>) {
     this.key = params.key;
-    this.prevState = Object.freeze(params.prevState);
+    this.prevState = params.prevState;
     this.state = params.state;
     this.data = params.data;
-    this.features = Object.freeze(params.features);
-    this.get = Object.freeze(params.get);
-    this.set = Object.freeze(params.set);
-    this.getStore = Object.freeze(params.getStore);
+    this.features = params.features;
+    this.get = params.get;
+    this.set = params.set;
   }
 }

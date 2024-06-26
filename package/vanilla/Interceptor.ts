@@ -3,35 +3,29 @@
  */
 import type { IPayload as Payload } from "./Payload";
 import type { IModule as Module } from "./Module";
-import {
-  Features,
-  InterceptorTypes,
-  StoreProps,
-  StateType,
-  DataProps,
-} from "./Interfaces";
+import { Features, InterceptorTypes } from "./Interfaces";
 
-export interface Params<T = StateType, S = StoreProps, D = DataProps> {
-  payload: Payload<T, S, D>;
-  modules: Map<string, Module>;
+export interface Params<S, A, SelectorKey extends keyof S> {
+  payload: Payload<S, A, SelectorKey>;
+  modules: Map<string, Module<S, A>>;
 }
 export interface IInterceptor {
-  readonly isStateNotPrevState_PrimitiveCheckOnly: () => boolean;
-  readonly isStateNotNullOrUndefined: () => boolean;
-  readonly onload: () => void;
-  readonly onRun: () => void;
-  readonly onCallback: () => void;
+  readonly isStateNotPrevState_PrimitiveCheckOnly: Readonly<() => boolean>;
+  readonly isStateNotNullOrUndefined: Readonly<() => boolean>;
+  readonly onload: Readonly<() => void>;
+  readonly onRun: Readonly<() => void>;
+  readonly onCallback: Readonly<() => void>;
 }
-export class Interceptor<T, S, D> implements IInterceptor {
-  private payload: Payload<T, S, D>;
-  private features?: Features<T, S>;
-  private modules?: Map<string, Module>;
+export class Interceptor<S, A, SelectorKey extends keyof S>
+  implements IInterceptor
+{
+  private payload: Payload<S, A, SelectorKey>;
+  private features?: Features<S, A>;
+  private modules?: Map<string, Module<S, A>>;
   private runModules = (type: InterceptorTypes) =>
-    this.modules?.forEach((module) =>
-      module[type]?.(this.payload as Payload<unknown, unknown>)
-    );
+    this.modules?.forEach((module) => module[type]?.(this.payload));
   private runFeatures = (type: InterceptorTypes) =>
-    this.features?.[type]?.(this.payload as Payload<T, S>);
+    this.features?.[type]?.(this.payload);
 
   readonly isStateNotPrevState_PrimitiveCheckOnly = () =>
     this.payload.prevState !== this.payload.state;
@@ -50,7 +44,7 @@ export class Interceptor<T, S, D> implements IInterceptor {
     this.runFeatures(InterceptorTypes.onCallback)
   );
 
-  constructor(params: Params<T, S, D>) {
+  constructor(params: Params<S, A, SelectorKey>) {
     this.payload = params.payload;
     this.modules = params.modules;
     this.features = params.payload.features;
