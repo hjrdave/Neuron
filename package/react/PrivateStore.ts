@@ -5,34 +5,25 @@ import { Store } from "./Store";
 import { Private } from "./Private";
 import type { UseNeuron } from "./useNeuron";
 import type { UseDispatch } from "./useDispatch";
-import type { StateProps } from "./State";
-import type { ModuleProps } from "./Module";
-import {
-  ActionProps,
-  DataProps,
-  SelectorKey,
-  DispatchMutator,
-} from "../vanilla/Interfaces";
+import { DispatchMutator } from "../vanilla/Interfaces";
 
-interface IContext<S = { [key: string]: unknown }> {
-  useNeuron: UseNeuron<S>;
-  useDispatch: UseDispatch<S>;
+interface IContext<S, A> {
+  useNeuron: UseNeuron<S, A>;
+  useDispatch: UseDispatch<S, A>;
 }
-export interface IPrivateStore<S> {
+export interface IPrivateStore<S, A> {
   readonly usePrivateStore: () => void;
   readonly Private: (props: { children?: React.ReactNode }) => JSX.Element;
-  readonly useNeuron: UseNeuron<S>;
-  readonly useDispatch: UseDispatch<S>;
+  readonly useNeuron: UseNeuron<S, A>;
+  readonly useDispatch: UseDispatch<S, A>;
 }
-export class PrivateStore<S = StateProps, M = ModuleProps>
-  implements IPrivateStore<S>
-{
-  private options?: { modules?: Module[] };
-  private Context: React.Context<IContext<S>>;
-  private ContextState: IContext<S>;
+export class PrivateStore<S, A> implements IPrivateStore<S, A> {
+  private options?: { modules?: Module<S, A>[] };
+  private Context: React.Context<IContext<S, A>>;
+  private ContextState: IContext<S, A>;
 
   usePrivateStore = () => {
-    const storeInstance = new Store<S, M>(this.options);
+    const storeInstance = new Store<S, A>(this.options);
     this.ContextState = {
       useNeuron: storeInstance.useNeuron,
       useDispatch: storeInstance.useDispatch,
@@ -48,21 +39,21 @@ export class PrivateStore<S = StateProps, M = ModuleProps>
       useDispatch: this.ContextState.useDispatch,
     });
 
-  useNeuron = <T = unknown, A = ActionProps>(
-    selector: SelectorKey<S> | Selector<S, T>
+  useNeuron = (<SelectorKey extends keyof S>(
+    selector: SelectorKey | Selector<unknown, S>
   ) => {
     const context = useContext(this.Context);
     if (context === undefined || context === null) {
       console.error(`Neuron: Private store hooks must be called in scope.`);
     }
-    return context?.useNeuron<T, A>(selector);
-  };
+    return context?.useNeuron(selector);
+  }) as UseNeuron<S, A>;
 
-  useDispatch = <T = unknown, D = DataProps>(selector: SelectorKey<S>) => {
+  useDispatch = <SelectorKey extends keyof S>(selector: SelectorKey) => {
     try {
       const context = useContext(this.Context);
-      return (mutator: DispatchMutator<T, S, D>) =>
-        context?.useDispatch<T>(selector, mutator as DispatchMutator<T, S>);
+      return (mutator: DispatchMutator<S, A, SelectorKey>) =>
+        context?.useDispatch(selector, mutator);
     } catch (err) {
       console.error(
         console.error(`Neuron: Private store hooks must be called in scope.`),
@@ -71,12 +62,14 @@ export class PrivateStore<S = StateProps, M = ModuleProps>
     }
   };
 
-  public constructor(options?: { modules?: Module[] }) {
-    this.Context = createContext(null) as unknown as React.Context<IContext<S>>;
+  public constructor(options?: { modules?: Module<S, A>[] }) {
+    this.Context = createContext(null) as unknown as React.Context<
+      IContext<S, A>
+    >;
     this.options = options;
     this.ContextState = {
-      useNeuron: undefined as unknown as UseNeuron<S>,
-      useDispatch: undefined as unknown as UseDispatch<S>,
+      useNeuron: undefined as unknown as UseNeuron<S, A>,
+      useDispatch: undefined as unknown as UseDispatch<S, A>,
     };
   }
 }

@@ -14,9 +14,7 @@ interface Person {
 interface State {
   person: Person;
 }
-enum StateKeys {
-  Person = "person",
-}
+
 const StateValues: State = {
   person: {
     name: "Bob",
@@ -31,17 +29,17 @@ const Store = createStore<State>();
 
 Store.use(Slices);
 
-Store.add<typeof StateValues.person>({
-  key: StateKeys.Person,
+Store.add({
+  key: "person",
   state: StateValues.person,
 });
 
 test("Can get non slice.", () => {
-  const person = getSlice<Person, State>((store) => store.person, Store);
+  const person = getSlice((store) => store.person, Store);
   expect(person.name).toBe(StateValues.person.name);
 });
 test("Get Person data slice.", () => {
-  expect(Store.has(StateKeys.Person)).toBeTruthy();
+  expect(Store.has("person")).toBeTruthy();
   expect(getSlice((store) => store.person.name, Store)).toBe(
     StateValues.person.name
   );
@@ -53,7 +51,7 @@ test("Get Person data slice.", () => {
   );
 });
 test("set Person data slice.", () => {
-  expect(Store.has(StateKeys.Person)).toBeTruthy();
+  expect(Store.has("person")).toBeTruthy();
 
   setSlice((store) => store.person.name, "Bill", Store);
   setSlice((store) => store.person.job.salary, 100000, Store);
@@ -72,9 +70,9 @@ test("Can set non slice.", () => {
       salary: 1000,
     },
   };
-  const selector = convertSelector<State>((store) => store.person);
+  const selector = convertSelector<Person, State>((store) => store.person);
   Store.set(selector.key, updatedPerson);
-  const person = Store.get<Person>(selector.key);
+  const person = Store.get(selector.key);
   expect(person.name).toBe(updatedPerson.name);
   expect(person.age).toBe(updatedPerson.age);
   expect(person.job.company).toBe(updatedPerson.job.company);

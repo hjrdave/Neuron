@@ -11,11 +11,6 @@ interface State {
   pokemon: string;
   trainer: Trainer;
 }
-enum StateKeys {
-  Fruit = "fruit",
-  Pokemon = "pokemon",
-  Trainer = "trainer",
-}
 enum StateValues {
   Fruit = "apple",
   Pokemon = "Pikachu",
@@ -31,15 +26,15 @@ const { State, getState, getStateRef, setState, addState } =
 describe("Check core methods", () => {
   it("Add state to store", () => {
     addState({
-      key: StateKeys.Fruit,
+      key: "fruit",
       state: "apple",
     });
     addState({
-      key: StateKeys.Pokemon,
+      key: "pokemon",
       state: "Pikachu",
     });
     addState({
-      key: StateKeys.Trainer,
+      key: "trainer",
       state: trainer,
     });
   });
@@ -68,15 +63,15 @@ describe("Check core methods", () => {
     expect(pokemonRef).toBe("Mewtwo");
   });
   it("Check immutability of getState method", () => {
-    const trainer = getState<Trainer>("trainer");
+    const trainer = getState("trainer");
     trainer.name = "Gary";
-    const clonedTrainer = getState<Trainer>("trainer");
+    const clonedTrainer = getState("trainer");
     expect(clonedTrainer.name).toBe("Ash");
   });
   it("Check immutability of getStateRef method", () => {
-    const trainer = getStateRef<Trainer>("trainer");
+    const trainer = getStateRef("trainer");
     trainer.name = "Gary";
-    const refTrainer = getStateRef<Trainer>("trainer");
+    const refTrainer = getStateRef("trainer");
     expect(refTrainer.name).toBe("Gary");
   });
 });

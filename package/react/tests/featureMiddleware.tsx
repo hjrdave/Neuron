@@ -41,23 +41,23 @@ describe("Test state feature middleware", () => {
     render(<Store />);
   });
   it("Check initial state", () => {
-    const _pokemon = renderHook(() => useNeuron<string>(StateKeys.Pokemon));
-    const _message = renderHook(() => useNeuron<string>(StateKeys.Message));
+    const _pokemon = renderHook(() => useNeuron("pokemon"));
+    const _message = renderHook(() => useNeuron("message"));
     expect(_message.result.current[0]).toBe(initialMsg);
     expect(_pokemon.result.current[0]).toBe("mewtwo");
   });
   it("Check that onLoad changed default value", () => {
-    const _pokemon = renderHook(() => useNeuron<string>(StateKeys.Pokemon));
+    const _pokemon = renderHook(() => useNeuron("pokemon"));
     expect(_pokemon.result.current[0]).toBe("mewtwo");
   });
   it("Check that onRun changed dispatched value", () => {
-    const _pokemon = renderHook(() => useNeuron<string>(StateKeys.Pokemon));
+    const _pokemon = renderHook(() => useNeuron("pokemon"));
     const setPokemon = _pokemon.result.all[0][1];
     setPokemon("pikachu");
     expect(_pokemon.result.current[0]).toBe("dark pikachu");
   });
   it("Check that onCallback updated message state", () => {
-    const _message = renderHook(() => useNeuron<string>(StateKeys.Message));
+    const _message = renderHook(() => useNeuron("message"));
     expect(_message.result.current[0]).toBe("Pokemon was set to dark pikachu");
   });
 });

@@ -1,6 +1,10 @@
 import { createModule } from "../vanilla";
-import type { Payload as TPayload } from "../vanilla";
-export type Payload = TPayload<string, unknown>;
+import type { SelectorKey, Payload as TPayload } from "../vanilla";
+export type Payload = TPayload<
+  { [key: string]: unknown },
+  { [key: string]: unknown },
+  SelectorKey<{ [key: string]: unknown }>
+>;
 export enum StorageTypes {
   SESSION = "session",
   LOCAL = "local",

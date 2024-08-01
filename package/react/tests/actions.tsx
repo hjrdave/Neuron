@@ -39,7 +39,7 @@ describe("Test state actions", () => {
     render(<Store />);
   });
   it("Check basic actions", () => {
-    const _count = renderHook(() => useNeuron<string>(StateKeys.Count));
+    const _count = renderHook(() => useNeuron(StateKeys.Count));
     const countActions = _count.result.all[0][2];
     expect(_count.result.current[0]).toBe(0);
     countActions.increment();

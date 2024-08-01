@@ -1,26 +1,25 @@
 import React from "react";
 import type { UseDispatch } from "./useDispatch";
 import type { UseNeuron } from "./useNeuron";
-import type { StateProps } from "./State";
 
-interface ContextProps<S = StateProps> {
-  useNeuron: UseNeuron<S>;
-  useDispatch: UseDispatch<S>;
+interface ContextProps<S, A> {
+  useNeuron: UseNeuron<S, A>;
+  useDispatch: UseDispatch<S, A>;
 }
-interface Props<S = StateProps> {
+interface Props<S, A> {
   children?: React.ReactNode;
-  context: React.Context<ContextProps<S>>;
-  useNeuron: UseNeuron<S>;
-  useDispatch: UseDispatch<S>;
+  context: React.Context<ContextProps<S, A>>;
+  useNeuron: UseNeuron<S, A>;
+  useDispatch: UseDispatch<S, A>;
 }
 
-export function Private<S = StateProps>({
+export function Private<S, A>({
   children,
   context: Context,
   useNeuron,
   useDispatch,
-}: Props<S>) {
-  const [contextProps] = React.useState<ContextProps<S>>({
+}: Props<S, A>) {
+  const [contextProps] = React.useState<ContextProps<S, A>>({
     useNeuron,
     useDispatch,
   });

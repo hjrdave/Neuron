@@ -12,7 +12,7 @@ enum StateValues {
 }
 const Store = createStore<State>();
 
-Store.add<string, { foo: string }>({
+Store.add({
   key: StateKeys.Fruit,
   state: StateValues.Fruit,
   features: {
@@ -25,7 +25,7 @@ Store.add<string, { foo: string }>({
 
 test("Make sure dispatch data is passed.", () => {
   expect(Store.get(StateKeys.Fruit)).toBe(StateValues.Fruit);
-  Store.dispatch<string, { foo: string }>("fruit", (payload) => {
+  Store.dispatch("fruit", (payload) => {
     payload.data = { foo: "Big" };
   });
   expect(Store.get(StateKeys.Fruit)).toBe("Big Apple");

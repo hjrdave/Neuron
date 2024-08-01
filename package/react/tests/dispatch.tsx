@@ -16,7 +16,7 @@ enum StateValues {
   Pokemon = "Pikachu",
 }
 
-const { useWeakNeuron, State } = createStore<State>();
+const { useDispatch, useNeuron, State } = createStore<State>();
 
 function Store() {
   return (
@@ -32,18 +32,22 @@ describe("Update state with a weak neuron", () => {
     render(<Store />);
   });
   it("Check initial state values", () => {
-    const _fruit = renderHook(() => useWeakNeuron<string>(StateKeys.Fruit));
-    const _pokemon = renderHook(() => useWeakNeuron<string>(StateKeys.Pokemon));
+    const _fruit = renderHook(() => useNeuron("fruit"));
+    const _pokemon = renderHook(() => useNeuron("pokemon"));
     expect(_fruit.result.current[0]).toBe(StateValues.Fruit);
     expect(_pokemon.result.current[0]).toBe(StateValues.Pokemon);
   });
-  it("Update state", () => {
-    const _fruit = renderHook(() => useWeakNeuron<string>(StateKeys.Fruit));
-    const _pokemon = renderHook(() => useWeakNeuron<string>(StateKeys.Pokemon));
-    const setFruit = _fruit.result.all[0][1];
-    const setPokemon = _pokemon.result.all[0][1];
-    setFruit("orange");
-    setPokemon("Jigglypuff");
+  it("Update state with useDispatch", () => {
+    const _fruit = renderHook(() => useNeuron("fruit"));
+    const _pokemon = renderHook(() => useNeuron("pokemon"));
+    const dispatchFruit = renderHook(() => useDispatch("fruit"));
+    const dispatchPokemon = renderHook(() => useDispatch("pokemon"));
+    dispatchFruit.result.current((payload) => {
+      payload.state = "orange";
+    });
+    dispatchPokemon.result.current((payload) => {
+      payload.state = "Jigglypuff";
+    });
     expect(_fruit.result.current[0]).toBe("orange");
     expect(_pokemon.result.current[0]).toBe("Jigglypuff");
   });

@@ -4,21 +4,21 @@ import { expect, test } from "vitest";
 interface State {
   fruit: string;
 }
-enum StateKeys {
-  Fruit = "fruit",
-}
 enum StateValues {
   Fruit = "Apple",
 }
-const Store = createStore<State>();
 
-interface FruitActions {
-  changeFruitToOrange: () => void;
-  changeFruitToKiwi: () => void;
+interface Actions {
+  fruit: {
+    changeFruitToOrange: () => void;
+    changeFruitToKiwi: () => void;
+  };
 }
-Store.add<string, FruitActions>({
-  //types are wrong
-  key: StateKeys.Fruit,
+
+const Store = createStore<State, Actions>();
+
+Store.add({
+  key: "fruit",
   state: StateValues.Fruit,
   actions: (dispatch) => ({
     changeFruitToOrange: () => {
@@ -34,8 +34,7 @@ Store.add<string, FruitActions>({
   }),
 });
 
-const fruitActions = Store.getActions<FruitActions>("fruit");
-
+const fruitActions = Store.getActions("fruit");
 test("Test action methods.", () => {
   expect(Store.get("fruit")).toBe("Apple");
   fruitActions.changeFruitToKiwi();

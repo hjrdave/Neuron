@@ -13,6 +13,7 @@ import type {
   DispatchMutator,
   GetState,
   SetState,
+  GetStore,
   AddState,
   DispatchPayload,
   OnDispatch,
@@ -24,22 +25,30 @@ import type {
 export interface Params<S, A> {
   modules?: IModule<S, A>[];
 }
-export interface IStore<S, A> {
-  readonly use: UseModule<S, A>;
-  readonly add: AddState<S, A>;
+export interface IStore<
+  S = { [key: string]: unknown },
+  A = { [key: string]: unknown }
+> {
+  readonly use: UseModule;
+  readonly add: AddState<S, A, Features<S, A, SelectorKey<S>>>;
   readonly get: GetState<S>;
   readonly getRef: GetState<S>;
   readonly getActions: GetActions<A>;
+  readonly getStore: GetStore<S, A>;
   readonly set: SetState<S>;
   readonly has: HasState<S>;
-  readonly dispatch: DispatchPayload<S>;
+  readonly dispatch: DispatchPayload<S, A>;
   readonly onDispatch: OnDispatch<S, A>;
 }
 
-export class Store<S, A> implements IStore<S, A> {
+export class Store<
+  S = { [key: string]: unknown },
+  A = { [key: string]: unknown }
+> implements IStore<S, A>
+{
   private stateInventory: Map<SelectorKey<S>, S>;
-  private featureInventory: Map<SelectorKey<S>, Features<S, A>>;
-  private actionsInventory: Map<SelectorKey<S>, A>;
+  private featureInventory: Map<SelectorKey<S>, Features<S, A, SelectorKey<S>>>;
+  private actionsInventory: Map<SelectorKey<A>, A>;
   private moduleInventory: Map<string, IModule<S, A>>;
   private dispatcher: IDispatcher<S, A, SelectorKey<S>>;
 
@@ -52,16 +61,21 @@ export class Store<S, A> implements IStore<S, A> {
       payload: payload,
       modules: this.moduleInventory,
     });
-    type === InterceptorTypes.OnLoad
-      ? interceptor.onload()
-      : interceptor.onRun();
+    if (type === InterceptorTypes.OnLoad) {
+      interceptor.onload();
+    } else {
+      interceptor.onRun();
+    }
     if (
       interceptor.isStateNotPrevState_PrimitiveCheckOnly() &&
       interceptor.isStateNotNullOrUndefined()
     ) {
       if (!payload.isDispatchCancelled()) {
         this.dispatcher.dispatch(payload);
-        this.stateInventory.set(payload.key as SelectorKey, payload.state as S);
+        this.stateInventory.set(
+          payload.key as unknown as keyof S,
+          payload.state as S
+        );
       }
     }
     type === InterceptorTypes.OnLoad ? null : interceptor.onCallback();
@@ -72,17 +86,17 @@ export class Store<S, A> implements IStore<S, A> {
     SelectorKey extends keyof S,
     ActionKey extends keyof A
   >(
-    params: StoreItem<SelectorKey, S[SelectorKey], A[ActionKey], Features<S, A>>
+    params: StoreItem<S, A, Features<S, A, SelectorKey>, SelectorKey, ActionKey>
   ) => {
     // @ts-expect-error - Payload props are missmatching expected props for some reason
     const payload = new Payload<S, A, SelectorKey>({
       key: params.key,
       prevState: this.stateInventory.get(params.key),
       state: params.state,
-      features: (params.features ??
-        this.featureInventory.get(params.key)) as Features<S, A>,
+      features: params.features ?? this.featureInventory.get(params.key),
       get: this.get,
       set: this.set,
+      getStore: this.getStore,
     });
     return payload;
   };
@@ -91,8 +105,28 @@ export class Store<S, A> implements IStore<S, A> {
    * Includes modules into store. Modules can be used to extend Neuron stores, with new features and functionality. Modules should be included above store item add methods.
    * @param {Module} module - imported module object
    */
-  readonly use = (module: IModule<S, A>) =>
+  readonly use = (module: IModule) =>
     this.moduleInventory.set(module.name, module);
+
+  /**
+   * Returns an array of store items.
+   */
+  readonly getStore = <
+    SelectorKey extends keyof S,
+    ActionKey extends keyof A
+  >() =>
+    Array.from(this.stateInventory.entries()).map(([key, state]) => ({
+      key,
+      state,
+      actions: this.actionsInventory.get(key as unknown as keyof A),
+      features: this.featureInventory.get(key),
+    })) as StoreItem<
+      S,
+      A,
+      Features<S, A, SelectorKey>,
+      SelectorKey,
+      ActionKey
+    >[];
 
   /**
    * Instantiates a store item.
@@ -103,7 +137,7 @@ export class Store<S, A> implements IStore<S, A> {
     state,
     actions,
     features,
-  }: StoreItem<SelectorKey, S[SelectorKey], A[ActionKey], Features<S, A>>) => {
+  }: StoreItem<S, A, Features<S, A, keyof S>, SelectorKey, ActionKey>) => {
     if (!this.stateInventory.has(key)) {
       const payload = this.createPayload({
         key: key,
@@ -111,12 +145,15 @@ export class Store<S, A> implements IStore<S, A> {
         features: features,
       });
       features
-        ? this.featureInventory.set(payload.key as unknown as keyof S, features)
+        ? this.featureInventory.set(
+            payload.key as unknown as keyof S,
+            features as Features<S, A, keyof S>
+          )
         : null;
       actions
         ? this.actionsInventory.set(
-            payload.key as unknown as keyof S,
-            actions as unknown as A
+            payload.key as unknown as keyof A,
+            actions as A
           )
         : null;
       this.dispatchPayload(payload, InterceptorTypes.OnLoad);
@@ -129,9 +166,9 @@ export class Store<S, A> implements IStore<S, A> {
    * @param {string} selector - key of the store item you want to select.
    */
   readonly get = <SelectorKey extends keyof S>(selector: SelectorKey) => {
-    const state = this.stateInventory.get(selector) as S[SelectorKey];
+    const state = this.stateInventory.get(selector);
     const clonedState = structuredClone?.(state) ?? state;
-    return clonedState;
+    return clonedState as S[SelectorKey];
   };
 
   /**
@@ -148,7 +185,7 @@ export class Store<S, A> implements IStore<S, A> {
    * @param {string} selector - key of the store item you want to select.
    */
   readonly getActions = <ActionKey extends keyof A>(selector: ActionKey) => {
-    const dispatch = (mutator: DispatchMutator<S, A>) =>
+    const dispatch = (mutator: DispatchMutator<S, A, keyof S>) =>
       this.dispatch(selector as unknown as keyof S, mutator);
     // @ts-expect-error - type error for selector and also says no call signature even though there is one.
     return (this.actionsInventory.get(selector)?.(dispatch) ??
@@ -192,7 +229,7 @@ export class Store<S, A> implements IStore<S, A> {
    */
   readonly dispatch = <SelectorKey extends keyof S>(
     key: SelectorKey,
-    mutator: DispatchMutator<S, A>
+    mutator: DispatchMutator<S, A, SelectorKey>
   ) => {
     const payload = this.createPayload({
       key: key,
@@ -205,7 +242,7 @@ export class Store<S, A> implements IStore<S, A> {
    * This function will fire anytime there is a store change. This is used to make state reactive.
    * @param {(payload) => void} callback - key of the store item you want to select.
    */
-  readonly onDispatch = (callback: DispatchCallback<S, A>) => {
+  readonly onDispatch = (callback: DispatchCallback<S, A, SelectorKey<S>>) => {
     this.stateInventory.forEach((_, key) => this.dispatcher.stopListening(key));
     this.stateInventory.forEach((_, key) =>
       this.dispatcher.listen(key, callback)
@@ -218,6 +255,8 @@ export class Store<S, A> implements IStore<S, A> {
     this.actionsInventory = new Map();
     this.moduleInventory = new Map();
     this.dispatcher = new Dispatcher();
-    params?.modules?.forEach((module) => this.use(module));
+    params?.modules?.forEach((module) =>
+      this.use(module as unknown as IModule)
+    );
   }
 }

@@ -1,5 +1,8 @@
 import React from "react";
-import type { Store as CoreStore } from "../vanilla";
+import type {
+  Store as CoreStore,
+  SelectorKey as TSelectorKey,
+} from "../vanilla";
 import {
   getSlice,
   setSlice,
@@ -7,49 +10,75 @@ import {
   convertSelector,
 } from "../slices";
 import { Selector } from "../slices";
-import type { StateProps } from "./State";
-import { ActionProps, SelectorKey } from "../vanilla/Interfaces";
 
-export type UseNeuron<S = StateProps> = <T = unknown, A = ActionProps>(
-  selector: SelectorKey<S> | Selector<S, T>
-) => [T, (value: T | ((prevState: T) => T)) => void, A];
+export type UseNeuron<S, A> = <
+  SelectorKey extends keyof S,
+  ActionKey extends keyof A
+>(
+  selector: SelectorKey | Selector<unknown, S>
+) => [
+  S[SelectorKey],
+  (
+    value: S[SelectorKey] | ((prevState: S[SelectorKey]) => S[SelectorKey])
+  ) => void,
+  A[ActionKey]
+];
 
-export const useNeuron = <T = unknown, A = ActionProps, S = StateProps>(
-  selector: SelectorKey<S> | Selector<S, T>,
-  Store: CoreStore<S>
+export const useNeuron = <
+  S,
+  A,
+  SelectorKey extends keyof S,
+  ActionKey extends keyof A,
+  T
+>(
+  selector: TSelectorKey<S> | Selector<T, S>,
+  Store: CoreStore<S, A>
 ) => {
-  const { key: selectorKey, isSlice: selectorIsSlice } =
-      convertSelector<S>(selector),
-    stateActions = Store.getActions<A>(selectorKey),
-    [state, _setState] = React.useState<T>(
-      selectorIsSlice
-        ? getSlice<T, S>(selector as Selector<S, T>, Store)
-        : Store.getRef<T>(selectorKey)
-    ),
-    [actions] = React.useState<A>(stateActions),
-    setState = (value: T | ((prevState: T) => T)) =>
-      selectorIsSlice
-        ? setSlice<T, S>(
-            selector as Selector<S, T>,
-            value as T /**This needs to account for functions */,
-            Store
-          )
-        : Store.set<T>(selectorKey, value);
+  const { key: selectorKey, isSlice: selectorIsSlice } = convertSelector<
+    unknown,
+    S
+  >(selector);
+  const stateActions = Store.getActions(selectorKey as unknown as ActionKey);
+  const defaultValue = selectorIsSlice
+    ? getSlice(
+        selector as Selector<unknown, S>,
+        Store as unknown as CoreStore<S, { [key: string]: unknown }>
+      )
+    : Store.getRef(selectorKey);
+  const [state, _setState] = React.useState(defaultValue);
+  const [actions] = React.useState(stateActions);
+  const setState = (
+    value: S[SelectorKey] | ((prevState: S[SelectorKey]) => S[SelectorKey])
+  ) => {
+    if (selectorIsSlice) {
+      setSlice(
+        selector as Selector<unknown, S>,
+        value /**This needs to account for functions */,
+        Store as unknown as CoreStore<S, { [key: string]: unknown }>
+      );
+    } else {
+      Store.set(selectorKey as SelectorKey, value);
+    }
+  };
 
   Store?.onDispatch((payload) => {
     if (payload.key === selectorKey) {
       if (selectorIsSlice) {
-        const newSliceState = updateStateWithSlice<S>(
-          selector as Selector<S, T>,
-          payload.state as S
+        const newSliceState = updateStateWithSlice(
+          selector as Selector<unknown, S>,
+          payload.state
         );
-        _setState(newSliceState as React.SetStateAction<T>);
+        _setState(newSliceState);
       } else {
-        const newState = payload.state as T;
+        const newState = payload.state;
         _setState(newState);
       }
     }
   });
 
-  return [state, setState, actions] as [T, typeof setState, A];
+  return [state, setState, actions] as [
+    typeof state,
+    typeof setState,
+    A[ActionKey]
+  ];
 };

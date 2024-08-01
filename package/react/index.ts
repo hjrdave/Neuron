@@ -7,22 +7,22 @@ const DefaultModules = [Slices];
 
 export function createStore<
   S = { [key: string]: unknown },
-  M = unknown
->(options?: { modules?: Module[] }) {
+  A = { [key: string]: unknown }
+>(options?: { modules?: Module<S, A>[] }) {
   const modules = options?.modules ?? [];
-  return new ReactStore<S, M>({
+  return new ReactStore<S, A>({
     ...options,
-    modules: [...DefaultModules, ...modules],
+    modules: [...DefaultModules, ...modules] as Module<S, A>[],
   });
 }
 
 export function createPrivateStore<
   S = { [key: string]: unknown },
-  M = unknown
->(options?: { modules?: Module[] }) {
+  A = { [key: string]: unknown }
+>(options?: { modules?: Module<S, A>[] }) {
   const modules = options?.modules ?? [];
-  return new ReactPrivateStore<S, M>({
+  return new ReactPrivateStore<S, A>({
     ...options,
-    modules: [...DefaultModules, ...modules],
+    modules: [...DefaultModules, ...modules] as Module<S, A>[],
   });
 }

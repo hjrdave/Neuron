@@ -11,34 +11,40 @@ export type Props = { [key: string]: unknown };
 
 export type SelectorKey<S> = keyof S;
 
-export type Actions<A, S, D> = (
-  dispatch: (mutator: DispatchMutator<S, D>) => void
+export type Actions<A, S, SelectorKey extends keyof S> = (
+  dispatch: (mutator: DispatchMutator<S, A, SelectorKey>) => void
 ) => A;
 
-export type DispatchMutator<S, A> = <SelectorKey extends keyof S>(
+export type DispatchMutator<S, A, SelectorKey extends keyof S> = (
   payload: Payload<S, A, SelectorKey>
 ) => void;
 
-export type DispatchCallback<S, A> = DispatchMutator<S, A>;
+export type DispatchCallback<
+  S,
+  A,
+  SelectorKey extends keyof S
+> = DispatchMutator<S, A, SelectorKey>;
 
-export type DispatchPayload<S, D = undefined> = <SelectorKey extends keyof S>(
+export type DispatchPayload<S, A> = <SelectorKey extends keyof S>(
   key: SelectorKey,
-  mutator: DispatchMutator<S, D>
+  mutator: DispatchMutator<S, A, SelectorKey>
 ) => void;
 
-export type OnDispatch<S, A> = (callback: DispatchCallback<S, A>) => void;
+export type OnDispatch<S, A> = (
+  callback: DispatchCallback<S, A, SelectorKey<S>>
+) => void;
 
-export type AddState<S, A> = <
+export type AddState<S, A, F> = <
   SelectorKey extends keyof S,
   ActionKey extends keyof A
 >(
-  storeItem: StoreItem<
-    SelectorKey,
-    S[SelectorKey],
-    A[ActionKey],
-    Features<S, A>
-  >
+  storeItem: StoreItem<S, A, F, SelectorKey, ActionKey>
 ) => void;
+
+export type GetStore<S, A> = <
+  SelectorKey extends keyof S,
+  ActionKey extends keyof A
+>() => StoreItem<S, A, Features<S, A, SelectorKey>, SelectorKey, ActionKey>[];
 
 export type GetState<S> = <SelectorKey extends keyof S>(
   selector: SelectorKey
@@ -51,21 +57,29 @@ export type SetState<S> = <SelectorKey extends keyof S>(
 
 export type HasState<S> = (key: SelectorKey<S>) => boolean;
 
-export type UseModule<S, A> = (module: Module<S, A>) => void;
+export type UseModule = (module: Module) => void;
 
 export type GetActions<A> = <ActionKey extends keyof A>(
   selector: ActionKey
 ) => A[ActionKey];
 
-export interface StoreItem<SelectorKey, State, Actions, Features> {
+export interface StoreItem<
+  S,
+  A,
+  F,
+  SelectorKey extends keyof S,
+  ActionKey extends keyof A
+> {
   key: SelectorKey;
-  state: State;
-  actions?: Actions;
-  features?: Features;
+  state: S[SelectorKey];
+  actions?: (
+    dispatch: (mutator: (payload: Payload<S, A, SelectorKey>) => void) => void
+  ) => A[ActionKey];
+  features?: F;
 }
 
-export interface Features<S, A> {
-  onLoad?: DispatchMutator<S, A>;
-  onRun?: DispatchMutator<S, A>;
-  onCallback?: DispatchMutator<S, A>;
+export interface Features<S, A, SelectorKey extends keyof S> {
+  onLoad?: DispatchMutator<S, A, SelectorKey>;
+  onRun?: DispatchMutator<S, A, SelectorKey>;
+  onCallback?: DispatchMutator<S, A, SelectorKey>;
 }

@@ -1,7 +1,10 @@
 import { createModule } from "../vanilla";
-import type { Payload as TPayload } from "../vanilla";
-import { IPayload } from "../vanilla/Payload";
-export type Payload = TPayload<string, unknown>;
+import type { SelectorKey, Payload as TPayload } from "../vanilla";
+export type Payload = TPayload<
+  { [key: string]: unknown },
+  { [key: string]: unknown },
+  SelectorKey<{ [key: string]: unknown }>
+>;
 
 export interface ShallowProps {
   shallow?: boolean;
@@ -46,7 +49,7 @@ export const shallowEqual = <T>(a: T, b: T) => {
   return false;
 };
 
-const runShallowCheck = (payload: IPayload<unknown, unknown, ShallowProps>) => {
+const runShallowCheck = (payload: Payload) => {
   const dispatchShouldCancel = shallowEqual(payload.prevState, payload.state);
   if (dispatchShouldCancel) {
     payload.cancelDispatch();

@@ -14,10 +14,6 @@ interface State {
   person: Person;
   list: string[];
 }
-enum StateKeys {
-  Person = "person",
-  List = "list",
-}
 const StateValues: State = {
   person: {
     name: "Bob",

@@ -5,7 +5,10 @@ import type { IPayload as Payload } from "./Payload";
 import type { DispatchCallback } from "./Interfaces";
 
 export interface IDispatcher<S, A, SelectorKey extends keyof S> {
-  listen: (key: SelectorKey, callbackfn: DispatchCallback<S, A>) => void;
+  listen: (
+    key: SelectorKey,
+    callbackfn: DispatchCallback<S, A, SelectorKey>
+  ) => void;
   stopListening: (key: SelectorKey) => void;
   dispatch: (payload: Payload<S, A, SelectorKey>) => void;
 }
@@ -13,10 +16,16 @@ export interface IDispatcher<S, A, SelectorKey extends keyof S> {
 export class Dispatcher<S, A, SelectorKey extends keyof S>
   implements IDispatcher<S, A, SelectorKey>
 {
-  private eventEmitters: Map<SelectorKey, DispatchCallback<S, A>[]>;
+  private eventEmitters: Map<
+    SelectorKey,
+    DispatchCallback<S, A, SelectorKey>[]
+  >;
   private payload?: Payload<S, A, SelectorKey>;
 
-  listen = (key: SelectorKey, callback: DispatchCallback<S, A>) => {
+  listen = (
+    key: SelectorKey,
+    callback: DispatchCallback<S, A, SelectorKey>
+  ) => {
     const emitter = () => (this.payload ? callback?.(this.payload) : null);
     const allEmitters = this.eventEmitters.get(key);
     allEmitters

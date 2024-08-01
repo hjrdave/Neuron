@@ -3,22 +3,25 @@ import type { DispatchMutator } from "./Interfaces";
 
 export interface Params<S, A> {
   name: string;
-  onLoad?: DispatchMutator<S, A>;
-  onRun?: DispatchMutator<S, A>;
-  onCallback?: DispatchMutator<S, A>;
+  onLoad?: DispatchMutator<S, A, keyof S>;
+  onRun?: DispatchMutator<S, A, keyof S>;
+  onCallback?: DispatchMutator<S, A, keyof S>;
 }
 
-export interface IModule<S, A> {
+export interface IModule<
+  S = { [key: string]: unknown },
+  A = { [key: string]: unknown }
+> {
   readonly name: string;
-  readonly onLoad?: DispatchMutator<S, A>;
-  readonly onRun?: DispatchMutator<S, A>;
-  readonly onCallback?: DispatchMutator<S, A>;
+  readonly onLoad?: DispatchMutator<S, A, keyof S>;
+  readonly onRun?: DispatchMutator<S, A, keyof S>;
+  readonly onCallback?: DispatchMutator<S, A, keyof S>;
 }
 export class Module<S, A> implements IModule<S, A> {
   readonly name: string;
-  private featureOnLoad?: DispatchMutator<S, A>;
-  private featureOnRun?: DispatchMutator<S, A>;
-  private featureOnCallback?: DispatchMutator<S, A>;
+  private featureOnLoad?: DispatchMutator<S, A, keyof S>;
+  private featureOnRun?: DispatchMutator<S, A, keyof S>;
+  private featureOnCallback?: DispatchMutator<S, A, keyof S>;
 
   readonly onLoad = <SelectorKey extends keyof S>(
     payload: Payload<S, A, SelectorKey>

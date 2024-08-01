@@ -1,96 +1,96 @@
 import { createModule, Store } from "../vanilla";
 import type { Payload } from "../vanilla";
-import type { SelectorKey, StateType } from "../vanilla/Interfaces";
 
-export type Selector<S = StateType, T = unknown> = (store: S) => T;
+export type Selector<T, S> = (store: S) => T;
 
-interface DispatchData<S> {
-  selector: Selector<S>;
-  newSliceState?: unknown;
+interface DispatchData<T, S> {
+  selector?: Selector<T, S>;
+  newSliceState?: T;
 }
 
-export const convertSelector = <S>(selector: SelectorKey<S> | Selector<S>) => {
+const selectorToArray = <T, S>(selector: Selector<T, S>) => {
+  const funcToSelectorString = selector
+    ?.toString()
+    .match(/\(\w+\) =>\s*(\S+)/)?.[1];
+
   const selectorArray =
-      (
-        selector?.toString().match(/return\s+([a-zA-Z0-9_$.]+)\s*;/)?.[1] ??
-        selector?.toString()
-      )?.split(".") || [],
-    selectorKey = (
-      selectorArray.length <= 1 ? selector : selectorArray[1]
-    ) as SelectorKey<S>,
-    isSlice = selectorArray.length > 2;
-
-  return {
-    key: selectorKey,
-    isSlice: isSlice,
-  };
+    typeof funcToSelectorString === "string"
+      ? funcToSelectorString?.split(".")
+      : [] ?? [];
+  return selectorArray;
+  return [];
 };
-
-export const getSlice = <T, S>(selector: Selector<S>, Store: Store<S>): T => {
-  const state: S = Store.getStore().reduce(
-    (acc, item) => ({ ...acc, [item.key]: item.state }),
-    {} as S
-  );
-  return selector(state) as T;
-};
-
-export const setSlice = <T, S>(
-  selector: Selector<S>,
-  newState: T,
-  Store: Store<S>
+export const convertSelector = <T, S, SelectorKey extends keyof S>(
+  selector: Selector<T, S>
 ) => {
-  Store.dispatch<DispatchData<S>>(
-    convertSelector<S>(selector).key,
-    (payload) => {
-      payload.data = {
-        selector: selector,
-        newSliceState: newState,
-      };
-    }
-  );
+  const selectorArray = selectorToArray(selector);
+  const selectorKey = selectorArray[1] as SelectorKey;
+  return selectorKey;
 };
 
-export const updateStateWithSlice = <State>(
-  selector: Selector<State>,
-  state: State
-): unknown => {
+export const convertActionSelector = <T, A, ActionKey extends keyof A>(
+  selector: Selector<T, A>
+) => {
+  const actionArray = selectorToArray(selector);
+  const actionKey = actionArray[1] as ActionKey;
+  return actionKey;
+};
+
+export const getSlice = <T, S, A>(
+  selector: Selector<T, S>,
+  Store: Store<S, A>
+) => {
+  const state = Store.getStore().reduce(
+    (acc, item) => ({ ...acc, [item.key]: item.state }),
+    {}
+  ) as S & A;
+  return selector(state);
+};
+
+export const setSlice = <T, S, A>(
+  selector: Selector<T, S>,
+  newState: T,
+  Store: Store<S, A>
+) => {
+  Store.dispatch(convertSelector(selector), (payload) => {
+    payload.data = {
+      selector: selector,
+      newSliceState: newState,
+    };
+  });
+};
+
+export const updateStateWithSlice = <T, S>(
+  selector: Selector<T, S>,
+  state: T
+): T => {
   const pathArray = selector.toString().split(".").slice(2);
   return pathArray.reduce((slice, key) => slice?.[key], state);
 };
 
-const deepStateUpdate = (payload: Payload) => {
+const deepStateUpdate = <T, S, A, SelectorKey extends keyof S>(
+  payload: Payload<S, A, SelectorKey>
+) => {
   const storeState = payload?.prevState;
-  const dispatchData = payload?.data;
-  if (
-    typeof storeState === "object" &&
-    dispatchData?.selector !== undefined &&
-    dispatchData?.newSliceState !== undefined
-  ) {
-    const { selector, newSliceState } = dispatchData;
-    const selectorToArray: string[] =
-      (
-        selector?.toString().match(/return\s+([a-zA-Z0-9_$.]+)\s*;/)?.[1] ??
-        selector?.toString()
-      )?.split(".") || [];
-
+  const dispatchData = payload?.data as DispatchData<T, S>;
+  const { selector, newSliceState } = dispatchData;
+  if (selector) {
+    const selectorArray = selectorToArray(selector);
     const getAllStoreState = () => {
       let allState = {};
-      payload.getStore().map((item) => {
+      const storeItems = payload.getStore();
+      storeItems.map((item) => {
         allState = { ...allState, [item.key]: item.state };
       });
-      return allState;
+      return allState as S;
     };
-    // @ts-expect-error - A selector could be "(prev) => void"
-    const currentSlice = selector?.(getAllStoreState());
-    const newSlice =
-      typeof newSliceState === "function"
-        ? newSliceState?.(currentSlice)
-        : newSliceState;
-    if (currentSlice !== newSlice) {
+    const allStoreState = getAllStoreState();
+    const currentSlice = selector?.(allStoreState);
+    if (currentSlice !== newSliceState) {
       const deepUpdate = (
         propPath: string[],
-        value: unknown,
-        objToUpdate: { [key: string]: unknown }
+        value: T | undefined,
+        objToUpdate: S[SelectorKey]
       ) => {
         const propAmount = propPath.length;
         for (let i = 0; i < propAmount - 1; i++) {
@@ -98,13 +98,13 @@ const deepStateUpdate = (payload: Payload) => {
           if (!objToUpdate[elem]) {
             objToUpdate[elem] = {};
           } else {
-            objToUpdate = objToUpdate[elem] as { [key: string]: unknown };
+            objToUpdate = objToUpdate[elem];
           }
         }
         objToUpdate[propPath[propAmount - 1]] = value;
       };
-      const storeStateClone = { ...storeState };
-      deepUpdate(selectorToArray.slice(2), newSlice, storeStateClone);
+      const storeStateClone = { ...storeState } as S[SelectorKey];
+      deepUpdate(selectorArray, newSliceState, storeStateClone);
       payload.state = storeStateClone;
     }
   }
@@ -112,5 +112,5 @@ const deepStateUpdate = (payload: Payload) => {
 
 export const Slices = createModule({
   name: "slices",
-  onRun: (payload) => deepStateUpdate(payload as Payload),
+  onRun: (payload) => deepStateUpdate(payload),
 });

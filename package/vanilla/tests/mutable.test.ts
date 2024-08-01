@@ -13,7 +13,7 @@ interface State {
 }
 const Store = createStore<State>();
 
-Store.add<Pokemon>({
+Store.add({
   key: "pokemon",
   state: {
     number: 150,
@@ -34,14 +34,14 @@ Store.add<Pokemon>({
 });
 
 test("Make sure initial state is correct.", () => {
-  const currentState = Store.get<Pokemon>("pokemon");
+  const currentState = Store.get("pokemon");
   expect(currentState.level).toBe(100);
 });
 
 test("Make sure payload is mutable.", () => {
-  const currentState = Store.getRef<Pokemon>("pokemon");
+  const currentState = Store.getRef("pokemon");
   expect(currentState.level).toBe(100);
   currentState.level = 200;
-  const mutatedCurrentState = Store.getRef<Pokemon>("pokemon");
+  const mutatedCurrentState = Store.getRef("pokemon");
   expect(mutatedCurrentState.level).toBe(200);
 });

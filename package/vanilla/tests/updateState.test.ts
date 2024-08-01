@@ -6,42 +6,33 @@ interface State {
   person: string;
   car: string;
 }
-enum StateKeys {
-  Fruit = "fruit",
-  Person = "person",
-  Car = "car",
-}
-enum StateValues {
-  Fruit = "Apple",
-  Person = "James",
-  Car = "Toyota",
-}
+
 const Store = createStore<State>();
 
-Store.add<string>({
-  key: StateKeys.Fruit,
-  state: StateValues.Fruit,
+Store.add({
+  key: "fruit",
+  state: "Apple",
 });
 
-Store.add<string>({
-  key: StateKeys.Person,
-  state: StateValues.Person,
+Store.add({
+  key: "person",
+  state: "James",
 });
 
-Store.add<string>({
-  key: StateKeys.Car,
-  state: StateValues.Car,
+Store.add({
+  key: "car",
+  state: "Toyota",
 });
 
 test("Make sure initial state is correct.", () => {
-  const currentState = Store.get(StateKeys.Fruit);
-  expect(currentState).toBe(StateValues.Fruit);
+  const currentState = Store.get("fruit");
+  expect(currentState).toBe("Apple");
 
-  Store.set(StateKeys.Fruit, "Orange");
-  const nextState = Store.get(StateKeys.Fruit);
+  Store.set("fruit", "Orange");
+  const nextState = Store.get("fruit");
   expect(nextState).toBe("Orange");
 
-  Store.set(StateKeys.Fruit, "PineApple");
-  const nextState2 = Store.get(StateKeys.Fruit);
+  Store.set("fruit", "PineApple");
+  const nextState2 = Store.get("fruit");
   expect(nextState2).toBe("PineApple");
 });

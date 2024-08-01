@@ -37,14 +37,14 @@ describe("Make sure state is immutable", () => {
     render(<Store />);
   });
   it("Check initial state values", () => {
-    const _trainer = renderHook(() => useNeuron<Trainer>(StateKeys.Trainer));
-    const _pokemon = renderHook(() => useNeuron<Pokemon>(StateKeys.Pokemon));
+    const _trainer = renderHook(() => useNeuron(StateKeys.Trainer));
+    const _pokemon = renderHook(() => useNeuron(StateKeys.Pokemon));
     expect(_trainer.result.current[0]).toBe(initialTrainer);
     expect(_pokemon.result.current[0]).toBe(initialPokemon);
   });
   it("Make sure store state is immutable", () => {
-    const _trainer = renderHook(() => useNeuron<Trainer>(StateKeys.Trainer));
-    const _pokemon = renderHook(() => useNeuron<Pokemon>(StateKeys.Pokemon));
+    const _trainer = renderHook(() => useNeuron(StateKeys.Trainer));
+    const _pokemon = renderHook(() => useNeuron(StateKeys.Pokemon));
     const trainer = _trainer.result.current[0];
     const pokemon = _pokemon.result.current[0];
     trainer.name = "Gary";

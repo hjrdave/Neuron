@@ -20,7 +20,7 @@ export class Interceptor<S, A, SelectorKey extends keyof S>
   implements IInterceptor
 {
   private payload: Payload<S, A, SelectorKey>;
-  private features?: Features<S, A>;
+  private features?: Features<S, A, SelectorKey>;
   private modules?: Map<string, Module<S, A>>;
   private runModules = (type: InterceptorTypes) =>
     this.modules?.forEach((module) => module[type]?.(this.payload));

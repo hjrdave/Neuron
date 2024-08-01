@@ -28,8 +28,8 @@ enum StateValues {
 const Store = createStore<State>();
 
 test("Check OnRun Feature Middleware.", () => {
-  Store.add<string>({
-    key: StateKeys.Fruit,
+  Store.add({
+    key: "fruit",
     state: StateValues.Fruit,
     features: {
       onRun: (payload) => {
@@ -39,10 +39,10 @@ test("Check OnRun Feature Middleware.", () => {
       },
     },
   });
-  Store.set(StateKeys.Fruit, "Pineapple");
+  Store.set("fruit", "Pineapple");
 
-  Store.add<string>({
-    key: StateKeys.Person,
+  Store.add({
+    key: "person",
     state: StateValues.Person,
     features: {
       onRun: (payload) => {
@@ -50,11 +50,11 @@ test("Check OnRun Feature Middleware.", () => {
       },
     },
   });
-  Store.set(StateKeys.Person, "MAGA");
+  Store.set("person", "MAGA");
   expect(Store.get(StateKeys.Person)).toBe(`Ultra MAGA`);
 
-  Store.add<string>({
-    key: StateKeys.Color,
+  Store.add({
+    key: "color",
     state: StateValues.Color,
     features: {
       onRun: (payload) => {
@@ -62,13 +62,13 @@ test("Check OnRun Feature Middleware.", () => {
       },
     },
   });
-  Store.set(StateKeys.Color, "Purple");
+  Store.set("color", "Purple");
   expect(Store.get(StateKeys.Color)).toBe(StateValues.Color);
 });
 
 test("Check OnLoad Feature Middleware.", () => {
-  Store.add<string>({
-    key: StateKeys.Animal,
+  Store.add({
+    key: "animal",
     state: StateValues.Animal,
     features: {
       onLoad: (payload) => {
@@ -79,8 +79,8 @@ test("Check OnLoad Feature Middleware.", () => {
     },
   });
 
-  Store.add<string>({
-    key: StateKeys.Teacher,
+  Store.add({
+    key: "teacher",
     state: StateValues.Teacher,
     features: {
       onLoad: (payload) => {
@@ -89,12 +89,12 @@ test("Check OnLoad Feature Middleware.", () => {
       },
     },
   });
-  expect(Store.get(StateKeys.Teacher)).toBe("Dr. Phil");
+  expect(Store.get("teacher")).toBe("Dr. Phil");
 });
 
 test("Check OnLoad Feature Middleware.", () => {
-  Store.add<string>({
-    key: StateKeys.Animal,
+  Store.add({
+    key: "animal",
     state: StateValues.Animal,
     features: {
       onLoad: (payload) => {
@@ -105,7 +105,7 @@ test("Check OnLoad Feature Middleware.", () => {
     },
   });
 
-  Store.add<string>({
+  Store.add({
     key: StateKeys.Teacher,
     state: StateValues.Teacher,
     features: {
@@ -119,7 +119,7 @@ test("Check OnLoad Feature Middleware.", () => {
 });
 
 test("Check OnCallback Feature Middleware.", () => {
-  Store.add<string>({
+  Store.add({
     key: StateKeys.Car,
     state: StateValues.Car,
     features: {

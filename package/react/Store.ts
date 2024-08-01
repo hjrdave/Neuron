@@ -1,4 +1,4 @@
-import type { Store as ICoreStore } from "../vanilla";
+import type { Features, Store as ICoreStore, SelectorKey } from "../vanilla";
 import { Store as CoreStore } from "../vanilla/Store";
 import type { Module as IModule } from "../vanilla";
 import type { Selector } from "../slices";
@@ -13,63 +13,88 @@ import type { UseWeakNeuron } from "./useWeakNeuron";
 import { useWeakNeuron } from "./useWeakNeuron";
 import { useDispatch } from "./useDispatch";
 import type {
-  ActionProps,
-  SelectorKey,
   DispatchCallback,
   StoreItem,
   SetState,
   AddState,
   OnDispatch,
 } from "../vanilla/Interfaces";
-export interface IStore<S, M> {
-  readonly Module: (props: ModuleProps) => null;
-  readonly State: <T = unknown, A = ActionProps>(
-    props: StateProps<T, A, S> & M
+// import { UseNeuronNew } from "./useNeuronNew";
+export interface IStore<S, A> {
+  readonly Module: (props: ModuleProps<S, A>) => null;
+  readonly State: <SelectorKey extends keyof S, ActionKey extends keyof A>(
+    props: StateProps<S, A, SelectorKey, ActionKey>
   ) => null;
-  readonly useNeuron: UseNeuron<S>;
-  readonly useWeakNeuron: UseWeakNeuron;
-  readonly useDispatch: UseDispatch<S>;
+  readonly useNeuron: UseNeuron<S, A>;
+
+  // readonly useNeuronNew: UseNeuronNew<S, A>;
+  readonly useWeakNeuron: UseWeakNeuron<unknown>;
+  readonly useDispatch: UseDispatch<S, A>;
   readonly setState: SetState<S>;
-  readonly addState: AddState<S>;
-  readonly onDispatch: OnDispatch<S>;
+  readonly addState: AddState<S, A, Features<S, A, keyof S>>;
+  readonly onDispatch: OnDispatch<S, A>;
   readonly bridge: { connect: () => void };
 }
-export class Store<S = StateProps, M = ModuleProps> implements IStore<S, M> {
-  private Core: ICoreStore<S>;
+export class Store<S, A> implements IStore<S, A> {
+  private Core: ICoreStore<S, A>;
 
-  Module = (props: ModuleProps) =>
+  Module = (props: ModuleProps<S, A>) =>
     Module({ ...props, ...{ Store: this.Core } });
 
-  State = <T = unknown, A = ActionProps>(props: StateProps<T, A, S> & M) =>
-    State<T, A, S, M>({ ...props, ...{ Store: this.Core } });
+  State = <SelectorKey extends keyof S, ActionKey extends keyof A>(
+    props: StateProps<S, A, SelectorKey, ActionKey>
+  ) =>
+    State<S, A, SelectorKey, ActionKey>({ ...props, ...{ Store: this.Core } });
 
-  useNeuron = <T = unknown, A = ActionProps>(
-    selector: SelectorKey<S> | Selector<S, T>
-  ) => useNeuron<T, A, S>(selector, this.Core);
+  useNeuron = <SelectorKey extends keyof S, ActionKey extends keyof A>(
+    selector: SelectorKey | Selector<unknown, S>
+  ) => useNeuron<S, A, SelectorKey, ActionKey>(selector, this.Core);
 
-  useWeakNeuron = <T = unknown, A = ActionProps>(selector: string) =>
-    useWeakNeuron<T, A, S>(selector as SelectorKey<unknown>, this.Core);
+  // useNeuronNew = <SelectorKey extends keyof S>(selector: SelectorKey) =>
+  //   useNeuronNew(selector, this.Core);
 
-  useDispatch = <T = unknown, D = { [key: string]: unknown }>(
-    selector: SelectorKey<S>
-  ) => useDispatch<T, S, D>(selector, this.Core);
+  useWeakNeuron = <T, A>(selector: string) =>
+    useWeakNeuron<T, A>(
+      selector,
+      this.Core as unknown as ICoreStore<
+        {
+          [key: string]: unknown;
+        },
+        A
+      >
+    );
 
-  setState = <T = unknown>(key: SelectorKey<S>, state: T) =>
-    this.Core.set(key, state);
+  useDispatch = <SelectorKey extends keyof S>(selector: SelectorKey) =>
+    useDispatch(selector, this.Core);
 
-  getState = <T = unknown>(key: SelectorKey<S>) => this.Core.get<T>(key);
+  setState = (<SelectorKey extends keyof S>(
+    key: SelectorKey,
+    state: S[SelectorKey]
+  ) => this.Core.set(key, state)) as SetState<S>;
 
-  getStateRef = <T = unknown>(key: SelectorKey<S>) => this.Core.getRef<T>(key);
+  getState = <SelectorKey extends keyof S>(key: SelectorKey) =>
+    this.Core.get(key);
 
-  addState = <T = unknown, A = ActionProps>(storeItem: StoreItem<T, S, A>) =>
-    this.Core.add<T>(storeItem as StoreItem<T, S>);
+  getStateRef = <SelectorKey extends keyof S>(key: SelectorKey) =>
+    this.Core.getRef(key);
 
-  onDispatch = (callback: DispatchCallback<S>) =>
-    this.Core.onDispatch(callback);
+  addState = (<SelectorKey extends keyof S, ActionKey extends keyof A>(
+    storeItem: StoreItem<
+      S,
+      A,
+      Features<S, A, SelectorKey>,
+      SelectorKey,
+      ActionKey
+    >
+  ) => this.Core.add(storeItem)) as AddState<S, A, Features<S, A, keyof S>>;
+
+  onDispatch = <SelectorKey extends keyof S>(
+    callback: DispatchCallback<S, A, SelectorKey>
+  ) => this.Core.onDispatch(callback as DispatchCallback<S, A, keyof S>);
 
   bridge = { connect: () => this.Core };
 
-  public constructor(params?: { modules?: IModule[] }) {
-    this.Core = new CoreStore<S>(params);
+  public constructor(params?: { modules?: IModule<S, A>[] }) {
+    this.Core = new CoreStore<S, A>(params) as ICoreStore<S, A>;
   }
 }

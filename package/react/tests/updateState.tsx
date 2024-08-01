@@ -32,14 +32,14 @@ describe("Update state", () => {
     render(<Store />);
   });
   it("Check initial state values", () => {
-    const _fruit = renderHook(() => useNeuron<string>(StateKeys.Fruit));
-    const _pokemon = renderHook(() => useNeuron<string>(StateKeys.Pokemon));
+    const _fruit = renderHook(() => useNeuron("fruit"));
+    const _pokemon = renderHook(() => useNeuron("pokemon"));
     expect(_fruit.result.current[0]).toBe(StateValues.Fruit);
     expect(_pokemon.result.current[0]).toBe(StateValues.Pokemon);
   });
   it("Update state values", () => {
-    const _fruit = renderHook(() => useNeuron<string>(StateKeys.Fruit));
-    const _pokemon = renderHook(() => useNeuron<string>(StateKeys.Pokemon));
+    const _fruit = renderHook(() => useNeuron(StateKeys.Fruit));
+    const _pokemon = renderHook(() => useNeuron(StateKeys.Pokemon));
     const setFruit = _fruit.result.all[0][1];
     const setPokemon = _pokemon.result.all[0][1];
     setFruit("orange");
@@ -48,8 +48,8 @@ describe("Update state", () => {
     expect(_pokemon.result.current[0]).toBe("Jigglypuff");
   });
   it("Update state values with prev state", () => {
-    const _fruit = renderHook(() => useNeuron<string>(StateKeys.Fruit));
-    const _pokemon = renderHook(() => useNeuron<string>(StateKeys.Pokemon));
+    const _fruit = renderHook(() => useNeuron(StateKeys.Fruit));
+    const _pokemon = renderHook(() => useNeuron(StateKeys.Pokemon));
     const setFruit = _fruit.result.all[0][1];
     const setPokemon = _pokemon.result.all[0][1];
     setFruit((prev) => `Big ${prev}`);

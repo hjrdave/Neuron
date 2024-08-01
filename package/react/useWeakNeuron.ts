@@ -1,34 +1,29 @@
-import React from "react";
+import { useEffect, useState } from "react";
 import type { Store as CoreStore } from "../vanilla";
-import { SelectorKey } from "../vanilla/Interfaces";
 
-export type UseWeakNeuron = <T, A>(
+export type UseWeakNeuron<T, A = { [key: string]: unknown }> = (
   selector: string
 ) => [T, (value: T | ((prevState: T) => T)) => void, A];
 
-export const useWeakNeuron = <
-  T = unknown,
-  A = { [key: string]: unknown },
-  S = { [key: string]: unknown }
->(
-  selectorKey: SelectorKey<S>,
-  Store: CoreStore<S>
+export const useWeakNeuron = <T, A>(
+  selectorKey: string,
+  Store: CoreStore<{ [key: string]: unknown }, A>
 ) => {
-  const stateActions = Store.getActions<A>(selectorKey);
-  const [state, _setState] = React.useState<T>(Store.getRef<T>(selectorKey));
-  const [actions] = React.useState<A>(stateActions);
+  const stateActions = Store.getActions(selectorKey as keyof A);
+  const [state, _setState] = useState(Store.getRef(selectorKey));
+  const [actions] = useState(stateActions);
   const setState = (value: T | ((prevState: T) => T)) =>
-    Store.set<T>(selectorKey, value);
+    Store.set(selectorKey, value);
 
-  React.useEffect(() => {
-    _setState(Store.getRef<T>(selectorKey));
+  useEffect(() => {
+    _setState(Store.getRef(selectorKey));
   }, [Store, selectorKey]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     Store?.onDispatch((payload) => {
       if (payload.key === selectorKey) {
-        const newState = payload.state as T;
-        _setState(newState);
+        const newState = payload.state;
+        _setState(newState as unknown as T);
       }
     });
   }, [Store, selectorKey]);

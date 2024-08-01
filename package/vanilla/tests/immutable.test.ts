@@ -13,7 +13,7 @@ interface State {
 }
 const Store = createStore<State>();
 
-Store.add<Pokemon>({
+Store.add({
   key: "pokemon",
   state: {
     number: 150,
@@ -34,31 +34,31 @@ Store.add<Pokemon>({
 });
 
 test("Make sure initial state is correct.", () => {
-  const currentState = Store.get<Pokemon>("pokemon");
+  const currentState = Store.get("pokemon");
   expect(currentState.level).toBe(100);
 });
 
 test("Make sure get state is immutable.", () => {
-  const currentState = Store.get<Pokemon>("pokemon");
+  const currentState = Store.get("pokemon");
   currentState.level = 101;
-  const nextState = Store.get<Pokemon>("pokemon");
+  const nextState = Store.get("pokemon");
   expect(nextState.level).toBe(100);
 });
 
 test("Make sure payload is immutable.", () => {
-  const currentState = Store.get<Pokemon>("pokemon");
+  const currentState = Store.get("pokemon");
   expect(currentState.level).toBe(100);
   Store.set("pokemon", { ...currentState, name: "Mew" });
-  const nextState = Store.get<Pokemon>("pokemon");
+  const nextState = Store.get("pokemon");
   expect(nextState.name).toBe("Mewtwo");
   expect(nextState.level).toBe(100);
 });
 
 test("Make sure payload is mutable.", () => {
-  const currentState = Store.getRef<Pokemon>("pokemon");
+  const currentState = Store.getRef("pokemon");
   expect(currentState.level).toBe(100);
   Store.set("pokemon", { ...currentState, name: "Mew" });
-  const nextState = Store.getRef<Pokemon>("pokemon");
+  const nextState = Store.getRef("pokemon");
   expect(nextState.name).toBe("Mewtwo");
   expect(nextState.level).toBe(100);
 });

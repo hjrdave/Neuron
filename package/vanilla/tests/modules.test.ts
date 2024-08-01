@@ -41,12 +41,12 @@ const TestModule2 = {
 Store.use(TestModule);
 Store.use(TestModule2);
 
-Store.add<string>({
+Store.add({
   key: StateKeys.Fruit,
   state: StateValues.Fruit,
 });
 
-Store.add<string>({
+Store.add({
   key: StateKeys.Car,
   state: StateValues.Car,
 });
