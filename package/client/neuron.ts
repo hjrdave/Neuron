@@ -6,13 +6,15 @@ export const neuron = <T, A>(
   initialState: T,
   features?: Features<T, A>
 ) => {
-  const privateKey =
-    Math.floor(Math.random() * (10 ** 11 - 10 ** 11)) + 10 ** 11;
+  const { actions, key: _key, ..._features } = features as Features<T, A>;
+  const key =
+    _key ?? Math.floor(Math.random() * (10 ** 11 - 10 ** 11)) + 10 ** 11;
   store.add({
-    key: privateKey,
+    key: key,
     state: initialState,
-    actions: features?.actions as any, // Correctly infer the action types
-    features: features as any,
+    actions: actions as any, // Correctly infer the action types
+    features: _features as any,
   });
-  return () => useSubscriber<T, A>(store as any, privateKey);
+  return <S>(sliceSelector?: (state: T) => S) =>
+    useSubscriber<T, A, S>(store as any, key, sliceSelector);
 };

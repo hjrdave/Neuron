@@ -1,5 +1,5 @@
 import React from "react";
-import { useCount, useFruit } from "./Store";
+import { useCount, useFruit, usePerson } from "./Store";
 
 const containerStyles: React.CSSProperties = {
   display: "flex",
@@ -41,8 +41,9 @@ const btnStyles: React.CSSProperties = {
 export default function Counter() {
   const [count, countActions] = useCount();
   const [fruit, fruitActions] = useFruit();
-  fruitActions.set("pear");
-  fruit;
+  const [person, personActions] = usePerson();
+  const [age, personActions2] = usePerson((state) => state.age);
+
   return (
     <>
       <div style={containerStyles}>
