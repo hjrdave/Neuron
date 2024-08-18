@@ -1,52 +1,90 @@
-import { useState } from "react";
-import { ClientStore } from "./NeuronClient";
+import { useEffect, useState } from "react";
+import { ClientStore } from "./interfaces";
 
 type SetState<T> = (state: T | ((prev: T) => T)) => void;
 type StateOrSlice<S, T> = unknown extends S ? (S extends unknown ? T : S) : S;
-type SetStateOrSlice<S, T, A> = unknown extends S
+type Actions<S, T, A> = unknown extends S
   ? S extends unknown
-    ? ActionsWithJustSet<T> & A
-    : ActionsWithSetSlice<S, T> & A
-  : ActionsWithSetSlice<S, T> & A;
-
-type ActionsWithJustSet<T> = { set: SetState<T> };
-type ActionsWithSetSlice<S, T> = { set: SetState<T>; setSlice: SetState<S> };
+    ? { set: SetState<T> } & A
+    : { set: SetState<T>; setSlice: SetState<S> } & A
+  : { set: SetState<T>; setSlice: SetState<S> } & A;
 
 export const useSubscriber = <T, A, S>(
   store: ClientStore,
   selector: number | string,
   sliceSelector?: (state: T) => S
 ) => {
-  const initialState = store.getRef(selector) as T;
   const [state, _setState] = useState(
-    sliceSelector ? sliceSelector(initialState) : initialState
+    sliceSelector
+      ? sliceSelector(store.getRef(selector) as T)
+      : (store.getRef(selector) as T)
   );
-  const setSlice: SetSlice<S> = (state: S | ((prevSlice: S) => S)) => {
+
+  const setSlice: SetState<S> = (state: S | ((prevSlice: S) => S)) => {
     if (sliceSelector) {
-      console.log(state);
+      const funcToSelectorString = sliceSelector
+        ?.toString()
+        .match(/\(\w+\) =>\s*(\S+)/)?.[1];
+      const selectorArray =
+        typeof funcToSelectorString === "string"
+          ? funcToSelectorString?.split(".").slice(1)
+          : [] ?? [];
+      const prevState = store.getRef(selector) as T;
+      const prevSliceState = selectorArray.reduce(
+        (acc, key) => acc[key],
+        prevState
+      ) as unknown as S;
+      let sliceState: S;
+
+      if (typeof state === "function") {
+        sliceState = (state as (prevSlice: S) => S)?.(prevSliceState);
+      } else {
+        sliceState = state;
+      }
+
+      const deepStateUpdateObject = (
+        obj: T,
+        path: string[],
+        value: unknown
+      ): T => {
+        const lastKey = path.pop() as keyof any;
+        const lastObj = path.reduce((o, key) => (o[key] = o[key] || {}), obj);
+        lastObj[lastKey] = value;
+        return obj;
+      };
+
+      const updatedState = deepStateUpdateObject(
+        prevState,
+        selectorArray,
+        sliceState
+      );
+      store.set(selector, { ...updatedState });
     }
   };
   const set: SetState<T> = (state: T | ((prev: T) => T)) =>
     store.set(selector, state);
   const _actions = (store.getActions(selector as never) ?? {}) as A;
-  const actions = (
-    sliceSelector
-      ? {
-          ..._actions,
-          set,
-          setSlice,
-        }
-      : { ..._actions, set }
-  ) as SetStateOrSlice<S, T, A>;
-  store.onDispatch((payload) => {
-    if (payload.key === selector) {
-      if (sliceSelector) {
-        _setState(sliceSelector(payload.state as T) as S);
-      } else {
-        _setState(payload.state as T);
+  const actions = sliceSelector
+    ? {
+        ..._actions,
+        set,
+        setSlice,
       }
-    }
-  });
+    : { ..._actions, set };
+  useEffect(() => {
+    store.onDispatch((payload) => {
+      if (payload.key === selector) {
+        const state = payload.state as T;
+        if (sliceSelector) {
+          console.log(payload);
+          const sliceState = sliceSelector(state);
+          _setState(sliceState);
+        } else {
+          _setState(state);
+        }
+      }
+    });
+  }, []);
 
-  return [state, actions] as [StateOrSlice<S, T>, typeof actions];
+  return [state, actions] as [StateOrSlice<S, T>, Actions<S, T, A>];
 };

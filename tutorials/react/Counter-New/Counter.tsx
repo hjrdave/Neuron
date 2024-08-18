@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useCount, useFruit, usePerson } from "./Store";
 
 const containerStyles: React.CSSProperties = {
@@ -42,10 +42,24 @@ export default function Counter() {
   const [count, countActions] = useCount();
   const [fruit, fruitActions] = useFruit();
   const [person, personActions] = usePerson();
-  const [age, personActions2] = usePerson((state) => state.age);
+  const [name, { setSlice: setName }] = usePerson((state) => state.name);
+  const [age, { setSlice: setAge }] = usePerson((state) => state.age);
 
   return (
     <>
+      <p>age: {age}</p>
+      <p>name: {name}</p>
+      <button onClick={() => setAge((prev) => prev + 1)}>Update age</button>
+      <button onClick={() => setName((prev) => prev + prev)}>
+        Update name
+      </button>
+      <button
+        onClick={() =>
+          personActions.set({ name: "Kevin", age: 100, job: "foo" })
+        }
+      >
+        Update Person
+      </button>
       <div style={containerStyles}>
         <div style={counterStyles}>
           <h1 style={h1Styles}>Neuron React: New</h1>
