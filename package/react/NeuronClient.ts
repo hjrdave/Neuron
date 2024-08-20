@@ -4,6 +4,7 @@ import { ClientStore, Features } from "./interfaces";
 import { neuron } from "./neuron";
 
 export interface StoreOptions {
+  name?: string | number;
   modules?: IModule[];
 }
 
@@ -13,6 +14,6 @@ export class NeuronClient {
     neuron<T, A>(this.store, initialState, features);
 
   constructor(options?: StoreOptions) {
-    this.store = createStore(options);
+    this.store = createStore(options) as any;
   }
 }

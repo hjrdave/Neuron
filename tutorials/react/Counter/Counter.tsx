@@ -1,5 +1,5 @@
-import React from "react";
-import { useNeuron } from "./Store";
+import React, { useEffect } from "react";
+import { useCount, useFruit, usePerson } from "./Store";
 
 const containerStyles: React.CSSProperties = {
   display: "flex",
@@ -39,26 +39,36 @@ const btnStyles: React.CSSProperties = {
   cursor: "pointer",
 };
 export default function Counter() {
-  const [counter, setCounter] = useNeuron<number>("counter");
+  const [count, countActions] = useCount();
+  const [fruit, fruitActions] = useFruit();
+  const [person, personActions] = usePerson();
+  const [name, { setSlice: setName }] = usePerson((state) => state.name);
+  const [age, { setSlice: setAge }] = usePerson((state) => state.age);
+
   return (
     <>
+      <p>age: {age}</p>
+      <p>name: {name}</p>
+      <button onClick={() => setAge("foo" as any)}>Update age</button>
+      <button onClick={() => setName((prev) => prev + prev)}>
+        Update name
+      </button>
+      <button
+        onClick={() =>
+          personActions.set({ name: "Kevin", age: 100, job: "foo" })
+        }
+      >
+        Update Person
+      </button>
       <div style={containerStyles}>
         <div style={counterStyles}>
-          <h1 style={h1Styles}>Neuron React</h1>
-          <p style={countStyles}>
-            Count: <span id="count">{counter}</span>
-          </p>
+          <h1 style={h1Styles}>Neuron React: New</h1>
+          <p style={countStyles}>Count: {count}</p>
           <div style={btnGroupStyles}>
-            <button
-              style={btnStyles}
-              onClick={() => setCounter((prev) => prev - 1)}
-            >
+            <button style={btnStyles} onClick={countActions.decrement}>
               Decrement
             </button>
-            <button
-              style={btnStyles}
-              onClick={() => setCounter((prev) => prev + 1)}
-            >
+            <button style={btnStyles} onClick={countActions.increment}>
               Increment
             </button>
           </div>

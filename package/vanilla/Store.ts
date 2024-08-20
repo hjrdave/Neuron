@@ -23,12 +23,14 @@ import type {
 } from "./Interfaces";
 
 export interface Params<S, A> {
+  name?: string | number;
   modules?: IModule<S, A>[];
 }
 export interface IStore<
   S = { [key: string]: unknown },
   A = { [key: string]: unknown }
 > {
+  readonly name: string | number;
   readonly use: UseModule;
   readonly add: AddState<S, A, Features<S, A, SelectorKey<S>>>;
   readonly get: GetState<S>;
@@ -102,11 +104,18 @@ export class Store<
   };
 
   /**
+   * Name of store. Used for store identification in devtools. Value is randomly generated unless specifically set in options.
+   */
+  readonly name: number | string = Math.floor(
+    Math.random() * 899999999 + 100000
+  );
+
+  /**
    * Includes modules into store. Modules can be used to extend Neuron stores, with new features and functionality. Modules should be included above store item add methods.
    * @param {Module} module - imported module object
    */
   readonly use = (module: IModule) =>
-    this.moduleInventory.set(module.name, module);
+    this.moduleInventory.set(module.name, module as any);
 
   /**
    * Returns an array of store items.
@@ -255,6 +264,7 @@ export class Store<
     this.actionsInventory = new Map();
     this.moduleInventory = new Map();
     this.dispatcher = new Dispatcher();
+    params?.name !== undefined ? (this.name = params.name) : null;
     params?.modules?.forEach((module) =>
       this.use(module as unknown as IModule)
     );

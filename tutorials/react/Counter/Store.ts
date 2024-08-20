@@ -1,6 +1,6 @@
-import { NeuronClient } from "../../../package/client/NeuronClient";
+import { NeuronClient } from "../../../package/react";
 
-const { neuron } = new NeuronClient();
+const { neuron } = new NeuronClient({ name: "fooStore", modules: [] });
 
 //private neurons are default
 export const useCount = neuron(0, {
