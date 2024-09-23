@@ -11,7 +11,7 @@ interface Props {
 export default function Grid({ columns, data }: Props) {
   return (
     <>
-      <Store>
+      <Store index={0}>
         <GridProvider columns={columns} data={data} />
         <div style={{}}>
           <Search />

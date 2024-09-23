@@ -1,9 +1,9 @@
 import React, { Fragment } from "react";
-import { useNeuron } from "./Grid.store";
+import { useFilteredData, useColumns } from "./Grid.store";
 
 export default function RenderRows() {
-  const [filterdData] = useNeuron((state) => state.filteredData);
-  const [columns] = useNeuron((state) => state.columns);
+  const [filterdData] = useFilteredData();
+  const [columns] = useColumns();
   const makeSureDynamicDataIsRenderSafe = (dynamicData: unknown) => {
     if (typeof dynamicData === "string" || typeof dynamicData === "number") {
       return dynamicData;

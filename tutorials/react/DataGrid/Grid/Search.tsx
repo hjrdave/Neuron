@@ -1,14 +1,14 @@
 import React from "react";
-import { RowData, SearchParamsQueries, useNeuron } from "./Grid.store";
+import { useColumns, useFilteredData, useSearchParams } from "./Grid.store";
 
 export default function Search() {
-  const [columns] = useNeuron((state) => state.columns);
-  const [, , { queryData }] = useNeuron<RowData[], SearchParamsQueries>(
-    (state) => state.filteredData
+  const [columns] = useColumns();
+  const [, , { queryData }] = useFilteredData();
+  const [input, { setSlice: setInput }] = useSearchParams(
+    (state) => state.input
   );
-  const [input, setInput] = useNeuron((state) => state.searchParams.input);
-  const [targetColumn, setTargetColumn] = useNeuron(
-    (state) => state.searchParams.targetColumn
+  const [targetColumn, { setSlice: setTargetColumn }] = useSearchParams(
+    (state) => state.targetColumn
   );
   React.useEffect(() => {
     queryData(input, targetColumn);

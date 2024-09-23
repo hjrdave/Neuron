@@ -1,8 +1,8 @@
 import React, { Fragment } from "react";
-import { useNeuron } from "./Grid.store";
+import { useColumns } from "./Grid.store";
 
 export default function Columns() {
-  const [columns] = useNeuron((state) => state.columns);
+  const [columns] = useColumns();
   return (
     <>
       <tr>

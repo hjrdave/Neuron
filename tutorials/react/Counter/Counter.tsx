@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { useCount, useFruit, usePerson } from "./Store";
+import React from "react";
+import { useCount, usePerson } from "./Counter.neurons";
 
 const containerStyles: React.CSSProperties = {
   display: "flex",
@@ -40,8 +40,7 @@ const btnStyles: React.CSSProperties = {
 };
 export default function Counter() {
   const [count, countActions] = useCount();
-  const [fruit, fruitActions] = useFruit();
-  const [person, personActions] = usePerson();
+  const [, personActions] = usePerson();
   const [name, { setSlice: setName }] = usePerson((state) => state.name);
   const [age, { setSlice: setAge }] = usePerson((state) => state.age);
 
@@ -49,7 +48,7 @@ export default function Counter() {
     <>
       <p>age: {age}</p>
       <p>name: {name}</p>
-      <button onClick={() => setAge("foo" as any)}>Update age</button>
+      <button onClick={() => setAge(20)}>Update age</button>
       <button onClick={() => setName((prev) => prev + prev)}>
         Update name
       </button>

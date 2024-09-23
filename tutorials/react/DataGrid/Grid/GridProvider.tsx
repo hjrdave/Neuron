@@ -1,13 +1,13 @@
 import React from "react";
-import { useNeuron, RowData } from "./Grid.store";
+import { useColumns, useData, useFilteredData, RowData } from "./Grid.store";
 interface Props {
   columns: string[];
   data: RowData[];
 }
 export default function GridProvider({ columns, data }: Props) {
-  const [, setColumns] = useNeuron((state) => state.columns);
-  const [, setData] = useNeuron((state) => state.data);
-  const [, setFilteredData] = useNeuron((state) => state.filteredData);
+  const [, { set: setColumns }] = useColumns();
+  const [, { set: setFilteredData }] = useData();
+  const [, { set: setData }] = useFilteredData();
   React.useEffect(() => {
     setColumns(columns);
     setFilteredData(data);
