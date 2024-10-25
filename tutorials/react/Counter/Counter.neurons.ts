@@ -15,7 +15,3 @@ export const useCount = neuron(0, {
       }),
   }),
 });
-
-export const useFruit = neuron("apple");
-
-export const usePerson = neuron({ name: "Bob", age: 36, job: "Developer" });

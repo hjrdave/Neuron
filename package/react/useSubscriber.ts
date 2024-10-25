@@ -3,7 +3,7 @@ import { ClientStore } from "./interfaces";
 
 type SetState<T> = (state: T | ((prev: T) => T)) => void;
 type StateOrSlice<S, T> = unknown extends S ? (S extends unknown ? T : S) : S;
-type Actions<S, T, A> = unknown extends S
+export type Actions<S, T, A> = unknown extends S
   ? S extends unknown
     ? { set: SetState<T> } & A
     : { set: SetState<T>; setSlice: SetState<S> } & A
@@ -28,7 +28,7 @@ export const useSubscriber = <T, A, S>(
       const selectorArray =
         typeof funcToSelectorString === "string"
           ? funcToSelectorString?.split(".").slice(1)
-          : [] ?? [];
+          : [];
       const prevState = store.getRef(selector) as T;
       const prevSliceState = selectorArray.reduce(
         (acc, key) => acc[key],
@@ -85,6 +85,5 @@ export const useSubscriber = <T, A, S>(
       }
     });
   }, []);
-
   return [state, actions] as [StateOrSlice<S, T>, Actions<S, T, A>];
 };
