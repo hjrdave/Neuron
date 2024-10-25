@@ -28,7 +28,7 @@ export const useSubscriber = <T, A, S>(
       const selectorArray =
         typeof funcToSelectorString === "string"
           ? funcToSelectorString?.split(".").slice(1)
-          : [] ?? [];
+          : [];
       const prevState = store.getRef(selector) as T;
       const prevSliceState = selectorArray.reduce(
         (acc, key) => acc[key],

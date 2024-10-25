@@ -10,15 +10,15 @@ const usePrivateNeuron = (
   Context: React.Context<IContext>,
   options?: Options
 ) => {
-  const storeInstance = createStore({ name: options?.name });
+  const connect = createStore({ name: options?.name });
   const ContextValue = {
-    store: storeInstance,
+    store: connect,
   };
   const Private = (props: { children: React.ReactNode }) => (
     <PrivateComp context={Context} value={ContextValue}>
       {props.children}
     </PrivateComp>
   );
-  return { Private, storeInstance };
+  return { Private, connect };
 };
 export default usePrivateNeuron;

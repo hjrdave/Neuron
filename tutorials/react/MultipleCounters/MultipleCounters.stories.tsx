@@ -4,7 +4,7 @@ import { StoryFn, Meta } from "@storybook/react";
 import { default as Comp } from "./App";
 
 export default {
-  title: "React Tutorials/Data Grid",
+  title: "React Tutorials/Multiple Counters",
   component: Comp,
 } as Meta<typeof Comp>;
 

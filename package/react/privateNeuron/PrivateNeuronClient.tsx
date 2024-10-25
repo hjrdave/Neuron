@@ -23,8 +23,9 @@ export interface IContext {
 }
 export class PrivateNeuronClient {
   private Context: React.Context<IContext>;
-  privateNeuron = <T,>(features?: Features<T, unknown>) =>
-    _privateNeuron(this.Context, features);
+  privateNeuron = <T, A = unknown>(features?: Features<T, A>) => {
+    return _privateNeuron<T, A>(this.Context, features);
+  };
   usePrivateNeuron = (options: Options) =>
     _usePrivateNeuron(this.Context, options);
   constructor() {
