@@ -47,11 +47,11 @@ export type GetStore<S, A> = <
 >() => StoreItem<S, A, Features<S, A, SelectorKey>, SelectorKey, ActionKey>[];
 
 export type GetState<S> = <SelectorKey extends keyof S>(
-  selector: SelectorKey
+  selector: SelectorKey | string
 ) => S[SelectorKey];
 
 export type SetState<S> = <SelectorKey extends keyof S>(
-  selector: SelectorKey,
+  selector: SelectorKey | string,
   newState: S[SelectorKey] | ((prevState: S[SelectorKey]) => S[SelectorKey])
 ) => void;
 

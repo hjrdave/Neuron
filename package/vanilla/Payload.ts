@@ -8,9 +8,9 @@ export interface Params<S, A, SelectorKey extends keyof S> {
   state: S[SelectorKey];
   features?: Features<S, A, SelectorKey>;
   data?: unknown;
-  get: GetState<S>;
-  set: SetState<S>;
-  getStore: GetStore<S, A>;
+  get: GetState<unknown>;
+  set: SetState<unknown>;
+  getStore: GetStore<unknown, A>;
 }
 
 export interface IPayload<S, A, SelectorKey extends keyof S> {
@@ -19,9 +19,9 @@ export interface IPayload<S, A, SelectorKey extends keyof S> {
   readonly prevState: Readonly<S[SelectorKey]>;
   state: S[SelectorKey];
   data?: unknown;
-  readonly get: GetState<S>;
-  readonly set: SetState<S>;
-  readonly getStore: GetStore<S, A>;
+  readonly get: GetState<unknown>;
+  readonly set: SetState<unknown>;
+  readonly getStore: GetStore<unknown, A>;
   readonly cancelDispatch: () => void;
   readonly isDispatchCancelled: () => boolean;
 }
@@ -35,8 +35,8 @@ export class Payload<S, A, SelectorKey extends keyof S>
   state: S[SelectorKey];
   data?: unknown;
   private dispatchCancelled = false;
-  readonly get: GetState<S>;
-  readonly set: SetState<S>;
+  readonly get: GetState<unknown>;
+  readonly set: SetState<unknown>;
   readonly getStore: GetStore<S, A>;
   readonly cancelDispatch = () => {
     this.dispatchCancelled = true;

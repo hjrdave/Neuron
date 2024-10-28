@@ -5,6 +5,7 @@ import { renderHook } from "@testing-library/react-hooks";
 const { neuron } = new NeuronClient();
 
 const usePokemon = neuron("Pikachu", {
+  key: "pokemon",
   onLoad: (payload) => {
     payload.state = "mewtwo";
   },

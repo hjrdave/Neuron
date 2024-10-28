@@ -21,11 +21,6 @@ export const [useInitCount, useCount] = privateNeuron<number, CountActions>({
   }),
 });
 
-export const [useInitPerson, usePerson] = privateNeuron<{
-  name: string;
-  age: number;
-}>();
-
 export default function Provider({
   children,
   id,
@@ -37,7 +32,6 @@ export default function Provider({
     name: `store-${id}`,
   });
   useInitCount(0, connect);
-  useInitPerson({ name: "Bob", age: 46 }, connect);
 
   return <Private>{children}</Private>;
 }

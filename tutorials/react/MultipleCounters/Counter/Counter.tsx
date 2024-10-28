@@ -1,5 +1,5 @@
 import React from "react";
-import Provider, { useCount, usePerson } from "./Counter.neurons";
+import Provider, { useCount } from "./Counter.neurons";
 
 const counterStyles: React.CSSProperties = {
   display: "flex",

@@ -13,5 +13,9 @@ export const useCount = neuron(0, {
       dispatch((payload) => {
         payload.state = payload.prevState - 1;
       }),
+    onRun: (payload) => {
+      const foo = payload.get("foo");
+    },
   }),
 });
+export const useFoo = neuron("foo", { key: "foo" });

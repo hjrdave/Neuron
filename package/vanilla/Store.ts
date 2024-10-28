@@ -48,9 +48,12 @@ export class Store<
   A = { [key: string]: unknown }
 > implements IStore<S, A>
 {
-  private stateInventory: Map<SelectorKey<S>, S>;
-  private featureInventory: Map<SelectorKey<S>, Features<S, A, SelectorKey<S>>>;
-  private actionsInventory: Map<SelectorKey<A>, A>;
+  private stateInventory: Map<SelectorKey<S> | string, S>;
+  private featureInventory: Map<
+    SelectorKey<S> | string,
+    Features<S, A, SelectorKey<S>>
+  >;
+  private actionsInventory: Map<SelectorKey<A> | string, A>;
   private moduleInventory: Map<string, IModule<S, A>>;
   private dispatcher: IDispatcher<S, A, SelectorKey<S>>;
 
@@ -90,7 +93,6 @@ export class Store<
   >(
     params: StoreItem<S, A, Features<S, A, SelectorKey>, SelectorKey, ActionKey>
   ) => {
-    // @ts-expect-error - Payload props are missmatching expected props for some reason
     const payload = new Payload<S, A, SelectorKey>({
       key: params.key,
       prevState: this.stateInventory.get(params.key),
@@ -174,7 +176,9 @@ export class Store<
    * Selected state is immutable.
    * @param {string} selector - key of the store item you want to select.
    */
-  readonly get = <SelectorKey extends keyof S>(selector: SelectorKey) => {
+  readonly get = <SelectorKey extends keyof S>(
+    selector: SelectorKey | string
+  ) => {
     const state = this.stateInventory.get(selector);
     const clonedState = structuredClone?.(state) ?? state;
     return clonedState as S[SelectorKey];
@@ -185,7 +189,9 @@ export class Store<
    * Selected state is a mutable reference.
    * @param {string} selector - key of the store item you want to select.
    */
-  readonly getRef = <SelectorKey extends keyof S>(selector: SelectorKey) => {
+  readonly getRef = <SelectorKey extends keyof S>(
+    selector: SelectorKey | string
+  ) => {
     return this.stateInventory.get(selector) as S[SelectorKey];
   };
 
@@ -207,13 +213,13 @@ export class Store<
    * @param {T | (prevState: T) => T} newState - New state that will be saved to the store.
    */
   readonly set = <SelectorKey extends keyof S>(
-    selector: SelectorKey,
+    selector: SelectorKey | string,
     newState: S[SelectorKey] | ((prevState: S[SelectorKey]) => S[SelectorKey])
   ) => {
     if (this.stateInventory.has(selector)) {
       const prevState = this.get(selector),
         payload = this.createPayload({
-          key: selector,
+          key: selector as SelectorKey,
           state:
             typeof newState === "function"
               ? (newState as (prevState: S[SelectorKey]) => S[SelectorKey])?.(
@@ -252,9 +258,11 @@ export class Store<
    * @param {(payload) => void} callback - key of the store item you want to select.
    */
   readonly onDispatch = (callback: DispatchCallback<S, A, SelectorKey<S>>) => {
-    this.stateInventory.forEach((_, key) => this.dispatcher.stopListening(key));
     this.stateInventory.forEach((_, key) =>
-      this.dispatcher.listen(key, callback)
+      this.dispatcher.stopListening(key as keyof S)
+    );
+    this.stateInventory.forEach((_, key) =>
+      this.dispatcher.listen(key as keyof S, callback)
     );
   };
 
