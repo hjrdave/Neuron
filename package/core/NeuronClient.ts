@@ -1,4 +1,3 @@
-import { Module } from "./Module";
 import {
   ClientName,
   NeuronKey,
@@ -10,7 +9,7 @@ import {
   NeuronInitOptions,
 } from "./Interfaces";
 import { Dispatcher } from "./Dispatcher";
-import { Neuron } from "./neuron";
+import { Neuron } from "./_Neuron";
 
 export class NeuronClient implements INeuronClient {
   private clientStore: Map<NeuronKey, NeuronData<unknown>>;
