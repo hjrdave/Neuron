@@ -1,20 +1,28 @@
-import { IModule, IPayload, ModuleOptions } from "./Interfaces";
+import { NeuronMiddleware } from "./Neuron";
 
-export class Module implements IModule {
+export class Module<F> implements IModule<F> {
   readonly name: string;
-  private featureInit?: any;
-  private featureOnRun?: any;
-  private featureOnCallback?: any;
-
-  readonly onInit = (payload: IPayload<unknown>) => this.featureInit?.(payload);
-  readonly onRun = (payload: IPayload<unknown>) => this.featureOnRun?.(payload);
-  readonly onCallback = (payload: IPayload<unknown>) =>
-    this.featureOnCallback?.(payload);
-
-  constructor(options: ModuleOptions) {
+  readonly onInit?: NeuronMiddleware<unknown, F>;
+  readonly onDispatch?: NeuronMiddleware<unknown, F>;
+  readonly onCallback?: NeuronMiddleware<unknown, F>;
+  constructor(options: ModuleOptions<F>) {
     this.name = options.name;
-    this.featureInit = options.onInit;
-    this.featureOnRun = options.onRun;
-    this.featureOnCallback = options.onCallback;
+    this.onInit = options.onInit;
+    this.onDispatch = options.onDispatch;
+    this.onCallback = options.onCallback;
   }
+}
+
+//Module Types and Interfaces
+export interface IModule<F> {
+  readonly name: Readonly<string>;
+  onInit?: NeuronMiddleware<unknown, F>;
+  onDispatch?: NeuronMiddleware<unknown, F>;
+  onCallback?: NeuronMiddleware<unknown, F>;
+}
+export interface ModuleOptions<F> {
+  name: string;
+  onInit?: NeuronMiddleware<unknown, F>;
+  onDispatch?: NeuronMiddleware<unknown, F>;
+  onCallback?: NeuronMiddleware<unknown, F>;
 }

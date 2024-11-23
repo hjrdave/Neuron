@@ -1,36 +1,23 @@
-import { createModule } from "../vanilla";
-import type { SelectorKey, Payload as TPayload } from "../vanilla";
-export type Payload = TPayload<
-  { [key: string]: unknown },
-  { [key: string]: unknown },
-  SelectorKey<{ [key: string]: unknown }>
->;
-export enum StorageTypes {
-  SESSION = "session",
-  LOCAL = "local",
+import { Module } from "../core";
+import { IPayload, NeuronKey } from "../core/Interfaces";
+
+export interface PersistFeatures {
+  persist?: "session" | "local" | boolean;
 }
+const moduleName = `@sandstack/neuron-persist`;
 
-export interface PersistProps {
-  persist?: StorageTypes.LOCAL | StorageTypes.SESSION | boolean;
-}
-
-const moduleName = `@sandstack/neuron-persist`; //need a unique id that is passed by store
-
-const saveStateToStorage = (payload: Payload) => {
-  const features = payload.features as PersistProps;
+const saveStateToStorage = <T>(payload: IPayload<T, PersistFeatures>) => {
+  const features = payload.features;
   const isEnabled = features?.persist;
   if (isEnabled) {
     const storageKey = `${moduleName}/${payload.key}`;
-    const storageType =
-      features?.persist === StorageTypes.SESSION
-        ? StorageTypes.SESSION
-        : StorageTypes.LOCAL;
+    const storageType = features?.persist === "session" ? "session" : "local";
     const stateToCache = JSON.stringify(payload.state);
-    if (storageType === StorageTypes.LOCAL) {
+    if (storageType === "local") {
       if (localStorage) {
         localStorage.setItem(storageKey, stateToCache);
       }
-    } else if (storageType === StorageTypes.SESSION) {
+    } else if (storageType === "session") {
       if (sessionStorage) {
         sessionStorage.setItem(storageKey, stateToCache);
       }
@@ -38,47 +25,67 @@ const saveStateToStorage = (payload: Payload) => {
   }
 };
 
-const getStateFromStorage = (payload: Payload) => {
-  const features = payload.features as PersistProps;
+const getStateFromStorage = <T>(payload: IPayload<T, PersistFeatures>) => {
+  const features = payload.features;
   const isEnabled = features?.persist;
   if (isEnabled) {
     const storageKey = `${moduleName}/${payload.key as string}`;
-    const storageType =
-      features?.persist === StorageTypes.SESSION
-        ? StorageTypes.SESSION
-        : StorageTypes.LOCAL;
-    if (storageType === StorageTypes.LOCAL) {
+    const storageType = features?.persist === "session" ? "session" : "local";
+    if (storageType === "local") {
       if (localStorage) {
         const cachedValue = localStorage.getItem(storageKey);
         if (cachedValue !== null) {
           const parsedCachedValue = JSON.parse(cachedValue);
-          return parsedCachedValue;
+          return parsedCachedValue as T;
         }
-        return cachedValue;
+        return cachedValue as T;
       }
-    } else if (storageType === StorageTypes.SESSION) {
+    } else if (storageType === "session") {
       if (sessionStorage) {
         const cachedValue = sessionStorage.getItem(storageKey);
         if (cachedValue !== null) {
           const parsedCachedValue = JSON.parse(cachedValue);
-          return parsedCachedValue;
+          return parsedCachedValue as T;
         }
-        return cachedValue;
+        return cachedValue as T;
       }
     }
   }
+  return payload.state;
 };
 
-const Persist = createModule({
-  name: moduleName,
-  onLoad: (payload) => {
-    const cachedState = getStateFromStorage(payload as Payload);
-    if (cachedState !== null && cachedState !== undefined) {
-      payload = cachedState;
-    }
-  },
-  onCallback: (payload) => {
-    saveStateToStorage(payload as Payload);
-  },
-});
-export default Persist;
+interface PersistOptions {
+  name?: string;
+  storage?: {
+    getItem?: <T>(
+      key: NeuronKey,
+      isPersistEnabled?: "session" | "local" | boolean
+    ) => T;
+    setItem?: <T>(
+      key: NeuronKey,
+      newState: T,
+      isPersistEnabled?: "session" | "local" | boolean
+    ) => void;
+  };
+}
+
+//payload needs to map correctly
+export const Persist = (options?: PersistOptions) =>
+  new Module({
+    name: moduleName,
+    onInit: <T>(payload: IPayload<T, PersistFeatures>) => {
+      const cachedState: T =
+        options?.storage?.getItem?.<T>(
+          payload.key,
+          payload?.features?.persist
+        ) ?? getStateFromStorage(payload);
+      payload.state = cachedState;
+    },
+    onCallback: <T>(payload: IPayload<T, PersistFeatures>) => {
+      options?.storage?.setItem?.(
+        payload.key,
+        payload.state,
+        payload.features?.persist
+      ) ?? saveStateToStorage(payload);
+    },
+  });
