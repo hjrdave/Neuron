@@ -13,27 +13,7 @@ describe("Neuron", () => {
       const neuron2 = new Neuron(0);
       expect(neuron1.key).not.toBe(neuron2.key); // Verify keys are unique
     });
-
-    it("should correctly set prevState in onInit middleware", () => {
-      const onInitMock = vi.fn();
-      const initialState = { count: 5 };
-
-      new Neuron(initialState, {
-        onInit: onInitMock,
-      });
-
-      // Check that prevState is set correctly in onInit
-      expect(onInitMock).toHaveBeenCalledTimes(1);
-      expect(onInitMock).toHaveBeenCalledWith(
-        expect.objectContaining({
-          state: { count: 5 },
-          prevState: { count: 5 }, // During initialization, prevState equals state
-        }),
-        expect.any(Map)
-      );
-    });
   });
-
   describe("State Updates", () => {
     it("should update state using the set method", () => {
       const neuron = new Neuron(0); // Initial state: 0
@@ -61,6 +41,97 @@ describe("Neuron", () => {
       neuron.dispatch((payload) => {
         expect(payload.prevState).toEqual({ count: 0 }); // Ensure prevState was updated correctly
       });
+    });
+  });
+
+  describe("Neuron Equality Check", () => {
+    it("should trigger middleware for primitive state changes", () => {
+      const onDispatchMock = vi.fn();
+      const initialState = 0;
+
+      // Create a neuron with onDispatch middleware
+      const neuron = new Neuron(initialState, {
+        onDispatch: onDispatchMock,
+      });
+
+      // Update the state to a different primitive value
+      neuron.set(1);
+
+      // Assert that onDispatch was triggered
+      expect(onDispatchMock).toHaveBeenCalledTimes(1);
+
+      // Extract the arguments passed to the mock
+      const [payload] = onDispatchMock.mock.calls[0];
+      expect(payload).toMatchObject({
+        prevState: 0,
+        state: 1,
+      });
+    });
+
+    it("should trigger middleware for unequal non-primitive state changes", () => {
+      const onDispatchMock = vi.fn();
+      const initialState = { count: 0 };
+
+      // Create a neuron with onDispatch middleware
+      const neuron = new Neuron(initialState, {
+        onDispatch: onDispatchMock,
+      });
+
+      // Update the state to a different object
+      neuron.set({ count: 1 });
+
+      // Assert that onDispatch was triggered
+      expect(onDispatchMock).toHaveBeenCalledTimes(1);
+
+      // Extract the arguments passed to the mock
+      const [payload] = onDispatchMock.mock.calls[0];
+      expect(payload).toMatchObject({
+        prevState: { count: 0 },
+        state: { count: 1 },
+      });
+    });
+    it("should not trigger middleware, effects, or onCallback if dispatch is cancelled", () => {
+      const onDispatchMock = vi.fn((payload) => payload.cancelDispatch());
+      const onCallbackMock = vi.fn();
+      const effectMock = vi.fn();
+      const initialState = 42;
+
+      // Create a neuron with onDispatch, onCallback, and effect
+      const neuron = new Neuron<number, unknown, unknown>(initialState, {
+        onDispatch: onDispatchMock,
+        onCallback: onCallbackMock,
+      });
+
+      // Attach an effect
+      neuron.effect(effectMock);
+
+      // Update the state with a different value
+      neuron.set(43);
+
+      // Assert that dispatch was cancelled
+      expect(onDispatchMock).toHaveBeenCalledTimes(1);
+      expect(onCallbackMock).not.toHaveBeenCalled(); // onCallback should not trigger on cancellation
+      expect(effectMock).not.toHaveBeenCalled(); // effect should not fire on cancellation
+
+      // Verify the payload passed to `onDispatchMock`
+      const [payload] = onDispatchMock.mock.calls[0];
+      expect(payload).toMatchObject({
+        prevState: 42,
+        state: 43,
+        cancelDispatch: expect.any(Function),
+        isDispatchCancelled: expect.any(Function),
+      });
+
+      // Assert that `isDispatchCancelled` returns true
+      expect(payload.isDispatchCancelled()).toBe(true);
+
+      // Update the state with a valid value (no cancellation)
+      onDispatchMock.mockImplementation(() => {}); // Disable cancellation
+      neuron.set(44);
+
+      // Assert that `onCallback` and `effect` were triggered
+      expect(onCallbackMock).toHaveBeenCalledTimes(1);
+      expect(effectMock).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -149,16 +220,19 @@ describe("Neuron", () => {
         onInit: onInitMock,
       });
 
-      // Assert that onInit was called once with the correct payload
+      // Assert that onInit was called once
       expect(onInitMock).toHaveBeenCalledTimes(1);
-      expect(onInitMock).toHaveBeenCalledWith(
-        expect.objectContaining({
-          state: { count: 0 },
-          prevState: { count: 0 },
-          key: expect.any(String),
-        }),
-        expect.any(Map) // Assuming `store` is a Map in this standalone use case
-      );
+
+      // Assert that onInit was called with the correct payload
+      const [payload] = onInitMock.mock.calls[0]; // Extract arguments
+
+      expect(payload).toMatchObject({
+        state: { count: 0 },
+        prevState: { count: 0 },
+        key: expect.any(String),
+        cancelDispatch: expect.any(Function),
+        isDispatchCancelled: expect.any(Function), // isDispatchCancelled is likely a function, not a boolean
+      });
     });
 
     it("should call onDispatch middleware during state updates", () => {
@@ -173,16 +247,25 @@ describe("Neuron", () => {
       // Update the state
       neuron.set({ count: 1 });
 
-      // Assert that onDispatch was called once with the correct payload
+      // Assert that onDispatch was called once
       expect(onDispatchMock).toHaveBeenCalledTimes(1);
-      expect(onDispatchMock).toHaveBeenCalledWith(
-        expect.objectContaining({
-          state: { count: 1 },
-          prevState: { count: 0 },
-          key: expect.any(String),
-        }),
-        expect.any(Map)
-      );
+
+      // Extract the arguments passed to the mock
+      const [payload] = onDispatchMock.mock.calls[0];
+
+      // Assert the payload structure
+      expect(payload).toMatchObject({
+        key: expect.any(String),
+        state: { count: 1 }, // The updated state
+        prevState: { count: 0 }, // The previous state
+        cancelDispatch: expect.any(Function),
+        isDispatchCancelled: expect.any(Function),
+      });
+
+      // Specifically handle the `features` property
+      if (payload.features !== undefined) {
+        expect(payload.features).toEqual(expect.anything());
+      }
     });
 
     it("should call onCallback middleware after state updates", () => {
@@ -197,16 +280,25 @@ describe("Neuron", () => {
       // Update the state
       neuron.set({ count: 1 });
 
-      // Assert that onCallback was called once with the correct payload
+      // Assert that onCallback was called once
       expect(onCallbackMock).toHaveBeenCalledTimes(1);
-      expect(onCallbackMock).toHaveBeenCalledWith(
-        expect.objectContaining({
-          state: { count: 1 },
-          prevState: { count: 0 },
-          key: expect.any(String),
-        }),
-        expect.any(Map)
-      );
+
+      // Extract the arguments passed to the mock
+      const [payload] = onCallbackMock.mock.calls[0];
+
+      // Assert the payload structure
+      expect(payload).toMatchObject({
+        key: expect.any(String),
+        state: { count: 1 }, // The updated state
+        prevState: { count: 0 }, // The previous state
+        cancelDispatch: expect.any(Function),
+        isDispatchCancelled: expect.any(Function),
+      });
+
+      // Specifically handle the `features` property
+      if (payload.features !== undefined) {
+        expect(payload.features).toEqual(expect.anything());
+      }
     });
 
     it("should call all middlewares in sequence during a state update", () => {

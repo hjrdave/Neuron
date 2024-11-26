@@ -23,33 +23,40 @@ describe("Dispatcher", () => {
   });
 
   describe("Listener Removal", () => {
-    it("should remove listeners when stopListening is called", () => {
+    it("should remove listeners when stopListening is called", async () => {
       const dispatcher = new Dispatcher();
-      const callback = vi.fn();
-      const key = "testKey";
+      const spy = vi.fn();
 
-      dispatcher.listen(key, callback);
-      dispatcher.stopListening(key);
+      // Set up the listener
+      dispatcher.listen("testKey", spy);
 
-      dispatcher.dispatch(
-        new Payload({ key, prevState: "oldState", state: "newState" })
-      );
+      // Stop listening before dispatching
+      dispatcher.stopListening("testKey");
 
-      expect(callback).not.toHaveBeenCalled();
-    });
-  });
-
-  describe("Edge Cases", () => {
-    it("should handle dispatching when no listeners are registered", () => {
-      const dispatcher = new Dispatcher();
-      const key = "testKey";
+      // Dispatch a payload for "testKey"
       const payload = new Payload({
-        key,
-        prevState: "oldState",
+        key: "testKey",
         state: "newState",
+        prevState: "oldState",
       });
+      dispatcher.dispatch(payload as any);
 
-      expect(() => dispatcher.dispatch(payload as any)).not.toThrow();
+      // Assert the spy was not called because the listener has been removed
+      expect(spy).not.toHaveBeenCalled();
+    });
+
+    describe("Edge Cases", () => {
+      it("should handle dispatching when no listeners are registered", () => {
+        const dispatcher = new Dispatcher();
+        const key = "testKey";
+        const payload = new Payload({
+          key,
+          prevState: "oldState",
+          state: "newState",
+        });
+
+        expect(() => dispatcher.dispatch(payload as any)).not.toThrow();
+      });
     });
   });
 });

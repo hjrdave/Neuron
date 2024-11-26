@@ -51,10 +51,19 @@ describe("NeuronClient", () => {
     it("should allow one neuron to update another neuron during onInit", () => {
       const client = new NeuronClient();
 
-      // Create neuron B
+      // Create neuron B with an initial state
       const neuronB = client.neuron("stateB", { key: "neuronB" });
 
-      // Ensure neuron B's state is updated by neuron A
+      // Create neuron A with onInit callback
+      client.neuron("stateA", {
+        onInit: () => {
+          // Update neuron B during neuron A's initialization
+          client.dispatch("neuronB", (payload) => {
+            payload.state = "updatedByNeuronA";
+          });
+        },
+      });
+      // Ensure neuron A's onInit logic has updated neuron B's state
       expect(client.getRef(neuronB.key)).toBe("updatedByNeuronA");
     });
 
@@ -63,12 +72,11 @@ describe("NeuronClient", () => {
 
       // Create neuron A
       const neuronA = client.neuron("stateA", {
-        onDispatch: (payload, clientStore) => {
+        onDispatch: () => {
           // Update neuronB when neuronA dispatches
-          const neuronB = clientStore.get("neuronB");
-          if (neuronB) {
-            neuronB.state = "updatedByNeuronA";
-          }
+          client.dispatch("neuronB", (payload) => {
+            payload.state = "updatedByNeuronA";
+          });
         },
       });
 
@@ -89,12 +97,11 @@ describe("NeuronClient", () => {
 
       // Create neuron A
       const neuronA = client.neuron("stateA", {
-        onCallback: (payload, clientStore) => {
+        onCallback: () => {
           // Update neuronB during neuronA's callback
-          const neuronB = clientStore.get("neuronB");
-          if (neuronB) {
-            neuronB.state = "updatedByNeuronA";
-          }
+          client.dispatch("neuronB", (payload) => {
+            payload.state = "updatedByNeuronA";
+          });
         },
       });
 
@@ -108,42 +115,42 @@ describe("NeuronClient", () => {
       expect(client.getRef(neuronB.key)).toBe("updatedByNeuronA");
     });
 
-    it("should allow chaining updates between neurons", () => {
+    /**THERE IS AN ISSUE WITH CHAINING */
+    it("should allow chaining updates between neurons", async () => {
       const client = new NeuronClient();
 
-      // Create neuron A
+      // Create neuron A with an onCallback to update neuron B
       const neuronA = client.neuron("stateA", {
-        onCallback: (payload, clientStore) => {
-          // Update neuron B when neuron A's callback is triggered
-          const neuronB = clientStore.get("neuronB");
-          if (neuronB) {
-            neuronB.state = "updatedByNeuronA";
-          }
+        key: "neuronA",
+        onCallback: () => {
+          client.dispatch("neuronB", (payload) => {
+            payload.state = "updatedByNeuronA";
+          });
         },
       });
 
-      // Create neuron B
+      // Create neuron B with an onCallback to update neuron C
       const neuronB = client.neuron("stateB", {
-        onCallback: (payload, clientStore) => {
-          // Update neuron C when neuron B's callback is triggered
-          const neuronC = clientStore.get("neuronC");
-          if (neuronC) {
-            neuronC.state = "updatedByNeuronB";
-          }
-        },
         key: "neuronB",
+        onCallback: () => {
+          client.dispatch("neuronC", (payload) => {
+            payload.state = "updatedByNeuronB";
+          });
+        },
       });
 
-      // Create neuron C
-      const neuronC = client.neuron("stateC", { key: "neuronC" });
+      // Create neuron C (this will be updated by neuron B)
+      const neuronC = client.neuron("stateC", {
+        key: "neuronC",
+      });
 
       // Update neuron A's state to trigger the chain reaction
-      neuronA.set("newStateA");
+      neuronA.set("newState");
 
-      // Ensure neuron B is updated by neuron A
+      // Assert that neuron B was updated by neuron A
       expect(client.getRef(neuronB.key)).toBe("updatedByNeuronA");
 
-      // Ensure neuron C is updated by neuron B
+      // Assert that neuron C was updated by neuron B
       expect(client.getRef(neuronC.key)).toBe("updatedByNeuronB");
     });
   });

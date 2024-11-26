@@ -47,13 +47,13 @@ export class NeuronClient<F> implements INeuronClient<F> {
     const payload = new Payload<unknown, F>({
       key: key,
       state: neuronData?.state,
-      prevState: neuronData.prevState,
+      prevState: neuronData?.prevState,
     });
     mutator(payload);
     this.clientModules.forEach((module) => {
-      module?.onDispatch?.(payload as IPayload<unknown, F>, this.clientStore);
+      module?.onDispatch?.(payload as IPayload<unknown, F>);
     });
-    neuronData?.onDispatch?.(payload, this.clientStore);
+    neuronData?.onDispatch?.(payload);
     this.clientStore.set(key, {
       ...neuronData,
       state: payload.state,
@@ -61,9 +61,9 @@ export class NeuronClient<F> implements INeuronClient<F> {
     } as NeuronData<unknown, unknown, F>);
     this.clientDispatcher.dispatch(payload);
     this.clientModules.forEach((module) => {
-      module?.onCallback?.(payload as IPayload<unknown, F>, this.clientStore);
+      module?.onCallback?.(payload as IPayload<unknown, F>);
     });
-    neuronData?.onCallback?.(payload, this.clientStore);
+    neuronData?.onCallback?.(payload);
   };
   readonly neuron = <T, A>(
     initialState: T,
@@ -95,27 +95,38 @@ export class NeuronClient<F> implements INeuronClient<F> {
   }
 }
 
-//NeuronClient Types and Interfaces
+/**
+ * Interface for a NeuronClient, a container for managing multiple Neurons and their states.
+ *
+ * @template F - The type of additional features or metadata associated with the client.
+ */
 export interface INeuronClient<F> {
   /**
-   * NeuronClient instance name.
+   * The name of the NeuronClient instance.
    */
   readonly name: Readonly<ClientName>;
 
   /**
-   * Checks to see if state exists in NeuronClient
-   * @param key - takes a client key that is associated to state item.
+   * Checks if a specific state exists in the client store.
+   *
+   * @param key - The unique key associated with the state item.
+   * @returns `true` if the state exists, otherwise `false`.
    */
   readonly has: (key: NeuronKey) => boolean;
 
   /**
-   * Returns a reference to a state value by key
-   * @param key - takes a client key that is associated to state item.
+   * Returns a reference to the state value associated with the provided key.
+   *
+   * @template T - The type of the state value.
+   * @param key - The unique key associated with the state item.
+   * @returns The state value as a reference.
    */
   readonly getRef: <T>(key: NeuronKey) => T;
 
   /**
-   * Returns array of state items
+   * Returns a snapshot of all state items in the client store.
+   *
+   * @returns An array of objects containing the key and state for each item.
    */
   readonly getSnapshot: () => {
     key: NeuronKey;
@@ -123,25 +134,75 @@ export interface INeuronClient<F> {
   }[];
 
   /**
-   * Runs a callback function everytime a neuron's state is updated.
-   * @param callbackFn - Callback function that takes payload for inspecting
+   * Registers a callback function that will be executed whenever a Neuron's state is updated.
+   *
+   * @param callbackFn - The callback function to invoke on state updates. Receives the payload for inspection.
    */
-  readonly listen: (callbackfn: DispatchCallback<unknown, F>) => void;
+  readonly listen: (callbackFn: DispatchCallback<unknown, F>) => void;
 
+  /**
+   * Dispatches a mutator function for updating the state associated with a specific key.
+   *
+   * @param key - The unique key associated with the state item to update.
+   * @param mutator - A function that manipulates the state through a payload.
+   */
   readonly dispatch: (
     key: NeuronKey,
     mutator: DispatchMutator<unknown, F>
   ) => void;
+
+  /**
+   * Creates a new Neuron instance within the client.
+   *
+   * @template T - The type of the Neuron's state.
+   * @template A - The type of the Neuron's actions.
+   * @param initialState - The initial state of the Neuron.
+   * @param options - Configuration options for the Neuron.
+   * @returns A new instance of the Neuron.
+   */
   readonly neuron: <T, A>(
     initialState: T,
     options?: NeuronOptions<T, A, F>
   ) => INeuron<T, A, F>;
+
+  /**
+   * Provides access to the NeuronClient without the `connect` method.
+   */
   readonly connect: ConnectToClient<F>;
 }
+
+/**
+ * Configuration options for a NeuronClient instance.
+ */
 export interface ClientOptions {
+  /**
+   * The name of the NeuronClient instance.
+   */
   name?: NeuronKey;
+
+  /**
+   * An array of modules to associate with the NeuronClient.
+   */
   modules?: IModule<unknown>[];
 }
+
+/**
+ * The name type for a NeuronClient, which can be a string or number.
+ */
 export type ClientName = string | number;
+
+/**
+ * Represents a connected NeuronClient with all its methods except `connect`.
+ *
+ * @template F - The type of additional features or metadata associated with the client.
+ */
 export type ConnectToClient<F> = Omit<INeuronClient<F>, "connect">;
+
+/**
+ * Represents the client store as a map of keys to NeuronData objects.
+ *
+ * @template T - The type of the Neuron's state.
+ * @template A - The type of the Neuron's actions.
+ * @template F - The type of additional features or metadata associated with the Neuron.
+ */
 export type ClientStore<T, A, F> = Map<NeuronKey, NeuronData<T, A, F>>;
