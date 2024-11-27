@@ -48,6 +48,7 @@ export class NeuronClient<F> implements INeuronClient<F> {
       key: key,
       state: neuronData?.state,
       prevState: neuronData?.prevState,
+      features: neuronData.features,
     });
     mutator(payload);
     this.clientModules.forEach((module) => {

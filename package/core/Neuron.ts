@@ -9,9 +9,6 @@ import { IModule } from "./Module";
 import { ClientStore } from "./NeuronClient";
 import { IPayload, Payload } from "./Payload";
 
-/**
- * Individual Neuron that holds state and has methods to manipulate that state
- */
 export class Neuron<T, A, F> implements INeuron<T, A, F> {
   private store: ClientStore<unknown, unknown, F>;
   private modules: IModule<F>[];
@@ -26,6 +23,7 @@ export class Neuron<T, A, F> implements INeuron<T, A, F> {
         typeof newState === "function"
           ? (newState as (prevState: T) => T)(neuronData?.state as T)
           : newState,
+      features: neuronData.features,
     });
     if (payload.state !== payload.prevState) {
       neuronData?.onDispatch?.(payload);
@@ -64,6 +62,7 @@ export class Neuron<T, A, F> implements INeuron<T, A, F> {
       key: this.key,
       state: neuronData?.state,
       prevState: neuronData?.prevState,
+      features: neuronData.features,
     });
     mutator(payload);
     if (!payload.isDispatchCancelled()) {
@@ -115,6 +114,7 @@ export class Neuron<T, A, F> implements INeuron<T, A, F> {
       key: this.key,
       state: initialState,
       prevState: initialState,
+      features: options?.features,
     });
     options?.onInit?.(payload);
     this.modules.forEach((module) => {
@@ -257,6 +257,22 @@ export interface NeuronData<T, A, F> {
   prevState: Readonly<T>;
 
   /**
+   * Additional features or metadata associated with the Neuron.
+   *
+   * The `features` property is a generic type (`F`) that allows customization of
+   * the behavior and capabilities of the Neuron. It can hold configuration
+   * options, flags, or additional data that extend the functionality of the Neuron.
+   *
+   * Examples of potential uses:
+   * - Persisting the state of the Neuron to local or session storage.
+   * - Adding flags for logging, caching, or feature toggles.
+   * - Storing metadata relevant to specific modules or extensions.
+   *
+   * @template F - The type of features or metadata for the Neuron.
+   */
+  features: F;
+
+  /**
    * A function that generates action methods for interacting with the Neuron's state.
    */
   actions?: NeuronActions<T, A, F>;
@@ -276,6 +292,7 @@ export interface NeuronData<T, A, F> {
    */
   onCallback?: NeuronMiddleware<T, F>;
 }
+
 /**
  * A middleware function used during various stages of a Neuron's lifecycle.
  *

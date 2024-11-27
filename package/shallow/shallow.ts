@@ -1,5 +1,4 @@
 import { Module } from "../core";
-import { IPayload } from "../core/Interfaces";
 
 export interface ShallowFeatures {
   shallow?: boolean;

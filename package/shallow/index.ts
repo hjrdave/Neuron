@@ -1,4 +1,4 @@
-import { Shallow, ShallowFeatures } from "./shallow";
+import { Shallow, ShallowFeatures, shallowEqual } from "./shallow";
 
 export type { ShallowFeatures };
-export { Shallow };
+export { Shallow, shallowEqual };

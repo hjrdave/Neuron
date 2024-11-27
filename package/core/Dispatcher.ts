@@ -1,6 +1,3 @@
-/**
- * Sets listeners on the Payload so when state changes it dispatches that state to the Store.
- */
 import { NeuronKey } from "./Neuron";
 import { IPayload } from "./Payload";
 

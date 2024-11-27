@@ -1,8 +1,5 @@
 import { NeuronKey } from "./Neuron";
 
-/**
- * This class hold data necessary for updating state and running middleware.
- */
 export class Payload<T, F> implements IPayload<T, F> {
   readonly key: NeuronKey;
   readonly prevState: Readonly<T>;
