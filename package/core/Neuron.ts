@@ -94,7 +94,7 @@ export class Neuron<T, A, F> implements INeuron<T, A, F> {
     return (neuronActions?.(this.dispatch) as A) ?? ({} as A);
   };
   readonly effect = (callbackFn: DispatchCallback<T, F>) => {
-    this.dispatcher.stopListening(this.key);
+    this.dispatcher.stopListening(this.key, callbackFn);
     this.dispatcher.listen(this.key, callbackFn);
   };
 

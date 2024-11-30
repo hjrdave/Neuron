@@ -29,7 +29,7 @@ export class NeuronClient<F> implements INeuronClient<F> {
     }));
   readonly listen = (callbackFn: DispatchCallback<unknown, F>) => {
     this.clientStore.forEach((_, key) => {
-      this.clientDispatcher.stopListening(key);
+      this.clientDispatcher.stopListening(key, callbackFn);
     });
     this.clientStore.forEach((_, key) => {
       this.clientDispatcher.listen(key, callbackFn);
@@ -78,7 +78,7 @@ export class NeuronClient<F> implements INeuronClient<F> {
       this.clientDispatcher as IDispatcher<T, F>
     );
   };
-  readonly connect: Omit<INeuronClient<F>, "connect">;
+  readonly connect: ConnectToClient<F>;
   constructor(options?: ClientOptions) {
     this.name = options?.name ?? crypto.randomUUID();
     this.clientStore = new Map<NeuronKey, NeuronData<unknown, unknown, F>>();
@@ -161,10 +161,7 @@ export interface INeuronClient<F> {
    * @param options - Configuration options for the Neuron.
    * @returns A new instance of the Neuron.
    */
-  readonly neuron: <T, A>(
-    initialState: T,
-    options?: NeuronOptions<T, A, F>
-  ) => INeuron<T, A, F>;
+  readonly neuron: NeuronInstance<F>;
 
   /**
    * Provides access to the NeuronClient without the `connect` method.
@@ -207,3 +204,7 @@ export type ConnectToClient<F> = Omit<INeuronClient<F>, "connect">;
  * @template F - The type of additional features or metadata associated with the Neuron.
  */
 export type ClientStore<T, A, F> = Map<NeuronKey, NeuronData<T, A, F>>;
+export type NeuronInstance<F> = <T, A>(
+  initialState: T,
+  options?: NeuronOptions<T, A, F>
+) => INeuron<T, A, F>;

@@ -2,29 +2,52 @@ import { NeuronKey } from "./Neuron";
 import { IPayload } from "./Payload";
 
 export class Dispatcher<T, F> implements IDispatcher<T, F> {
-  private eventEmitters: Map<NeuronKey, DispatchCallback<T, F>[]>;
+  private eventEmitters: Map<NeuronKey, Set<DispatchCallback<T, F>>> =
+    new Map();
   private payload?: IPayload<T, F>;
-  listen = (key: NeuronKey, callback: DispatchCallback<T, F>) => {
-    const emitter = () => (this.payload ? callback?.(this.payload) : null);
-    const allEmitters = this.eventEmitters.get(key);
-    allEmitters
-      ? allEmitters.push(emitter)
-      : this.eventEmitters.set(key, [emitter]);
-  };
-  stopListening = (key: NeuronKey) => {
-    const allEmitters = this.eventEmitters.get(key);
-    allEmitters ? this.eventEmitters.set(key, []) : null;
-  };
-  dispatch = (payload: IPayload<T, F>) => {
+
+  /**
+   * Registers a callback to listen to changes associated with the given key.
+   * @param key - The unique identifier for the Neuron whose state changes should be listened to.
+   * @param callback - The function to invoke when the state changes.
+   */
+  listen(key: NeuronKey, callback: DispatchCallback<T, F>) {
+    if (!this.eventEmitters.has(key)) {
+      this.eventEmitters.set(key, new Set());
+    }
+    this.eventEmitters.get(key)?.add(callback);
+
+    // Immediately invoke the callback with the current state, if available
+    if (this.payload?.key === key) {
+      callback(this.payload);
+    }
+  }
+
+  /**
+   * Stops listening for changes for the given key and removes the specific callback.
+   * @param key - The unique identifier for the Neuron.
+   * @param callback - The callback to remove from the listeners.
+   */
+  stopListening(key: NeuronKey, callback: DispatchCallback<T, F>) {
+    const listeners = this.eventEmitters.get(key);
+    if (listeners) {
+      listeners.delete(callback);
+      if (listeners.size === 0) {
+        this.eventEmitters.delete(key); // Clean up if no listeners remain
+      }
+    }
+  }
+
+  /**
+   * Dispatches a payload to all registered listeners associated with the payload's key.
+   * @param payload - The payload containing the state and metadata to dispatch.
+   */
+  dispatch(payload: IPayload<T, F>) {
     this.payload = payload;
-    const key = payload.key;
-    const allEmitters = this.eventEmitters.get(key);
-    allEmitters?.slice()?.map((emitter) => {
-      emitter?.(payload);
+    const listeners = this.eventEmitters.get(payload.key);
+    listeners?.forEach((listener) => {
+      listener(payload);
     });
-  };
-  public constructor() {
-    this.eventEmitters = new Map();
   }
 }
 
@@ -48,7 +71,7 @@ export interface IDispatcher<T, F> {
    *
    * @param key - The unique identifier for the Neuron whose state changes should no longer be listened to.
    */
-  stopListening: (key: NeuronKey) => void;
+  stopListening: (key: NeuronKey, callback: DispatchCallback<T, F>) => void;
 
   /**
    * Dispatches the given payload to all registered callbacks associated with the payload's key.
