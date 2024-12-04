@@ -5,10 +5,10 @@ import { IContext, StoreInstance } from "./PrivateNeuronClient";
 export interface Options {
   name?: string;
 }
-const usePrivateNeuron = (
+export function usePrivateNeuron(
   Context: React.Context<IContext>,
   options?: Options
-) => {
+) {
   const connect = createStore({ name: options?.name }) as StoreInstance;
   const ContextValue: IContext = {
     store: connect,
@@ -19,5 +19,4 @@ const usePrivateNeuron = (
     </PrivateComp>
   );
   return { Private, connect };
-};
-export default usePrivateNeuron;
+}

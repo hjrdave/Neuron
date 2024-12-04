@@ -22,6 +22,15 @@ export class NeuronClient<F> implements INeuronClient<F> {
   readonly has = (key: NeuronKey) => this.clientStore.has(key);
   readonly getRef = <T>(key: NeuronKey) =>
     this.clientStore.get(key)?.state as T;
+  readonly getActions = <A>(key: NeuronKey) => {
+    const neuronActions = (
+      this.clientStore.get(key) as NeuronData<unknown, A, F>
+    )?.actions;
+    return (
+      (neuronActions?.((mutator) => this.dispatch(key, mutator)) as A) ??
+      ({} as A)
+    );
+  };
   readonly getSnapshot = () =>
     Array.from(this.clientStore.entries()).map((item) => ({
       key: item[1].key,
@@ -88,6 +97,7 @@ export class NeuronClient<F> implements INeuronClient<F> {
       name: this.name,
       has: this.has,
       getRef: this.getRef,
+      getActions: this.getActions,
       getSnapshot: this.getSnapshot,
       listen: this.listen,
       dispatch: this.dispatch,
@@ -123,6 +133,19 @@ export interface INeuronClient<F> {
    * @returns The state value as a reference.
    */
   readonly getRef: <T>(key: NeuronKey) => T;
+
+  /**
+   * Retrieves the actions associated with a specific neuron key.
+   *
+   * @template A - The type of the actions object.
+   * @param {NeuronKey} key - The unique key identifying the neuron.
+   * @returns {A} The actions object of the specified type `A` associated with the neuron key.
+   *
+   * @example
+   * const actions = getActions<ActionsInterface>(key);
+   * actions.someAction(); // Invoke an action.
+   */
+  readonly getActions: <A>(key: NeuronKey) => A;
 
   /**
    * Returns a snapshot of all state items in the client store.

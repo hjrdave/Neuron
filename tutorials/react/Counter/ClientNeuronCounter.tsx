@@ -1,5 +1,21 @@
 import React from "react";
-import { useCount } from "./Counter.neurons";
+import { NeuronClient } from "../../../package/react_new/NeuronClient";
+
+const { neuron } = new NeuronClient();
+
+const useCount = neuron(0, {
+  actions: (dispatch) => ({
+    increment: () =>
+      dispatch((payload) => {
+        alert(payload.state);
+        payload.state = payload.prevState + 1;
+      }),
+    decrement: () =>
+      dispatch((payload) => {
+        payload.state = payload.prevState - 1;
+      }),
+  }),
+});
 
 const containerStyles: React.CSSProperties = {
   display: "flex",
@@ -40,9 +56,8 @@ const btnStyles: React.CSSProperties = {
   backgroundColor: "#219ebc",
   cursor: "pointer",
 };
-export default function Counter() {
+function SingleNeuronCounter() {
   const [count, countActions] = useCount();
-
   return (
     <>
       <div style={containerStyles}>
@@ -53,11 +68,34 @@ export default function Counter() {
             <button style={btnStyles} onClick={countActions.decrement}>
               Decrement
             </button>
-            <button style={btnStyles} onClick={countActions.increment}>
+            <button
+              style={btnStyles}
+              onClick={() => countActions.set((prev) => prev + 1)}
+            >
               Increment
             </button>
           </div>
         </div>
+      </div>
+    </>
+  );
+}
+
+const h1AppStyles: React.CSSProperties = {
+  fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
+};
+const textAppStyles: React.CSSProperties = {
+  fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
+};
+export default function ClientNeuronCounterApp() {
+  return (
+    <>
+      <div style={{ height: "75vh" }}>
+        <h1 style={h1AppStyles}>Client Neuron Component</h1>
+        <p style={textAppStyles}>
+          This is a demo of a component that uses "single" Neurons.
+        </p>
+        <SingleNeuronCounter />
       </div>
     </>
   );

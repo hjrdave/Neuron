@@ -1,14 +1,19 @@
 import { useEffect, useState } from "react";
-import { INeuron } from "../core/Neuron";
+import { INeuronClient } from "../../core/NeuronClient";
+import { NeuronKey } from "../../core/Neuron";
 
-export function useSubscriber<T, A, F, S>(
-  neuron: INeuron<T, A, F>,
+export function usePrivateSubscriber<T, A, F, S>(
+  neuronClient: INeuronClient<F>,
+  neuronKey: NeuronKey,
   slice?: (state: T) => S
 ) {
   const [state, setState] = useState(
-    slice ? slice(neuron.getRef()) : neuron.getRef()
+    slice
+      ? slice(neuronClient.getRef(neuronKey))
+      : neuronClient.getRef(neuronKey)
   );
-  const set: SetState<T> = (state: T | ((prev: T) => T)) => neuron.set(state);
+  const set: SetState<T> = (state: T | ((prev: T) => T)) =>
+    neuronClient.dispatch(neuronKey, (payload) => (payload.state = state));
   const setSlice: SetState<S> = (state: S | ((prevSlice: S) => S)) => {
     if (slice) {
       const funcToSelectorString = slice
@@ -18,9 +23,9 @@ export function useSubscriber<T, A, F, S>(
         typeof funcToSelectorString === "string"
           ? funcToSelectorString?.split(".").slice(1)
           : [];
-      const prevState = neuron.getRef();
+      const prevState = neuronClient.getRef<T>(neuronKey);
       const prevSliceState = selectorArray.reduce(
-        (acc, key) => acc[key],
+        (acc: any, key) => acc[key],
         prevState
       ) as unknown as S;
 
@@ -46,22 +51,27 @@ export function useSubscriber<T, A, F, S>(
         sliceState
       );
 
-      neuron.set({ ...updatedState });
+      neuronClient.dispatch(
+        neuronKey,
+        (payload) => (payload.state = { ...updatedState })
+      );
     }
   };
   const actions = slice
     ? {
-        ...neuron.getActions(),
+        ...neuronClient.getActions<A>(neuronKey),
         set,
         setSlice,
       }
-    : { ...neuron.getActions(), set };
+    : { ...neuronClient.getActions<A>(neuronKey), set };
   useEffect(() => {
-    neuron.effect((payload) => {
-      if (slice) {
-        setState(slice(payload.state));
-      } else {
-        setState(payload.state);
+    neuronClient.listen((payload) => {
+      if (payload.key === neuronKey) {
+        if (slice) {
+          setState(slice(payload.state as T));
+        } else {
+          setState(payload.state as S);
+        }
       }
     });
   }, []);

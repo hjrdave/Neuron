@@ -47,6 +47,105 @@ describe("NeuronClient", () => {
     });
   });
 
+  describe("NeuronClient - getActions", () => {
+    it("should return an empty object if no actions are defined", () => {
+      // Create a new instance of NeuronClient for this test
+      const client = new NeuronClient();
+      const neuron = client.neuron("initialState");
+
+      const actions = client.getActions(neuron.key);
+      expect(actions).toEqual({});
+    });
+
+    it("should return the defined actions for a neuron", () => {
+      // Create a new instance of NeuronClient for this test
+      const client = new NeuronClient();
+      const neuron = client.neuron("initialState", {
+        actions: (dispatch) => ({
+          increment: () =>
+            dispatch((payload) => (payload.state = "incremented")),
+          decrement: () =>
+            dispatch((payload) => (payload.state = "decremented")),
+        }),
+      });
+
+      const actions = client.getActions<{
+        increment: () => void;
+        decrement: () => void;
+      }>(neuron.key);
+      expect(actions).toHaveProperty("increment");
+      expect(actions).toHaveProperty("decrement");
+
+      // Verify that the actions work as expected
+      actions.increment();
+      expect(client.getRef(neuron.key)).toBe("incremented");
+
+      actions.decrement();
+      expect(client.getRef(neuron.key)).toBe("decremented");
+    });
+
+    it("should throw an error if getActions is called for a non-existent neuron key", () => {
+      // Create a new instance of NeuronClient for this test
+      const client = new NeuronClient();
+
+      const invalidKey = "nonExistentKey";
+      expect(client.getActions(invalidKey)).toEqual({});
+    });
+
+    it("should bind dispatch correctly to actions", () => {
+      // Create a new instance of NeuronClient for this test
+      const client = new NeuronClient();
+      const neuron = client.neuron("initialState", {
+        actions: (dispatch) => ({
+          setState: (newState: string) =>
+            dispatch((payload) => (payload.state = newState)),
+        }),
+      });
+
+      const actions = client.getActions<{
+        setState: (newState: string) => void;
+      }>(neuron.key);
+
+      // Verify that dispatch is bound correctly
+      actions.setState("newState");
+      expect(client.getRef(neuron.key)).toBe("newState");
+    });
+
+    it("should work with complex action dispatches", () => {
+      // Create a new instance of NeuronClient for this test
+      const client = new NeuronClient();
+      const neuron = client.neuron(
+        { count: 0 },
+        {
+          actions: (dispatch) => ({
+            increment: () =>
+              dispatch(
+                (payload) =>
+                  (payload.state = { count: payload.state.count + 1 })
+              ),
+            reset: () => dispatch((payload) => (payload.state = { count: 0 })),
+          }),
+        }
+      );
+
+      const actions = client.getActions<{
+        increment: () => void;
+        reset: () => void;
+      }>(neuron.key);
+
+      // Verify increment action
+      actions.increment();
+      expect(client.getRef(neuron.key)).toEqual({ count: 1 });
+
+      actions.increment();
+      expect(client.getRef(neuron.key)).toEqual({ count: 2 });
+
+      // Verify reset action
+      actions.reset();
+      expect(client.getRef(neuron.key)).toEqual({ count: 0 });
+    });
+  });
+
   describe("Neuron Interactions", () => {
     it("should allow one neuron to update another neuron during onInit", () => {
       const client = new NeuronClient();

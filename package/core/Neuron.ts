@@ -1,3 +1,4 @@
+import { neuron } from "../react_new";
 import {
   Dispatch,
   DispatchCallback,
@@ -61,7 +62,7 @@ export class Neuron<T, A, F> implements INeuron<T, A, F> {
     const payload = new Payload<T, F>({
       key: this.key,
       state: neuronData?.state,
-      prevState: neuronData?.prevState,
+      prevState: neuronData?.state,
       features: neuronData.features,
     });
     mutator(payload);
@@ -76,11 +77,12 @@ export class Neuron<T, A, F> implements INeuron<T, A, F> {
       }
     }
     if (!payload.isDispatchCancelled()) {
-      this.store.set(this.key, {
+      const newNeuronData = {
         ...neuronData,
         state: payload.state,
-        prevState: payload?.prevState,
-      } as NeuronData<unknown, A, F>);
+        prevState: neuronData.state,
+      };
+      this.store.set(this.key, newNeuronData as NeuronData<unknown, A, F>);
       this.dispatcher.dispatch(payload);
       neuronData?.onCallback?.(payload);
       this.modules.forEach((module) => {
