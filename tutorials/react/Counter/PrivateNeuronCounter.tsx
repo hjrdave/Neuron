@@ -1,14 +1,13 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment } from "react";
 import { PrivateNeuronClient } from "../../../package/react_new/privateNeuron/PrivateNeuronClient";
 
 const { privateNeuron, useNeuronClient } = new PrivateNeuronClient();
 
 //private neurons are default
-const [initCount, useCount] = privateNeuron(0, {
+const [useInitCount, useCount] = privateNeuron(0, {
   actions: (dispatch) => ({
     increment: () =>
       dispatch((payload) => {
-        alert(payload.state);
         payload.state = payload.prevState + 1;
       }),
     decrement: () =>
@@ -69,10 +68,7 @@ function PrivateNeuronCounterComp() {
             <button style={btnStyles} onClick={countActions.decrement}>
               Decrement
             </button>
-            <button
-              style={btnStyles}
-              onClick={() => countActions.set((prev) => prev + 1)}
-            >
+            <button style={btnStyles} onClick={countActions.increment}>
               Increment
             </button>
           </div>
@@ -83,9 +79,7 @@ function PrivateNeuronCounterComp() {
 }
 function PrivateNeuronCounter(props: { id: string }) {
   const { Private, client } = useNeuronClient({ name: props.id });
-  useEffect(() => {
-    initCount(client);
-  }, []);
+  useInitCount(client);
   return (
     <>
       <Private>

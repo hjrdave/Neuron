@@ -56,10 +56,12 @@ export class NeuronClient<F> implements INeuronClient<F> {
     const payload = new Payload<unknown, F>({
       key: key,
       state: neuronData?.state,
-      prevState: neuronData?.prevState,
+      prevState: neuronData?.state,
       features: neuronData.features,
     });
+
     mutator(payload);
+
     this.clientModules.forEach((module) => {
       module?.onDispatch?.(payload as IPayload<unknown, F>);
     });
@@ -67,7 +69,7 @@ export class NeuronClient<F> implements INeuronClient<F> {
     this.clientStore.set(key, {
       ...neuronData,
       state: payload.state,
-      prevState: payload?.prevState,
+      prevState: neuronData.state,
     } as NeuronData<unknown, unknown, F>);
     this.clientDispatcher.dispatch(payload);
     this.clientModules.forEach((module) => {

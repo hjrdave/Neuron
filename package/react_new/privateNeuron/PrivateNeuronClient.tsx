@@ -20,14 +20,17 @@ export class PrivateNeuronClient<F> implements IPrivateNeuronClient<F> {
     options?: NeuronOptions<T, A, F>
   ) => {
     const neuronKey = options?.key ?? crypto.randomUUID();
-    const initNeuron = (client: INeuronClient<F>) => {
+    const useinitNeuron = (client: INeuronClient<F>) => {
       client.neuron(initialState, { ...options, key: neuronKey });
     };
     const useNeuron = <S,>(slice?: (state: T) => S) => {
       const client = useContext(this.clientContext);
       return usePrivateSubscriber<T, A, F, S>(client, neuronKey, slice);
     };
-    return [initNeuron, useNeuron] as [typeof initNeuron, typeof useNeuron];
+    return [useinitNeuron, useNeuron] as [
+      typeof useinitNeuron,
+      typeof useNeuron
+    ];
   };
   readonly useNeuronClient = (options?: { name?: ClientName }) => {
     const client = new NeuronClient<F>({
