@@ -1,5 +1,5 @@
 import React from "react";
-import { neuron } from "../../../package/react_new/neuron";
+import { neuron } from "../../../package/react/neuron";
 
 //private neurons are default
 const useCount = neuron(0, {
@@ -14,7 +14,7 @@ const useCount = neuron(0, {
       }),
   }),
   onDispatch: (payload) => {
-    //console.log(payload.key, payload);
+    console.log(payload.key, payload);
   },
 });
 

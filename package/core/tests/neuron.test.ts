@@ -39,7 +39,8 @@ describe("Neuron", () => {
 
       // Since prevState is part of internal storage, we can check it by calling `dispatch`
       neuron.dispatch((payload) => {
-        expect(payload.prevState).toEqual({ count: 0 }); // Ensure prevState was updated correctly
+        console.log(payload);
+        expect(payload.prevState).toEqual({ count: 1 }); // Ensure prevState was updated correctly
       });
     });
   });
@@ -338,7 +339,7 @@ describe("Neuron", () => {
       expect(currentState).toEqual({ count: 3 });
 
       neuron.dispatch((payload) => {
-        expect(payload.prevState).toEqual({ count: 0 }); // Ensure prevState was updated correctly
+        expect(payload.prevState).toEqual({ count: 3 }); // Ensure prevState was updated correctly
       });
     });
 

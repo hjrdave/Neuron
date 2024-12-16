@@ -1,4 +1,4 @@
-import { neuron } from "../react_new";
+import { neuron } from "../react";
 import {
   Dispatch,
   DispatchCallback,
@@ -19,7 +19,7 @@ export class Neuron<T, A, F> implements INeuron<T, A, F> {
     const neuronData = this.store.get(this.key) as NeuronData<T, A, F>;
     const payload = new Payload<T, F>({
       key: this.key,
-      prevState: neuronData?.state as T,
+      prevState: neuronData?.prevState as T,
       state:
         typeof newState === "function"
           ? (newState as (prevState: T) => T)(neuronData?.state as T)
@@ -39,7 +39,7 @@ export class Neuron<T, A, F> implements INeuron<T, A, F> {
         this.store.set(this.key, {
           ...neuronData,
           state: payload?.state,
-          prevState: payload?.prevState,
+          prevState: neuronData.state,
         } as NeuronData<unknown, A, F>);
         this.dispatcher.dispatch(payload);
         neuronData?.onCallback?.(payload);

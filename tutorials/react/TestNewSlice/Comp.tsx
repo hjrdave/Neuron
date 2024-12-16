@@ -1,5 +1,5 @@
 import React from "react";
-import { neuron } from "../../../package/react_new/neuron";
+import { neuron } from "../../../package/react/neuron";
 
 const usePerson = neuron({ name: "bob", age: 10 });
 

@@ -1,47 +1,35 @@
 import { useEffect, useState } from "react";
-import { ClientStore } from "./interfaces";
+import { INeuron } from "../core/Neuron";
 
-type SetState<T> = (state: T | ((prev: T) => T)) => void;
-type StateOrSlice<S, T> = unknown extends S ? (S extends unknown ? T : S) : S;
-export type Actions<S, T, A> = unknown extends S
-  ? S extends unknown
-    ? { set: SetState<T> } & A
-    : { set: SetState<T>; setSlice: SetState<S> } & A
-  : { set: SetState<T>; setSlice: SetState<S> } & A;
-
-export const useSubscriber = <T, A, S>(
-  store: ClientStore,
-  selector: number | string,
-  sliceSelector?: (state: T) => S
-) => {
-  const [state, _setState] = useState(
-    sliceSelector
-      ? sliceSelector(store.getRef(selector) as T)
-      : (store.getRef(selector) as T)
+export function useSubscriber<T, A, F, S>(
+  neuron: INeuron<T, A, F>,
+  slice?: (state: T) => S
+) {
+  const [state, setState] = useState(
+    slice ? slice(neuron.getRef()) : neuron.getRef()
   );
-
+  const set: SetState<T> = (state: T | ((prev: T) => T)) => neuron.set(state);
   const setSlice: SetState<S> = (state: S | ((prevSlice: S) => S)) => {
-    if (sliceSelector) {
-      const funcToSelectorString = sliceSelector
+    if (slice) {
+      const funcToSelectorString = slice
         ?.toString()
         .match(/\(\w+\) =>\s*(\S+)/)?.[1];
       const selectorArray =
         typeof funcToSelectorString === "string"
           ? funcToSelectorString?.split(".").slice(1)
           : [];
-      const prevState = store.getRef(selector) as T;
+      const prevState = neuron.getRef();
       const prevSliceState = selectorArray.reduce(
         (acc, key) => acc[key],
         prevState
       ) as unknown as S;
-      let sliceState: S;
 
+      let sliceState: S;
       if (typeof state === "function") {
         sliceState = (state as (prevSlice: S) => S)?.(prevSliceState);
       } else {
         sliceState = state;
       }
-
       const deepStateUpdateObject = (
         obj: T,
         path: string[],
@@ -52,38 +40,42 @@ export const useSubscriber = <T, A, S>(
         lastObj[lastKey] = value;
         return obj;
       };
-
       const updatedState = deepStateUpdateObject(
         prevState,
         selectorArray,
         sliceState
       );
-      store.set(selector, { ...updatedState });
+
+      neuron.set({ ...updatedState });
     }
   };
-  const set: SetState<T> = (state: T | ((prev: T) => T)) =>
-    store.set(selector, state);
-  const _actions = (store.getActions(selector as never) ?? {}) as A;
-  const actions = sliceSelector
+  const actions = slice
     ? {
-        ..._actions,
+        ...neuron.getActions(),
         set,
         setSlice,
       }
-    : { ..._actions, set };
+    : { ...neuron.getActions(), set };
   useEffect(() => {
-    store.onDispatch((payload) => {
-      if (payload.key === selector) {
-        const state = payload.state as T;
-        if (sliceSelector) {
-          console.log(payload);
-          const sliceState = sliceSelector(state);
-          _setState(sliceState);
-        } else {
-          _setState(state);
-        }
+    neuron.effect((payload) => {
+      if (slice) {
+        setState(slice(payload.state));
+      } else {
+        setState(payload.state);
       }
     });
   }, []);
-  return [state, actions] as [StateOrSlice<S, T>, Actions<S, T, A>];
-};
+  return [state, actions] as [StateOrSlice<S, T>, Actions<T, S, A>];
+}
+
+export type StateOrSlice<T, S> = unknown extends T
+  ? T extends unknown
+    ? S
+    : T
+  : T;
+export type Actions<T, S, A> = unknown extends S
+  ? T extends unknown
+    ? { set: SetState<T> } & A
+    : { set: SetState<T>; setSlice: SetState<S> } & A
+  : { set: SetState<T>; setSlice: SetState<S> } & A;
+export type SetState<T> = (state: T | ((prev: T) => T)) => void;

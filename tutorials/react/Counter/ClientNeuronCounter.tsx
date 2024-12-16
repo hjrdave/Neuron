@@ -1,5 +1,5 @@
 import React from "react";
-import { NeuronClient } from "../../../package/react_new/NeuronClient";
+import { NeuronClient } from "../../../package/react/NeuronClient";
 
 const { neuron } = new NeuronClient();
 

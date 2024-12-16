@@ -1,19 +1,16 @@
-import { ClientStore, Features } from "./interfaces";
+import { IModule } from "../core/Module";
+import { Neuron, NeuronOptions } from "../core/Neuron";
+import { NeuronInstance } from "../core/NeuronClient";
 import { useSubscriber } from "./useSubscriber";
-
-export const neuron = <T, A>(
-  store: ClientStore,
+export const neuron = <T, A, F>(
   initialState: T,
-  features?: Features<T, A>
+  options?: NeuronOptions<T, A, F>,
+  modules?: IModule<F>[],
+  clientNeuron?: NeuronInstance<F>
 ) => {
-  const { actions, key, ..._features } = features ?? {};
-  const _key = key ?? Math.floor(Math.random() * 899999999 + 100000);
-  store.add({
-    key: _key,
-    state: initialState,
-    actions: actions as any,
-    features: _features as any,
-  });
-  return <S>(sliceSelector?: (state: T) => S) =>
-    useSubscriber<T, A, S>(store as any, _key, sliceSelector);
+  const neuronCore =
+    clientNeuron?.(initialState, options) ??
+    new Neuron(initialState, options, modules);
+  return <S>(slice?: (state: T) => S) =>
+    useSubscriber<T, A, F, S>(neuronCore, slice);
 };
