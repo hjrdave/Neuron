@@ -46,7 +46,56 @@ describe("NeuronClient", () => {
       expect(neuron.getRef()).toBe("newState");
     });
   });
+  describe("NeuronClient - Remove Neurons", () => {
+    it("should remove a neuron correctly", () => {
+      const client = new NeuronClient();
 
+      // Create a neuron
+      client.neuron("initialState", { key: "neuronToRemove" });
+
+      // Verify the neuron is created
+      expect(client.has("neuronToRemove")).toBe(true);
+      expect(client.getRef("neuronToRemove")).toBe("initialState");
+
+      // Remove the neuron
+      client.remove("neuronToRemove");
+
+      // Verify the neuron is removed
+      expect(client.has("neuronToRemove")).toBe(false);
+      expect(client.getRef("neuronToRemove")).toBeUndefined();
+    });
+
+    it("should handle removing a non-existent neuron gracefully", () => {
+      const client = new NeuronClient();
+
+      // Attempt to remove a non-existent neuron
+      expect(() => client.remove("nonExistentKey")).not.toThrow();
+      expect(client.has("nonExistentKey")).toBe(false);
+    });
+
+    it("should not affect other neurons when one is removed", () => {
+      const client = new NeuronClient();
+
+      // Create two neurons
+      client.neuron("stateA", { key: "neuronA" });
+      client.neuron("stateB", { key: "neuronB" });
+
+      // Verify both neurons are created
+      expect(client.has("neuronA")).toBe(true);
+      expect(client.has("neuronB")).toBe(true);
+
+      // Remove one neuron
+      client.remove("neuronA");
+
+      // Verify neuronA is removed
+      expect(client.has("neuronA")).toBe(false);
+      expect(client.getRef("neuronA")).toBeUndefined();
+
+      // Verify neuronB still exists
+      expect(client.has("neuronB")).toBe(true);
+      expect(client.getRef("neuronB")).toBe("stateB");
+    });
+  });
   describe("NeuronClient - getActions", () => {
     it("should return an empty object if no actions are defined", () => {
       // Create a new instance of NeuronClient for this test

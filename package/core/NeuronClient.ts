@@ -20,6 +20,11 @@ export class NeuronClient<F> implements INeuronClient<F> {
   private clientDispatcher: IDispatcher<unknown, F>;
   readonly name: ClientName;
   readonly has = (key: NeuronKey) => this.clientStore.has(key);
+  readonly remove = (key: NeuronKey) => {
+    const isRemoved = this.clientStore.delete(key);
+    this.clientDispatcher.stopListening(key, () => null);
+    return isRemoved;
+  };
   readonly getRef = <T>(key: NeuronKey) =>
     this.clientStore.get(key)?.state as T;
   readonly getActions = <A>(key: NeuronKey) => {
@@ -98,6 +103,7 @@ export class NeuronClient<F> implements INeuronClient<F> {
     this.connect = {
       name: this.name,
       has: this.has,
+      remove: this.remove,
       getRef: this.getRef,
       getActions: this.getActions,
       getSnapshot: this.getSnapshot,
@@ -126,6 +132,18 @@ export interface INeuronClient<F> {
    * @returns `true` if the state exists, otherwise `false`.
    */
   readonly has: (key: NeuronKey) => boolean;
+
+  /**
+   * Removes a neuron from the client store by its key.
+   *
+   * @param {NeuronKey} key - The key of the neuron to be removed.
+   * @returns {boolean} - Returns `true` if the neuron was successfully deleted, otherwise `false`.
+   *
+   * @example
+   * const success = client.remove('exampleKey');
+   * console.log(success); // true or false
+   */
+  readonly remove: (key: NeuronKey) => boolean;
 
   /**
    * Returns a reference to the state value associated with the provided key.
