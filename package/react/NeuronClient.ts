@@ -1,10 +1,10 @@
-import { IModule } from "../core/Module";
-import { NeuronOptions } from "../core/Neuron";
 import {
+  IModule,
+  NeuronOptions,
   ClientName,
   ConnectToClient,
   NeuronClient as NeuronClientCore,
-} from "../core/NeuronClient";
+} from "../core";
 import { neuron as _neuron } from "./neuron";
 import { DynamicNeuronHook, useNeuron } from "./useNeuron";
 import { Actions, StateOrSlice } from "./useSubscriber";
@@ -31,6 +31,7 @@ export class NeuronClient<F> implements INeuronClient<F> {
       dispatch: client.dispatch,
       neuron: client.neuron,
       getActions: client.getActions,
+      remove: client.remove,
     };
   }
 }

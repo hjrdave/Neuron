@@ -1,4 +1,3 @@
-import { neuron } from "../react";
 import {
   Dispatch,
   DispatchCallback,

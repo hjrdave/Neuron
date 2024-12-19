@@ -4,10 +4,14 @@ import {
   ClientName,
   ConnectToClient,
   INeuronClient,
-} from "./NeuronClient";
-import { Neuron, INeuron, NeuronKey, NeuronOptions } from "./Neuron";
-import { IPayload } from "./Payload";
-import { Module, IModule } from "./Module";
+  Neuron,
+  INeuron,
+  NeuronKey,
+  NeuronOptions,
+  IPayload,
+  Module,
+  IModule,
+} from "./core/index";
 
 export type {
   IPayload,
@@ -21,3 +25,8 @@ export type {
   INeuronClient,
 };
 export { Neuron, NeuronClient, Module };
+globalThis["NeuronCore"] = {
+  NeuronClient,
+  Neuron,
+  Module,
+};

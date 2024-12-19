@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { INeuron } from "../core/Neuron";
+import { INeuron } from "../core";
 
 export function useSubscriber<T, A, F, S>(
   neuron: INeuron<T, A, F>,

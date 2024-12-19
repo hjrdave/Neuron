@@ -1,11 +1,11 @@
 import { createContext, ReactNode, useContext } from "react";
-import { IModule } from "../../core/Module";
-import { NeuronOptions } from "../../core/Neuron";
 import {
   ClientName,
   INeuronClient,
   NeuronClient,
-} from "../../core/NeuronClient";
+  NeuronOptions,
+  IModule,
+} from "../core";
 import {
   Actions,
   StateOrSlice,

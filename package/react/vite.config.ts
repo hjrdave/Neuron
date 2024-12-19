@@ -1,6 +1,8 @@
 /// <reference types="vitest" />
 import { defineConfig } from "vite";
 import dts from "vite-plugin-dts";
+import react from "@vitejs/plugin-react";
+
 export default defineConfig({
   define: {
     "process.env.NODE_ENV": '"production"',
@@ -11,50 +13,50 @@ export default defineConfig({
     sourcemap: true,
     emptyOutDir: false,
     lib: {
-      entry: "./package/persist/index.ts",
-      name: "NeuronPersist",
+      entry: "./package/react/index.ts",
+      name: "ReactNeuron",
       fileName: "index",
     },
     rollupOptions: {
-      external: ["../core"],
+      external: ["react", "react/jsx-runtime", "../core"],
       output: [
         {
           dir: "./dist",
-          name: "persist",
-          entryFileNames: "persist.js",
+          name: "react",
+          entryFileNames: "react.js",
         },
         {
           dir: "./dist",
-          name: "persist",
+          name: "react",
           format: "cjs",
-          entryFileNames: "persist.cjs",
+          entryFileNames: "react.cjs",
         },
         {
           dir: "./dist/umd/",
-          name: "persist",
+          name: "react",
           format: "umd",
-          entryFileNames: "persist.js",
+          entryFileNames: "react.js",
         },
         {
           dir: "./dist/esm/",
-          name: "persist",
+          name: "react",
           format: "esm",
-          entryFileNames: "persist.js",
+          entryFileNames: "react.js",
         },
         {
           dir: "./dist/iife/",
-          name: "persist",
+          name: "react",
           format: "iife",
-          entryFileNames: "persist.js",
+          entryFileNames: "react.js",
         },
         {
           dir: "./dist/system/",
-          name: "persist",
+          name: "react",
           format: "system",
-          entryFileNames: "persist.js",
+          entryFileNames: "react.js",
         },
       ],
     },
   },
-  plugins: [dts()],
+  plugins: [dts(), react()],
 });

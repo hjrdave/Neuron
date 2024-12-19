@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
-import { NeuronClient } from "../core";
-import { NeuronKey } from "../core/Neuron";
+import { NeuronClient, NeuronKey } from "../core";
 export const useNeuron: DynamicNeuronHook = <T = unknown, F = unknown>(
   key: NeuronKey,
   client: NeuronClient<F>

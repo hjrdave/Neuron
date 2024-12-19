@@ -1,6 +1,4 @@
-import { Module } from "../core";
-import { NeuronKey } from "../core/Neuron";
-import { IPayload } from "../core/Payload";
+import { Module, IPayload, NeuronKey } from "../core";
 
 export interface PersistFeatures {
   persist?: "session" | "local" | boolean;

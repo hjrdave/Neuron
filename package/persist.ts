@@ -1,7 +1,9 @@
-import type { PersistProps } from "./persist/index";
 import { Persist } from "./persist/index";
-export { PersistProps };
+import type { PersistFeatures } from "./persist/index";
+
+export type { PersistFeatures };
 export { Persist };
+
 globalThis["NeuronPersist"] = {
   Persist,
 };

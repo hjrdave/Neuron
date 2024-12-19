@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
-import { INeuronClient } from "../../core/NeuronClient";
-import { NeuronKey } from "../../core/Neuron";
+import { NeuronKey, INeuronClient } from "../core";
 
 export function usePrivateSubscriber<T, A, F, S>(
   neuronClient: INeuronClient<F>,

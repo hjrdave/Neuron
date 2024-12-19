@@ -1,6 +1,4 @@
-import { IModule } from "../core/Module";
-import { Neuron, NeuronOptions } from "../core/Neuron";
-import { NeuronInstance } from "../core/NeuronClient";
+import { NeuronInstance, IModule, Neuron, NeuronOptions } from "../core";
 import { useSubscriber } from "./useSubscriber";
 export const neuron = <T, A, F>(
   initialState: T,
