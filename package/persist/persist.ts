@@ -4,32 +4,34 @@ const moduleName = `@sandstack/neuron-persist`;
 
 const saveStateToStorage = <T>(
   payload: IPayload<T>,
+  storageKey?: string,
   storageType?: "session" | "local"
 ) => {
-  const storageKey = `${moduleName}/${payload.key}`;
+  const _storageKey = `${moduleName}/${storageKey ?? payload.key}`;
   const _storageType = storageType === "session" ? "session" : "local";
 
   const stateToCache = JSON.stringify(payload.state);
   if (_storageType === "local") {
     if (localStorage) {
-      localStorage.setItem(storageKey, stateToCache);
+      localStorage.setItem(_storageKey, stateToCache);
     }
   } else if (_storageType === "session") {
     if (sessionStorage) {
-      sessionStorage.setItem(storageKey, stateToCache);
+      sessionStorage.setItem(_storageKey, stateToCache);
     }
   }
 };
 
 const getStateFromStorage = <T>(
   payload: IPayload<T>,
+  storageKey?: string,
   storageType?: "session" | "local"
 ) => {
-  const storageKey = `${moduleName}/${payload.key}`;
+  const _storageKey = `${moduleName}/${storageKey ?? payload.key}`;
   const _storageType = storageType === "session" ? "session" : "local";
   if (_storageType === "local") {
     if (localStorage) {
-      const cachedValue = localStorage?.getItem(storageKey);
+      const cachedValue = localStorage?.getItem(_storageKey);
       if (cachedValue !== null) {
         const parsedCachedValue = JSON.parse(cachedValue) as T;
         return parsedCachedValue;
@@ -38,7 +40,7 @@ const getStateFromStorage = <T>(
     }
   } else if (_storageType === "session") {
     if (sessionStorage) {
-      const cachedValue = sessionStorage.getItem(storageKey);
+      const cachedValue = sessionStorage.getItem(_storageKey);
       if (cachedValue !== null) {
         const parsedCachedValue = JSON.parse(cachedValue) as T;
         return parsedCachedValue;
@@ -68,21 +70,33 @@ export const Persist = (options?: PersistOptions): IModule =>
           if (options.storage.setItem) {
             options?.storage?.setItem?.(payload.key, payload.state);
           } else {
-            saveStateToStorage(payload);
+            saveStateToStorage(
+              payload,
+              options?.storageKey,
+              options.storageType
+            );
           }
         }
       } else {
-        const cachedState = getStateFromStorage(payload);
+        const cachedState = getStateFromStorage(
+          payload,
+          options?.storageKey,
+          options?.storageType
+        );
         if (cachedState != null && cachedState != undefined) {
           payload.state = cachedState;
         } else {
-          saveStateToStorage(payload);
+          saveStateToStorage(
+            payload,
+            options?.storageKey,
+            options?.storageType
+          );
         }
       }
     },
     onCallback: (payload: IPayload<unknown>) => {
       options?.storage?.setItem?.(payload.key, payload.state) ??
-        saveStateToStorage(payload);
+        saveStateToStorage(payload, options?.storageKey, options?.storageType);
     },
   });
 
@@ -95,6 +109,22 @@ export type PersistOptions =
       /** Custom name for the module. */
       name?: string;
 
+      /** storage key to be used Neuron state.
+       * This only needs to be used when a Neuron state does not have its own key and the module is instantiated on an individual Neuron instance.
+       */
+      storageKey?: string;
+      storage?: never;
+      storageType?: never;
+    }
+  | {
+      /** Custom name for the module. */
+      name?: string;
+
+      /** storage key to be used Neuron state.
+       * This only needs to be used when a Neuron state does not have its own key and the module is instantiated on an individual Neuron instance.
+       */
+      storageKey?: string;
+
       /** Browser storage type to use: `localStorage` or `sessionStorage`. Defaults to "local". */
       storageType: "session" | "local";
 
@@ -104,6 +134,11 @@ export type PersistOptions =
   | {
       /** Custom name for the module. */
       name?: string;
+
+      /** storage key to be used Neuron state.
+       * This only needs to be used when a Neuron state does not have its own key and the module is instantiated on an individual Neuron instance.
+       */
+      storageKey?: string;
 
       /** Browser storage type is not allowed when `storage` is defined. */
       storageType?: never;

@@ -79,7 +79,7 @@ export class NeuronClient implements INeuronClient {
   readonly neuron = <T, A>(initialState: T, options?: NeuronOptions<T, A>) => {
     return new Neuron<T, A>(
       initialState,
-      options,
+      { modules: this.clientModules, ...options },
       this.clientStore,
       this.clientDispatcher as IDispatcher<T>
     );

@@ -3,6 +3,7 @@ import { StoryFn, Meta } from "@storybook/react";
 import SingleNeuronCounterApp from "./SingleNeuronCounter";
 import ClientNeuronCounterApp from "./ClientNeuronCounter";
 import PrivateNeuronCounterApp from "./PrivateNeuronCounter";
+import PersistedNeuronCounterApp from "./PersistedNeuronCounter";
 
 export default {
   title: "React Tutorials/Counter",
@@ -26,3 +27,8 @@ const PrivateNeuronTemplate: StoryFn<typeof PrivateNeuronCounterApp> = () => (
 );
 export const PrivateNeuron = PrivateNeuronTemplate.bind({});
 PrivateNeuron.args = {};
+
+const PersistedNeuronTemplate: StoryFn<
+  typeof PersistedNeuronCounterApp
+> = () => <PersistedNeuronCounterApp />;
+export const PersistedNeuron = PersistedNeuronTemplate.bind({});

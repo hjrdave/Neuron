@@ -1,6 +1,6 @@
 import { NeuronClient } from "../core";
 import { Neuron } from "../core/Neuron";
-import { Persist } from "./Persist";
+import { Persist } from "./persist";
 import { beforeEach, describe, expect, it } from "vitest";
 
 // Mock localStorage and sessionStorage
@@ -44,7 +44,6 @@ describe("Persist Module", () => {
       neuron.set({ count: 1 });
 
       // Check if the state was saved to sessionStorage
-      console.log(sessionStorage.key(0));
       const cachedState = sessionStorage.getItem(
         `@sandstack/neuron-persist/${key}`
       );
@@ -131,7 +130,6 @@ describe("Persist Module", () => {
       const neuron = neuronClient.neuron(initialState, {
         key,
       });
-
       // Check if the initial state is saved to localStorage
       const storageKey = `@sandstack/neuron-persist/${key}`;
       expect(JSON.parse(localStorage.getItem(storageKey)!)).toEqual({
