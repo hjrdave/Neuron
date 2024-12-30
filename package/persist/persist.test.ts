@@ -16,12 +16,7 @@ describe("Persist Module", () => {
       const key = "testNeuron";
       const storageKey = `@sandstack/neuron-persist/${key}`;
       const initialState = { count: 0 };
-      const persist = Persist();
-      const neuron = new Neuron(
-        initialState,
-        { key, features: { persist: "local" } },
-        [persist]
-      );
+      const neuron = new Neuron(initialState, { key, modules: [Persist()] });
 
       // Check if the state was saved to localStorage
       expect(JSON.parse(localStorage.getItem(storageKey)!)).toEqual({
@@ -40,20 +35,20 @@ describe("Persist Module", () => {
     it("should save state to sessionStorage when persist is 'session'", () => {
       const key = "testNeuronSession";
       const initialState = { count: 0 };
-      const persist = Persist();
-      const neuron = new Neuron(
-        initialState,
-        { key, features: { persist: "session" } },
-        [persist]
-      );
+      const neuron = new Neuron(initialState, {
+        key,
+        modules: [Persist({ storageType: "session" })], //session is not being set for some reason
+      });
 
       // Update the state
       neuron.set({ count: 1 });
 
       // Check if the state was saved to sessionStorage
+      console.log(sessionStorage.key(0));
       const cachedState = sessionStorage.getItem(
         `@sandstack/neuron-persist/${key}`
       );
+
       expect(cachedState).toBeDefined();
       expect(JSON.parse(cachedState!)).toEqual({ count: 1 });
     });
@@ -67,13 +62,10 @@ describe("Persist Module", () => {
         `@sandstack/neuron-persist/${key}`,
         JSON.stringify({ count: 5 })
       );
-
-      const persist = Persist();
-      const neuron = new Neuron(
-        initialState,
-        { key, features: { persist: "local" } },
-        [persist]
-      );
+      const neuron = new Neuron(initialState, {
+        key,
+        modules: [Persist({ storageType: "local" })],
+      });
 
       // Check if the state was correctly retrieved
       expect(neuron.getRef()).toEqual({ count: 5 });
@@ -88,13 +80,10 @@ describe("Persist Module", () => {
         `@sandstack/neuron-persist/${key}`,
         JSON.stringify({ count: 10 })
       );
-
-      const persist = Persist();
-      const neuron = new Neuron(
-        initialState,
-        { key, features: { persist: "session" } },
-        [persist]
-      );
+      const neuron = new Neuron(initialState, {
+        key,
+        modules: [Persist({ storageType: "session" })],
+      });
 
       // Check if the state was correctly retrieved
       expect(neuron.getRef()).toEqual({ count: 10 });
@@ -115,11 +104,7 @@ describe("Persist Module", () => {
           },
         },
       });
-      const neuron = new Neuron(
-        initialState,
-        { key, features: { persist: true } },
-        [persist]
-      );
+      const neuron = new Neuron(initialState, { key, modules: [persist] });
 
       // Check if the state was saved to localStorage
       expect(JSON.parse(localStorage.getItem(key)!)).toEqual({ count: 0 });
@@ -136,17 +121,15 @@ describe("Persist Module", () => {
     it("should save and retrieve state using NeuronClient with 'local' persistence", () => {
       const key = "testNeuronClientLocal";
       const initialState = { count: 0 };
-      const persist = Persist();
 
       // Instantiate the NeuronClient
       const neuronClient = new NeuronClient({
-        modules: [persist],
+        modules: [Persist()],
       });
 
       // Create a neuron with local persistence
       const neuron = neuronClient.neuron(initialState, {
         key,
-        features: { persist: "local" },
       });
 
       // Check if the initial state is saved to localStorage
@@ -170,17 +153,15 @@ describe("Persist Module", () => {
     it("should save and retrieve state using NeuronClient with 'session' persistence", () => {
       const key = "testNeuronClientSession";
       const initialState = { count: 0 };
-      const persist = Persist();
 
       // Instantiate the NeuronClient
       const neuronClient = new NeuronClient({
-        modules: [persist],
+        modules: [Persist({ storageType: "session" })],
       });
 
       // Create a neuron with session persistence
       const neuron = neuronClient.neuron(initialState, {
         key,
-        features: { persist: "session" },
       });
 
       // Update the state
@@ -221,7 +202,6 @@ describe("Persist Module", () => {
       // Create a neuron with custom storage
       const neuron = neuronClient.neuron(initialState, {
         key,
-        features: { persist: true },
       });
 
       // Check if the initial state is saved to custom storage

@@ -98,7 +98,7 @@ describe("Neuron", () => {
       const initialState = 42;
 
       // Create a neuron with onDispatch, onCallback, and effect
-      const neuron = new Neuron<number, unknown, unknown>(initialState, {
+      const neuron = new Neuron(initialState, {
         onDispatch: onDispatchMock,
         onCallback: onCallbackMock,
       });

@@ -5,12 +5,15 @@ import { IModule } from "../../core/Module";
 
 describe("neuron", () => {
   it("should create a Neuron instance and return the initial state", () => {
-    const mockModule: IModule<unknown> = {
+    const mockModule: IModule = {
       name: "testModule",
       onDispatch: vi.fn(),
     };
 
-    const useNeuron = neuron({ value: 0 }, { key: "testNeuron" }, [mockModule]);
+    const useNeuron = neuron(
+      { value: 0 },
+      { key: "testNeuron", modules: [mockModule] }
+    );
 
     const { result } = renderHook(() => useNeuron());
     const [state] = result.current;
@@ -54,12 +57,15 @@ describe("neuron", () => {
 
   it("should apply modules correctly during state updates", () => {
     const mockOnDispatch = vi.fn();
-    const mockModule: IModule<unknown> = {
+    const mockModule: IModule = {
       name: "testModule",
       onDispatch: mockOnDispatch,
     };
 
-    const useNeuron = neuron({ value: 0 }, { key: "testNeuron" }, [mockModule]);
+    const useNeuron = neuron(
+      { value: 0 },
+      { key: "testNeuron", modules: [mockModule] }
+    );
 
     const { result } = renderHook(() => useNeuron());
     const [, actions] = result.current;

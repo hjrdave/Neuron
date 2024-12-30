@@ -1,20 +1,18 @@
 import { NeuronKey } from "./Neuron";
 
-export class Payload<T, F> implements IPayload<T, F> {
+export class Payload<T> implements IPayload<T> {
   readonly key: NeuronKey;
   readonly prevState: Readonly<T>;
   state: T;
-  readonly features?: F;
   #dispatchCancelled = false;
   readonly cancelDispatch = () => {
     this.#dispatchCancelled = true;
   };
   readonly isDispatchCancelled = () => this.#dispatchCancelled;
-  constructor(options: PayloadParams<T, F>) {
+  constructor(options: PayloadParams<T>) {
     this.key = options.key;
     this.prevState = options.prevState;
     this.state = options.state;
-    this.features = options.features;
   }
 }
 
@@ -23,9 +21,8 @@ export class Payload<T, F> implements IPayload<T, F> {
  * and running middleware during state transitions.
  *
  * @template T - The type of the state being managed.
- * @template F - The type of additional features or metadata associated with the payload.
  */
-export interface IPayload<T = unknown, F = { [key: string]: unknown }> {
+export interface IPayload<T = unknown> {
   /**
    * The unique key associated with the Neuron state.
    */
@@ -40,11 +37,6 @@ export interface IPayload<T = unknown, F = { [key: string]: unknown }> {
    * The previous state of the Neuron.
    */
   readonly prevState: Readonly<T>;
-
-  /**
-   * Optional additional features or metadata associated with the payload.
-   */
-  readonly features?: Readonly<F>;
 
   /**
    * Cancels the dispatch operation for the current payload.
@@ -63,9 +55,8 @@ export interface IPayload<T = unknown, F = { [key: string]: unknown }> {
  * Parameters for creating a new Payload instance.
  *
  * @template T - The type of the state being managed.
- * @template F - The type of additional features or metadata associated with the payload.
  */
-export interface PayloadParams<T, F> {
+export interface PayloadParams<T> {
   /**
    * The unique key associated with the Neuron state.
    */
@@ -80,9 +71,4 @@ export interface PayloadParams<T, F> {
    * The current state of the Neuron.
    */
   state: T;
-
-  /**
-   * Optional additional features or metadata to associate with the payload.
-   */
-  features?: F;
 }

@@ -14,10 +14,10 @@ import {
 } from "./Neuron";
 import { IPayload, Payload } from "./Payload";
 
-export class NeuronClient<F> implements INeuronClient<F> {
-  private clientStore: ClientStore<unknown, unknown, F>;
-  private clientModules: IModule<F>[];
-  private clientDispatcher: IDispatcher<unknown, F>;
+export class NeuronClient implements INeuronClient {
+  private clientStore: ClientStore<unknown, unknown>;
+  private clientModules: IModule[];
+  private clientDispatcher: IDispatcher<unknown>;
   readonly name: ClientName;
   readonly has = (key: NeuronKey) => this.clientStore.has(key);
   readonly remove = (key: NeuronKey) => {
@@ -28,9 +28,8 @@ export class NeuronClient<F> implements INeuronClient<F> {
   readonly getRef = <T>(key: NeuronKey) =>
     this.clientStore.get(key)?.state as T;
   readonly getActions = <A>(key: NeuronKey) => {
-    const neuronActions = (
-      this.clientStore.get(key) as NeuronData<unknown, A, F>
-    )?.actions;
+    const neuronActions = (this.clientStore.get(key) as NeuronData<unknown, A>)
+      ?.actions;
     return (
       (neuronActions?.((mutator) => this.dispatch(key, mutator)) as A) ??
       ({} as A)
@@ -41,7 +40,7 @@ export class NeuronClient<F> implements INeuronClient<F> {
       key: item[1].key,
       state: item[1].state,
     }));
-  readonly listen = (callbackFn: DispatchCallback<unknown, F>) => {
+  readonly listen = (callbackFn: DispatchCallback<unknown>) => {
     this.clientStore.forEach((_, key) => {
       this.clientDispatcher.stopListening(key, callbackFn);
     });
@@ -49,55 +48,46 @@ export class NeuronClient<F> implements INeuronClient<F> {
       this.clientDispatcher.listen(key, callbackFn);
     });
   };
-  readonly dispatch = (
-    key: NeuronKey,
-    mutator: DispatchMutator<unknown, F>
-  ) => {
+  readonly dispatch = (key: NeuronKey, mutator: DispatchMutator<unknown>) => {
     const neuronData = this.clientStore.get(key) as NeuronData<
       unknown,
-      unknown,
-      F
+      unknown
     >;
-    const payload = new Payload<unknown, F>({
+    const payload = new Payload<unknown>({
       key: key,
       state: neuronData?.state,
       prevState: neuronData?.state,
-      features: neuronData.features,
     });
 
     mutator(payload);
 
     this.clientModules.forEach((module) => {
-      module?.onDispatch?.(payload as IPayload<unknown, F>);
+      module?.onDispatch?.(payload as IPayload<unknown>);
     });
     neuronData?.onDispatch?.(payload);
     this.clientStore.set(key, {
       ...neuronData,
       state: payload.state,
       prevState: neuronData.state,
-    } as NeuronData<unknown, unknown, F>);
+    } as NeuronData<unknown, unknown>);
     this.clientDispatcher.dispatch(payload);
     this.clientModules.forEach((module) => {
-      module?.onCallback?.(payload as IPayload<unknown, F>);
+      module?.onCallback?.(payload as IPayload<unknown>);
     });
     neuronData?.onCallback?.(payload);
   };
-  readonly neuron = <T, A>(
-    initialState: T,
-    options?: NeuronOptions<T, A, F>
-  ) => {
-    return new Neuron<T, A, F>(
+  readonly neuron = <T, A>(initialState: T, options?: NeuronOptions<T, A>) => {
+    return new Neuron<T, A>(
       initialState,
       options,
-      this.clientModules,
       this.clientStore,
-      this.clientDispatcher as IDispatcher<T, F>
+      this.clientDispatcher as IDispatcher<T>
     );
   };
-  readonly connect: ConnectToClient<F>;
+  readonly connect: ConnectToClient;
   constructor(options?: ClientOptions) {
     this.name = options?.name ?? crypto.randomUUID();
-    this.clientStore = new Map<NeuronKey, NeuronData<unknown, unknown, F>>();
+    this.clientStore = new Map<NeuronKey, NeuronData<unknown, unknown>>();
     this.clientDispatcher = new Dispatcher();
     this.clientModules = options?.modules ?? [];
     this.connect = {
@@ -116,10 +106,8 @@ export class NeuronClient<F> implements INeuronClient<F> {
 
 /**
  * Interface for a NeuronClient, a container for managing multiple Neurons and their states.
- *
- * @template F - The type of additional features or metadata associated with the client.
  */
-export interface INeuronClient<F> {
+export interface INeuronClient {
   /**
    * The name of the NeuronClient instance.
    */
@@ -182,7 +170,7 @@ export interface INeuronClient<F> {
    *
    * @param callbackFn - The callback function to invoke on state updates. Receives the payload for inspection.
    */
-  readonly listen: (callbackFn: DispatchCallback<unknown, F>) => void;
+  readonly listen: (callbackFn: DispatchCallback<unknown>) => void;
 
   /**
    * Dispatches a mutator function for updating the state associated with a specific key.
@@ -192,7 +180,7 @@ export interface INeuronClient<F> {
    */
   readonly dispatch: (
     key: NeuronKey,
-    mutator: DispatchMutator<unknown, F>
+    mutator: DispatchMutator<unknown>
   ) => void;
 
   /**
@@ -204,12 +192,12 @@ export interface INeuronClient<F> {
    * @param options - Configuration options for the Neuron.
    * @returns A new instance of the Neuron.
    */
-  readonly neuron: NeuronInstance<F>;
+  readonly neuron: NeuronInstance;
 
   /**
    * Provides access to the NeuronClient without the `connect` method.
    */
-  readonly connect: ConnectToClient<F>;
+  readonly connect: ConnectToClient;
 }
 
 /**
@@ -224,7 +212,7 @@ export interface ClientOptions {
   /**
    * An array of modules to associate with the NeuronClient.
    */
-  modules?: IModule<unknown>[];
+  modules?: IModule[];
 }
 
 /**
@@ -237,17 +225,16 @@ export type ClientName = string | number;
  *
  * @template F - The type of additional features or metadata associated with the client.
  */
-export type ConnectToClient<F> = Omit<INeuronClient<F>, "connect">;
+export type ConnectToClient = Omit<INeuronClient, "connect">;
 
 /**
  * Represents the client store as a map of keys to NeuronData objects.
  *
  * @template T - The type of the Neuron's state.
  * @template A - The type of the Neuron's actions.
- * @template F - The type of additional features or metadata associated with the Neuron.
  */
-export type ClientStore<T, A, F> = Map<NeuronKey, NeuronData<T, A, F>>;
-export type NeuronInstance<F> = <T, A>(
+export type ClientStore<T, A> = Map<NeuronKey, NeuronData<T, A>>;
+export type NeuronInstance = <T, A>(
   initialState: T,
-  options?: NeuronOptions<T, A, F>
-) => INeuron<T, A, F>;
+  options?: NeuronOptions<T, A>
+) => INeuron<T, A>;

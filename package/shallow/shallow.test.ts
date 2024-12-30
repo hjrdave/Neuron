@@ -8,8 +8,7 @@ describe("Shallow Module", () => {
     it("should allow state update if shallow equality fails (primitive types)", () => {
       const neuron = new Neuron(
         { value: 0 },
-        { key: "testNeuron", features: { shallow: true } },
-        [Shallow]
+        { key: "testNeuron", modules: [Shallow()] }
       );
 
       neuron.set({ value: 1 });
@@ -19,8 +18,7 @@ describe("Shallow Module", () => {
     it("should cancel state update if shallow equality succeeds (primitive types)", () => {
       const neuron = new Neuron(
         { value: 0 },
-        { key: "testNeuron", features: { shallow: true } },
-        [Shallow]
+        { key: "testNeuron", modules: [Shallow()] }
       );
 
       neuron.set({ value: 0 });
@@ -30,8 +28,7 @@ describe("Shallow Module", () => {
     it("should allow state update for non-primitive types with different references", () => {
       const neuron = new Neuron(
         { array: [1, 2, 3] },
-        { key: "testNeuron", features: { shallow: true } },
-        [Shallow]
+        { key: "testNeuron", modules: [Shallow()] }
       );
 
       neuron.set({ array: [1, 2, 3] }); // New array reference
@@ -42,8 +39,7 @@ describe("Shallow Module", () => {
       const sharedArray = [1, 2, 3];
       const neuron = new Neuron(
         { array: sharedArray },
-        { key: "testNeuron", features: { shallow: true } },
-        [Shallow]
+        { key: "testNeuron", modules: [Shallow()] }
       );
 
       neuron.set({ array: sharedArray });
@@ -54,11 +50,11 @@ describe("Shallow Module", () => {
   describe("With NeuronClient Class", () => {
     it("should allow state update if shallow equality fails (primitive types)", () => {
       const neuronClient = new NeuronClient({
-        modules: [Shallow],
+        modules: [Shallow()],
       });
       const neuron = neuronClient.neuron(
         { value: 0 },
-        { key: "testNeuronClient", features: { shallow: true } }
+        { key: "testNeuronClient" }
       );
 
       neuron.set({ value: 1 });
@@ -67,11 +63,11 @@ describe("Shallow Module", () => {
 
     it("should cancel state update if shallow equality succeeds (primitive types)", () => {
       const neuronClient = new NeuronClient({
-        modules: [Shallow],
+        modules: [Shallow()],
       });
       const neuron = neuronClient.neuron(
         { value: 0 },
-        { key: "testNeuronClient", features: { shallow: true } }
+        { key: "testNeuronClient" }
       );
 
       neuron.set({ value: 0 });
@@ -80,11 +76,11 @@ describe("Shallow Module", () => {
 
     it("should allow state update for non-primitive types with different references", () => {
       const neuronClient = new NeuronClient({
-        modules: [Shallow],
+        modules: [Shallow()],
       });
       const neuron = neuronClient.neuron(
         { obj: { nested: 1 } },
-        { key: "testNeuronClient", features: { shallow: true } }
+        { key: "testNeuronClient" }
       );
 
       neuron.set({ obj: { nested: 1 } }); // New object reference
@@ -94,11 +90,11 @@ describe("Shallow Module", () => {
     it("should cancel state update if non-primitive types have identical references", () => {
       const sharedObject = { nested: 1 };
       const neuronClient = new NeuronClient({
-        modules: [Shallow],
+        modules: [Shallow()],
       });
       const neuron = neuronClient.neuron(
         { obj: sharedObject },
-        { key: "testNeuronClient", features: { shallow: true } }
+        { key: "testNeuronClient" }
       );
 
       neuron.set({ obj: sharedObject });

@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { INeuron } from "../core";
 
-export function useSubscriber<T, A, F, S>(
-  neuron: INeuron<T, A, F>,
+export function useSubscriber<T, A, S>(
+  neuron: INeuron<T, A>,
   slice?: (state: T) => S
 ) {
   const [state, setState] = useState(

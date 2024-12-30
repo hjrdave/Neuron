@@ -9,27 +9,26 @@ import { IModule } from "./Module";
 import { ClientStore } from "./NeuronClient";
 import { IPayload, Payload } from "./Payload";
 
-export class Neuron<T, A, F> implements INeuron<T, A, F> {
-  private store: ClientStore<unknown, unknown, F>;
-  private modules: IModule<F>[];
-  private dispatcher: IDispatcher<T, F>;
+export class Neuron<T, A> implements INeuron<T, A> {
+  private store: ClientStore<unknown, unknown>;
+  private modules: IModule[];
+  private dispatcher: IDispatcher<T>;
   readonly key: NeuronKey;
   readonly set = (newState: T | ((prevState: T) => T)) => {
-    const neuronData = this.store.get(this.key) as NeuronData<T, A, F>;
-    const payload = new Payload<T, F>({
+    const neuronData = this.store.get(this.key) as NeuronData<T, A>;
+    const payload = new Payload<T>({
       key: this.key,
       prevState: neuronData?.prevState as T,
       state:
         typeof newState === "function"
           ? (newState as (prevState: T) => T)(neuronData?.state as T)
           : newState,
-      features: neuronData.features,
     });
     if (payload.state !== payload.prevState) {
       neuronData?.onDispatch?.(payload);
       for (let i = 0; i < this.modules.length; i++) {
         if (!payload.isDispatchCancelled()) {
-          this.modules[i].onDispatch?.(payload as IPayload<unknown, F>);
+          this.modules[i].onDispatch?.(payload as IPayload<unknown>);
           continue;
         }
         break;
@@ -39,11 +38,11 @@ export class Neuron<T, A, F> implements INeuron<T, A, F> {
           ...neuronData,
           state: payload?.state,
           prevState: neuronData.state,
-        } as NeuronData<unknown, A, F>);
+        } as NeuronData<unknown, A>);
         this.dispatcher.dispatch(payload);
         neuronData?.onCallback?.(payload);
         this.modules.forEach((module) => {
-          module?.onCallback?.(payload as IPayload<unknown, F>);
+          module?.onCallback?.(payload as IPayload<unknown>);
         });
       }
     }
@@ -56,20 +55,19 @@ export class Neuron<T, A, F> implements INeuron<T, A, F> {
     return neuronState;
   };
   readonly getRef = () => this.store.get(this.key)?.state as T;
-  readonly dispatch = (mutator: DispatchMutator<T, F>) => {
-    const neuronData = this.store.get(this.key) as NeuronData<T, A, F>;
-    const payload = new Payload<T, F>({
+  readonly dispatch = (mutator: DispatchMutator<T>) => {
+    const neuronData = this.store.get(this.key) as NeuronData<T, A>;
+    const payload = new Payload<T>({
       key: this.key,
       state: neuronData?.state,
       prevState: neuronData?.state,
-      features: neuronData.features,
     });
     mutator(payload);
     if (!payload.isDispatchCancelled()) {
       neuronData?.onDispatch?.(payload);
       for (let i = 0; i < this.modules.length; i++) {
         if (!payload.isDispatchCancelled()) {
-          this.modules[i].onDispatch?.(payload as IPayload<unknown, F>);
+          this.modules[i].onDispatch?.(payload as IPayload<unknown>);
           continue;
         }
         break;
@@ -81,52 +79,50 @@ export class Neuron<T, A, F> implements INeuron<T, A, F> {
         state: payload.state,
         prevState: neuronData.state,
       };
-      this.store.set(this.key, newNeuronData as NeuronData<unknown, A, F>);
+      this.store.set(this.key, newNeuronData as NeuronData<unknown, A>);
       this.dispatcher.dispatch(payload);
       neuronData?.onCallback?.(payload);
       this.modules.forEach((module) => {
-        module?.onCallback?.(payload as IPayload<unknown, F>);
+        module?.onCallback?.(payload as IPayload<unknown>);
       });
     }
   };
   readonly getActions = () => {
-    const neuronActions = (this.store.get(this.key) as NeuronData<T, A, F>)
+    const neuronActions = (this.store.get(this.key) as NeuronData<T, A>)
       ?.actions;
     return (neuronActions?.(this.dispatch) as A) ?? ({} as A);
   };
-  readonly effect = (callbackFn: DispatchCallback<T, F>) => {
+  readonly effect = (callbackFn: DispatchCallback<T>) => {
     this.dispatcher.stopListening(this.key, callbackFn);
     this.dispatcher.listen(this.key, callbackFn);
   };
 
   constructor(
     initialState: T,
-    options?: NeuronOptions<T, A, F>,
-    modules?: IModule<F>[],
-    clientStore?: ClientStore<unknown, unknown, F>,
-    dispatcher?: IDispatcher<T, F>
+    options?: NeuronOptions<T, A>,
+    clientStore?: ClientStore<unknown, unknown>,
+    dispatcher?: IDispatcher<T>
   ) {
     this.key = options?.key ?? crypto.randomUUID();
     this.store =
-      clientStore ?? new Map<NeuronKey, NeuronData<unknown, unknown, F>>();
-    this.modules = modules ?? [];
-    this.dispatcher = dispatcher ?? new Dispatcher<T, F>();
-    const payload = new Payload<T, F>({
+      clientStore ?? new Map<NeuronKey, NeuronData<unknown, unknown>>();
+    this.modules = options?.modules ?? [];
+    this.dispatcher = dispatcher ?? new Dispatcher<T>();
+    const payload = new Payload<T>({
       key: this.key,
       state: initialState,
       prevState: initialState,
-      features: options?.features,
     });
     options?.onInit?.(payload);
     this.modules.forEach((module) => {
-      module?.onInit?.(payload as IPayload<unknown, F>);
+      module?.onInit?.(payload as IPayload<unknown>);
     });
     this.store.set(payload.key, {
       ...options,
       key: payload.key,
       state: payload?.state,
       prevState: payload?.prevState,
-    } as NeuronData<unknown, A, F>);
+    } as NeuronData<unknown, A>);
   }
 }
 
@@ -138,9 +134,8 @@ export class Neuron<T, A, F> implements INeuron<T, A, F> {
  *
  * @template T - The type of the state held by the Neuron.
  * @template A - The type of actions associated with the Neuron.
- * @template F - The type of additional features or metadata for the Neuron.
  */
-export interface INeuron<T, A, F> {
+export interface INeuron<T, A> {
   /**
    * A unique key identifying the Neuron instance.
    */
@@ -159,7 +154,7 @@ export interface INeuron<T, A, F> {
    *
    * @param mutator - A function that modifies the payload, allowing complex state updates.
    */
-  readonly dispatch: Dispatch<T, F>;
+  readonly dispatch: Dispatch<T>;
 
   /**
    * Returns a deep clone of the current Neuron state.
@@ -180,7 +175,7 @@ export interface INeuron<T, A, F> {
    *
    * @param callbackFn - A callback function that receives the payload with state details.
    */
-  readonly effect: (callbackFn: DispatchCallback<T, F>) => void;
+  readonly effect: (callbackFn: DispatchCallback<T>) => void;
 
   /**
    * Retrieves action methods associated with the Neuron,
@@ -195,53 +190,51 @@ export interface INeuron<T, A, F> {
  *
  * @template T - The type of the initial state.
  * @template A - The type of the actions associated with the Neuron.
- * @template F - The type of additional features or metadata for the Neuron.
  */
-export interface NeuronOptions<T, A, F> {
+export interface NeuronOptions<T, A> {
   /**
    * A unique key to identify the Neuron. If not provided, a random key is generated.
    */
   key?: NeuronKey;
 
   /**
-   * Optional features or metadata associated with the Neuron.
+   * Takes an array of Neuron Modules for extending Neuron state with more features.
    */
-  features?: F;
+  modules?: IModule[];
 
   /**
    * A function that generates action methods for interacting with the Neuron's state.
    */
-  actions?: NeuronActions<T, A, F>;
+  actions?: NeuronActions<T, A>;
 
   /**
    * A middleware function invoked during the Neuron's initialization.
    *
    * @param payload - The payload containing state details during initialization.
    */
-  onInit?: NeuronMiddleware<T, F>;
+  onInit?: NeuronMiddleware<T>;
 
   /**
    * A middleware function invoked when the Neuron's state is updated.
    *
    * @param payload - The payload containing state details during dispatch.
    */
-  onDispatch?: NeuronMiddleware<T, F>;
+  onDispatch?: NeuronMiddleware<T>;
 
   /**
    * A middleware function invoked after the Neuron's state has been updated.
    *
    * @param payload - The payload containing state details after dispatch.
    */
-  onCallback?: NeuronMiddleware<T, F>;
+  onCallback?: NeuronMiddleware<T>;
 }
 /**
  * Represents the data stored in a Neuron instance, including state and middleware.
  *
  * @template T - The type of the state held by the Neuron.
  * @template A - The type of actions associated with the Neuron.
- * @template F - The type of additional features or metadata for the Neuron.
  */
-export interface NeuronData<T, A, F> {
+export interface NeuronData<T, A> {
   /**
    * The unique key identifying the Neuron.
    */
@@ -258,51 +251,34 @@ export interface NeuronData<T, A, F> {
   prevState: Readonly<T>;
 
   /**
-   * Additional features or metadata associated with the Neuron.
-   *
-   * The `features` property is a generic type (`F`) that allows customization of
-   * the behavior and capabilities of the Neuron. It can hold configuration
-   * options, flags, or additional data that extend the functionality of the Neuron.
-   *
-   * Examples of potential uses:
-   * - Persisting the state of the Neuron to local or session storage.
-   * - Adding flags for logging, caching, or feature toggles.
-   * - Storing metadata relevant to specific modules or extensions.
-   *
-   * @template F - The type of features or metadata for the Neuron.
-   */
-  features: F;
-
-  /**
    * A function that generates action methods for interacting with the Neuron's state.
    */
-  actions?: NeuronActions<T, A, F>;
+  actions?: NeuronActions<T, A>;
 
   /**
    * Middleware invoked during the Neuron's initialization.
    */
-  onInit?: NeuronMiddleware<T, F>;
+  onInit?: NeuronMiddleware<T>;
 
   /**
    * Middleware invoked when the Neuron's state is updated.
    */
-  onDispatch?: NeuronMiddleware<T, F>;
+  onDispatch?: NeuronMiddleware<T>;
 
   /**
    * Middleware invoked after the Neuron's state has been updated.
    */
-  onCallback?: NeuronMiddleware<T, F>;
+  onCallback?: NeuronMiddleware<T>;
 }
 
 /**
  * A middleware function used during various stages of a Neuron's lifecycle.
  *
  * @template T - The type of the state held by the Neuron.
- * @template F - The type of additional features or metadata for the Neuron.
  *
  * @param payload - The payload containing the state and metadata during the middleware execution.
  */
-export type NeuronMiddleware<T, F> = (payload: IPayload<T, F>) => void;
+export type NeuronMiddleware<T> = (payload: IPayload<T>) => void;
 /**
  * Represents a unique key used to identify a Neuron instance.
  */
@@ -312,9 +288,8 @@ export type NeuronKey = string | number;
  *
  * @template T - The type of the state held by the Neuron.
  * @template A - The type of actions to be generated.
- * @template F - The type of additional features or metadata for the Neuron.
  *
  * @param dispatch - The dispatch function for sending state mutations.
  * @returns A collection of action methods.
  */
-export type NeuronActions<T, A, F> = (dispatch: Dispatch<T, F>) => A;
+export type NeuronActions<T, A> = (dispatch: Dispatch<T>) => A;

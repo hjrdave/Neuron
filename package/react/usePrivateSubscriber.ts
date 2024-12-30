@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { NeuronKey, INeuronClient } from "../core";
 
-export function usePrivateSubscriber<T, A, F, S>(
-  neuronClient: INeuronClient<F>,
+export function usePrivateSubscriber<T, A, S>(
+  neuronClient: INeuronClient,
   neuronKey: NeuronKey,
   slice?: (state: T) => S
 ) {

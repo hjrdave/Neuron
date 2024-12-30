@@ -12,20 +12,20 @@ import {
   usePrivateSubscriber,
 } from "./usePrivateSubscriber";
 
-export class PrivateNeuronClient<F> implements IPrivateNeuronClient<F> {
-  private clientContext: React.Context<INeuronClient<F>>;
-  private modules: IModule<unknown>[];
+export class PrivateNeuronClient implements IPrivateNeuronClient {
+  private clientContext: React.Context<INeuronClient>;
+  private modules: IModule[];
   readonly privateNeuron = <T, A>(
     initialState: T,
-    options?: NeuronOptions<T, A, F>
+    options?: NeuronOptions<T, A>
   ) => {
     const neuronKey = options?.key ?? crypto.randomUUID();
-    const useinitNeuron = (client: INeuronClient<F>) => {
+    const useinitNeuron = (client: INeuronClient) => {
       client.neuron(initialState, { ...options, key: neuronKey });
     };
     const useNeuron = <S,>(slice?: (state: T) => S) => {
       const client = useContext(this.clientContext);
-      return usePrivateSubscriber<T, A, F, S>(client, neuronKey, slice);
+      return usePrivateSubscriber<T, A, S>(client, neuronKey, slice);
     };
     return [useinitNeuron, useNeuron] as [
       typeof useinitNeuron,
@@ -33,7 +33,7 @@ export class PrivateNeuronClient<F> implements IPrivateNeuronClient<F> {
     ];
   };
   readonly useNeuronClient = (options?: { name?: ClientName }) => {
-    const client = new NeuronClient<F>({
+    const client = new NeuronClient({
       name: options?.name,
       modules: this.modules,
     });
@@ -45,27 +45,27 @@ export class PrivateNeuronClient<F> implements IPrivateNeuronClient<F> {
   };
   constructor(options?: ClientOptions) {
     this.modules = options?.modules ?? [];
-    this.clientContext = createContext(null) as unknown as React.Context<
-      INeuronClient<F>
-    >;
+    this.clientContext = createContext(
+      null
+    ) as unknown as React.Context<INeuronClient>;
   }
 }
 
-interface IPrivateNeuronClient<F> {
+interface IPrivateNeuronClient {
   privateNeuron: <T, A>(
     initialState: T,
-    options?: NeuronOptions<T, A, F>
+    options?: NeuronOptions<T, A>
   ) => (
-    | ((client: INeuronClient<F>) => void)
+    | ((client: INeuronClient) => void)
     | (<S>(slice?: (state: T) => S) => [StateOrSlice<S, T>, Actions<T, S, A>])
   )[];
   useNeuronClient: (options?: { name?: ClientName }) => {
-    client: NeuronClient<F>;
+    client: NeuronClient;
     Private: ({ children }: PrivateProps) => JSX.Element;
   };
 }
 interface ClientOptions {
-  modules?: IModule<unknown>[];
+  modules?: IModule[];
 }
 interface PrivateProps {
   children?: ReactNode;

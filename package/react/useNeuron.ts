@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { NeuronClient, NeuronKey } from "../core";
-export const useNeuron: DynamicNeuronHook = <T = unknown, F = unknown>(
+export const useNeuron: DynamicNeuronHook = <T = unknown>(
   key: NeuronKey,
-  client: NeuronClient<F>
+  client: NeuronClient
 ) => {
   const [state, _setState] = useState<T>(client.getRef(key));
   const setState = (newState: T | ((prev: T) => T)) => {
@@ -25,7 +25,7 @@ export const useNeuron: DynamicNeuronHook = <T = unknown, F = unknown>(
   }, [key]);
   return [state, setState] as [T, typeof setState];
 };
-export type DynamicNeuronHook = <T = unknown, F = unknown>(
+export type DynamicNeuronHook = <T = unknown>(
   key: NeuronKey,
-  client: NeuronClient<F>
+  client: NeuronClient
 ) => [T, (newState: T | ((prev: T) => T)) => void];

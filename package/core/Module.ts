@@ -1,11 +1,11 @@
 import { NeuronMiddleware } from "./Neuron";
 
-export class Module<F> implements IModule<F> {
+export class Module implements IModule {
   readonly name: string;
-  readonly onInit?: NeuronMiddleware<unknown, F>;
-  readonly onDispatch?: NeuronMiddleware<unknown, F>;
-  readonly onCallback?: NeuronMiddleware<unknown, F>;
-  constructor(options: ModuleOptions<F>) {
+  readonly onInit?: NeuronMiddleware<unknown>;
+  readonly onDispatch?: NeuronMiddleware<unknown>;
+  readonly onCallback?: NeuronMiddleware<unknown>;
+  constructor(options: ModuleOptions) {
     this.name = options.name;
     this.onInit = options.onInit;
     this.onDispatch = options.onDispatch;
@@ -15,10 +15,8 @@ export class Module<F> implements IModule<F> {
 
 /**
  * Interface representing a module that provides lifecycle methods for interacting with Neuron state.
- *
- * @template F - The type of additional features or metadata associated with the module.
  */
-export interface IModule<F> {
+export interface IModule {
   /**
    * The name of the module.
    */
@@ -29,29 +27,27 @@ export interface IModule<F> {
    *
    * @param payload - The payload containing state and metadata during initialization.
    */
-  onInit?: NeuronMiddleware<unknown, F>;
+  onInit?: NeuronMiddleware<unknown>;
 
   /**
    * Optional lifecycle method invoked during the dispatch of a Neuron state change.
    *
    * @param payload - The payload containing the updated state and metadata.
    */
-  onDispatch?: NeuronMiddleware<unknown, F>;
+  onDispatch?: NeuronMiddleware<unknown>;
 
   /**
    * Optional lifecycle method invoked after a Neuron state change has been completed.
    *
    * @param payload - The payload containing the final state and metadata.
    */
-  onCallback?: NeuronMiddleware<unknown, F>;
+  onCallback?: NeuronMiddleware<unknown>;
 }
 
 /**
  * Options for configuring a `Module` instance.
- *
- * @template F - The type of additional features or metadata associated with the module.
  */
-export interface ModuleOptions<F> {
+export interface ModuleOptions {
   /**
    * The name of the module.
    */
@@ -62,19 +58,19 @@ export interface ModuleOptions<F> {
    *
    * @param payload - The payload containing state and metadata during initialization.
    */
-  onInit?: NeuronMiddleware<unknown, F>;
+  onInit?: NeuronMiddleware<unknown>;
 
   /**
    * Optional lifecycle method invoked during the dispatch of a Neuron state change.
    *
    * @param payload - The payload containing the updated state and metadata.
    */
-  onDispatch?: NeuronMiddleware<unknown, F>;
+  onDispatch?: NeuronMiddleware<unknown>;
 
   /**
    * Optional lifecycle method invoked after a Neuron state change has been completed.
    *
    * @param payload - The payload containing the final state and metadata.
    */
-  onCallback?: NeuronMiddleware<unknown, F>;
+  onCallback?: NeuronMiddleware<unknown>;
 }

@@ -41,12 +41,10 @@ export const shallowEqual = <T>(a: T, b: T) => {
   return false;
 };
 
-export const Shallow = new Module<ShallowFeatures>({
-  name: "@sandstack/neuron-shallow",
-  onDispatch: (payload) => {
-    const features = payload.features;
-    const isEnabled = features?.shallow;
-    if (isEnabled) {
+export const Shallow = () =>
+  new Module({
+    name: "@sandstack/neuron-shallow",
+    onDispatch: (payload) => {
       const dispatchShouldCancel = shallowEqual(
         payload.prevState,
         payload.state
@@ -54,6 +52,5 @@ export const Shallow = new Module<ShallowFeatures>({
       if (dispatchShouldCancel) {
         payload.cancelDispatch();
       }
-    }
-  },
-});
+    },
+  });
