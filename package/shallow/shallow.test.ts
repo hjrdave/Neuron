@@ -1,6 +1,6 @@
 import { Neuron } from "../core/Neuron";
 import { NeuronClient } from "../core";
-import { Shallow, shallowEqual } from "./Shallow";
+import { Shallow, shallowEqual } from "./shallow";
 import { describe, it, expect } from "vitest";
 
 describe("Shallow Module", () => {
