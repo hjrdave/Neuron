@@ -1,13 +1,34 @@
 import React from "react";
 import { StoryFn, Meta } from "@storybook/react";
-
-import { default as Comp } from "./App";
+import SingleNeuronCounterApp from "./SingleNeuronCounter";
+import ClientNeuronCounterApp from "./ClientNeuronCounter";
+import PrivateNeuronCounterApp from "./PrivateNeuronCounter";
+import PersistedNeuronCounterApp from "./PersistedNeuronCounter";
 
 export default {
   title: "React Tutorials/Counter",
-  component: Comp,
-} as Meta<typeof Comp>;
+  component: SingleNeuronCounterApp,
+} as Meta<typeof SingleNeuronCounterApp>;
 
-const PrimaryTemplate: StoryFn<typeof Comp> = () => <Comp />;
-export const Primary = PrimaryTemplate.bind({});
-Primary.args = {};
+const SingleNeuronTemplate: StoryFn<typeof SingleNeuronCounterApp> = () => (
+  <SingleNeuronCounterApp />
+);
+export const SingleNeuron = SingleNeuronTemplate.bind({});
+SingleNeuron.args = {};
+
+const ClientNeuronTemplate: StoryFn<typeof ClientNeuronCounterApp> = () => (
+  <ClientNeuronCounterApp />
+);
+export const ClientNeuron = ClientNeuronTemplate.bind({});
+ClientNeuron.args = {};
+
+const PrivateNeuronTemplate: StoryFn<typeof PrivateNeuronCounterApp> = () => (
+  <PrivateNeuronCounterApp />
+);
+export const PrivateNeuron = PrivateNeuronTemplate.bind({});
+PrivateNeuron.args = {};
+
+const PersistedNeuronTemplate: StoryFn<
+  typeof PersistedNeuronCounterApp
+> = () => <PersistedNeuronCounterApp />;
+export const PersistedNeuron = PersistedNeuronTemplate.bind({});

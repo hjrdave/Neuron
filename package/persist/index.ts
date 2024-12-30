@@ -1,5 +1,2 @@
-import Persist from "./persist";
-import type { PersistProps } from "./persist";
-
-export type { PersistProps };
+import { Persist } from "./persist";
 export { Persist };

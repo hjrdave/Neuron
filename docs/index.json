@@ -8,42 +8,32 @@
     "filename": "getting-started"
   },
   {
-    "section": "Vanilla",
+    "section": "Core",
     "items": [
       {
-        "parent": "Vanilla",
-        "title": "Create Store",
-        "filename": "vanilla/create-store"
+        "parent": "Core",
+        "title": "Create Neuron State",
+        "filename": "core/create-new-neuron-state"
       },
       {
-        "parent": "Vanilla",
+        "parent": "Core",
         "title": "Read and Update State",
-        "filename": "vanilla/read-and-update-state"
+        "filename": "core/read-and-update-state"
       },
       {
-        "parent": "Vanilla",
+        "parent": "Core",
         "title": "Listen for State Changes",
-        "filename": "vanilla/listen-for-state-changes"
+        "filename": "core/listen-for-state-changes"
       },
       {
-        "parent": "Vanilla",
+        "parent": "Core",
         "title": "Middleware",
-        "filename": "vanilla/middleware"
+        "filename": "core/middleware"
       },
       {
-        "parent": "Vanilla",
-        "title": "Dispatch State Changes",
-        "filename": "vanilla/dispatch-state-changes"
-      },
-      {
-        "parent": "Vanilla",
+        "parent": "Core",
         "title": "Modules",
-        "filename": "vanilla/modules"
-      },
-      {
-        "section": "Vanilla",
-        "title": "Typescript",
-        "filename": "typescript"
+        "filename": "core/modules"
       }
     ]
   },
@@ -54,11 +44,6 @@
         "parent": "React",
         "title": "About",
         "filename": "react/about"
-      },
-      {
-        "parent": "React",
-        "title": "Create Store",
-        "filename": "react/create-store"
       },
       {
         "parent": "React",
@@ -77,33 +62,9 @@
       },
       {
         "parent": "React",
-        "title": "Private Stores",
-        "filename": "react/private-stores"
-      },
-      {
-        "parent": "React",
         "title": "Modules",
         "filename": "react/modules"
-      },
-      {
-        "section": "React",
-        "title": "Typescript",
-        "filename": "typescript"
       }
     ]
-  },
-  {
-    "section": "Modules",
-    "items": [
-      {
-        "parent": "Modules",
-        "title": "Persist",
-        "filename": "modules/persist"
-      }
-    ]
-  },
-  {
-    "section": "Devtools",
-    "filename": "devtools"
   }
 ]

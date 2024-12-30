@@ -1,64 +1,112 @@
 # Middleware
 
-Middleware is logic that runs at different times during the store dispatch process. This allows for state to be manipulated, interrogated, logged, and even cancelled during a dispatch. Middleware is set on a store item. Any time the store item gets a dispatch, the appropriate middleware will run. And example middleware is below:
-
-```jsx
-<State
-  name={"fruit"}
-  state={"apple"}
-  onRun={(payload) => {
-    console.log("The dispatched state is: ", payload.state);
-  }}
-/>
-```
+Middleware is used to implement logic during the lifecycle of state changes. It has access to the dispatched state and `payload`.
 
 ## Types
 
-All three types of middleware have access to the `payload` object. This object has properties and methods that allow the middleware to interrogate, manipulate, or cancel the dispatch. You may use all three types on one store item. Learn the payload api [here](vanilla/middleware#payload).
+There are three different middleware types that can be called at different times during the dispatch lifecycle.
 
-### OnLoad
+### onInit
 
-Only fires once as the store is instantiated. It will not run again, even if a dispatch happens.
+Invokes only once when the Neuron is first instantiated.
 
-```jsx
-<State
-  name={"trainer"}
-  state={"ash"}
-  onLoad={(payload) => {
-    console.log("I fire only once when the store first instantiates");
-  }}
-/>
+```javascript
+const usePokemon = neuron("Pikachu", {
+  onInit: () => {
+    //do something when Neuron first instantiates
+  },
+});
 ```
 
-### OnRun
+### onDispatch
 
-Fires every time a dispatch is sent. When this middleware resolves, the dispatch will also resolve and the store will be updated.
+Invokes every time a `set` or `dispatch` method is fired. It runs before state is updated.
 
-```jsx
-<State
-  name={"trainer"}
-  state={"ash"}
-  onRun={(payload) => {
-    if (payload.state === "gary") {
-      console.log("Gary is lame!");
+```javascript
+const usePokemon = neuron("Pikachu", {
+  onDispatch: () => {
+    //do something every time state is updated
+  },
+});
+```
+
+### onCallback
+
+Invokes after the store is updated. This will run even if the update fails.
+
+```javascript
+const usePokemon = neuron("Pikachu", {
+  onCallback: () => {
+    //do something every time state is updated
+  },
+});
+```
+
+### Payload
+
+The payload is an object of properties and methods that is made available to each middleware mutator function. This allows logic to manipulate state or even cancel a dispatch in mid flight.
+
+**Properties**
+
+`key` - Neuron key.
+
+`prevState` - Previous state.
+
+`state` - Dispatched state. _Mutable_
+
+`features` - Features set for the store item. Module specific props passed to the _features_ property in the Neuron options.
+
+**Methods**
+
+`cancelDispatch` - Cancels the dispatch.
+
+`isDispatchCancelled` - Checks to see if the dispatch was cancelled.
+
+### Examples of using middleware and payloads
+
+#### Example 1
+
+Make sure dispatched state is always capitalized.
+
+```javascript
+const usePokemon = neuron("Pikachu", {
+  onDispatch: (payload) => {
+    const capitalizedState = `${payload.state
+      .charAt(0)
+      .toUpperCase()}${phrase.slice(1)}`;
+    payload.state = capitalizedState;
+  },
+});
+```
+
+#### Example 2
+
+Cancel a dispatch if the state does not meet a certain condition.
+
+```javascript
+const usePokemon = neuron("Pikachu", {
+  onDispatch: (payload) => {
+    if (payload.state === "trubbish") {
       payload.cancelDispatch();
-    } else {
-      console.log(payload.state, " is amazing!");
+      alert("Trubbish should not exist. Try again");
     }
-  }}
-/>
+  },
+});
 ```
 
-### OnCallback
+#### Example 3
 
-Fires only when all other middleware and the dispatch resolves. This will fire even if a dispatch is cancelled.
+Update another state if the dispatched state is a certain value.
 
-```jsx
-<State
-  name={"trainer"}
-  state={"ash"}
-  onCallback={(payload) => {
-    console.log("The store has been updated....");
-  }}
-/>
+```javascript
+const useTrainer = neuron("Ash");
+const usePokemon = neuron("Pikachu", {
+  onCallback: (payload) => {
+    if (payload.state === "Meowth") {
+      trainer.set("Team Rocket");
+    }
+  },
+});
 ```
+
+Middleware and payloads when used together can be very powerful and help centralize common state logic.

@@ -19,19 +19,19 @@ You can also include a cdn in your html file.
 Neuron can be imported into your js file through ESM Imports or CommonJS.
 
 ```javascript
-import { createStore } from "@sandstack/neuron";
+import { Neuron } from "@sandstack/neuron";
 
-const { createStore } = require("@sandstack/neuron");
+const { Neuron } = require("@sandstack/neuron");
 ```
 
 ## Choose Neuron Flavor
 
 Neuron was made with the thought of a totally customizable global state management system that could be used for specific needs of the developer despite what JS framework or library they use. As of now there are two flavors you can choose from VanillaJS and React. Click the one that you want to use below.
 
-[VanillaJS](vanilla/create-store)  
-This is the barebones library that can be used in any js application or html file. You will have to use `onDispatch` to setup your own reactive state needs.
+[Core](core/create-store)  
+This is the barebones library that can be used in any js application or html file. You will have to use `effect` to setup your own reactive state needs.
 
 [React](react/about)
-This is a wrapper around VanillaJS Neuron. It uses a React centric api that includes components and hooks to manage global state in your React app.
+This is a React wrapper around Core Neuron. It uses a React centric api that includes components and hooks to manage global state in your React app.
 
 Happy hacking!

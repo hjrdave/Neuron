@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Counter - Neuron Core</title>
+  <meta charset="UTF-8" />
+  <style>
+    body {
+      background-color: #212529;
+      height: 75vh;
+    }
+
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+    }
+
+    .counter {
+      display: flex;
+      flex-direction: column;
+      border: 1px solid black;
+      padding: 2rem;
+      border-radius: 0.5rem;
+      background-color: #57c09b;
+    }
+
+    h1 {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      margin-bottom: 0rem;
+    }
+
+    p {
+      font-size: 1.5rem;
+      color: black;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      text-align: center;
+    }
+
+    .btn-group {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+    }
+
+    button {
+      padding: 0.5rem 1rem;
+      font-size: 1rem;
+      border: none;
+      border-radius: 0.5rem;
+      background-color: #219ebc;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="counter">
+      <h1>Neuron Vanilla</h1>
+      <p>Count: <span id="count">0</span></p>
+      <div class="btn-group">
+        <button id="decrementBtn">Decrement</button>
+        <button id="incrementBtn">Increment</button>
+      </div>
+    </div>
+  </div>
+  <script src="../../package/core/index.ts" type="module"></script>
+  <script>
+    window.onload = (event) => {
+      const Store = Neuron.createStore();
+
+      Store.add({
+        key: "counter",
+        state: 0,
+      });
+
+      function increment() {
+        Store.set("counter", (prev) => prev + 1);
+      }
+      function decrement() {
+        Store.set("counter", (prev) => prev - 1);
+      }
+
+      const counter = document.querySelector("#count");
+
+      Store.onDispatch((payload) => {
+        if (payload.key === "counter") {
+          counter.innerHTML = payload.state;
+        }
+      });
+
+      //attach click events
+      document
+        .querySelector("#decrementBtn")
+        .addEventListener("click", decrement);
+      document
+        .querySelector("#incrementBtn")
+        .addEventListener("click", increment);
+    };
+  </script>
+</body>
+
+</html>

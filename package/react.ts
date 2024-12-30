@@ -1,6 +1,7 @@
-import { createStore, createPrivateStore } from "./react/index";
-export { createPrivateStore, createStore };
-globalThis["NeuronReact"] = {
-  createPrivateStore,
-  createStore,
+import { neuron, NeuronClient, PrivateNeuronClient } from "./react/index";
+export { neuron, NeuronClient, PrivateNeuronClient };
+globalThis["ReactNeuron"] = {
+  neuron,
+  NeuronClient,
+  PrivateNeuronClient,
 };

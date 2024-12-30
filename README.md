@@ -8,56 +8,40 @@
 
 The Neuron Global State Manager is a small, bare bones, framework agnostic library for building framework specific global state managers.
 
-Neuron Vanilla can be used in any js application by itself or you can tailor it to your framework of choice. My goal is to create framework specific version of this that use vanilla under the hood.
-See [Neuron React](https://sandstack.dev/neuron/docs/react/about) as an example.
+Neuron Core can be used in any js application by itself or you can tailor it to your framework of choice. My goal is to create framework specific version of this that use core under the hood.
+See [React Neuron](https://sandstack.dev/neuron/docs/react/about) as an example.
 
 <div style="background-color: #fff3cd; border: 1px solid #ffeeba; padding: 1em;">
   <strong>Warning:</strong> This library is still experimental and is not ready for production.
 </div>
 
-## Setup Store
+## Setup Neuron State
 
-### Create a new Store
-
-```javascript
-import { createStore } from "@sandstack/neuron";
-
-export const Store = createStore();
-```
-
-### Add initial state to Store
+### Create a new Neuron
 
 ```javascript
-Store.add({
-  key: "name",
-  state: "Ash Ketchum",
-});
+import { Neuron } from "@sandstack/neuron";
 
-Store.add({
-  key: "age",
-  state: 10,
-});
+const trainer = new Neuron("Ash Ketchum");
 ```
 
 ### Update state
 
 ```javascript
-Store.set("name", "Gary Oak"); //key, new state
+trainer.set("Gary Oak");
 ```
 
 ### Get state
 
 ```javascript
-Store.get("name"); //key
+const name = trainer.getRef();
 ```
 
 ### Listen for state changes
 
 ```javascript
-Store.onDispatch((dispatchItem) => {
-  if (dispatchItem.key === "name") {
-    console.log(dispatchItem.state);
-  }
+trainer.effect((payload) => {
+  console.log(payload.state);
 });
 
 //initial console.log output
@@ -67,4 +51,4 @@ Store.onDispatch((dispatchItem) => {
 //name: Gary Oak
 ```
 
-Learn more about [Vanilla Neuron](https://sandstack.dev/neuron) and [Neuron React](https://sandstack.dev/neuron/docs/react/about).
+Learn more about [Neuron Core](https://sandstack.dev/neuron) and [React Neuron](https://sandstack.dev/neuron/docs/react/about).

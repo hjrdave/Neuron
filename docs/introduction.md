@@ -14,7 +14,7 @@ subnav:
 
 # Introduction
 
-The Neuron State Manager is a small, bare bones, framework agnostic library for managing client state in javascript user interfaces. It is simple enough to be used by itself or tailor fitted to be used with any UI Framework of your choice. The vanilla npm package is less than _2KBs_ and can be configured anyway to your tech stack or project needs.
+The Neuron State Manager is a small, bare bones, framework agnostic library for managing client state in javascript user interfaces. It is simple enough to be used by itself or tailor fitted to be used with any UI Framework of your choice. The core npm package is less than _2KBs_ and can be configured anyway to your tech stack or project needs.
 
 ## What is Global State?
 
@@ -26,40 +26,32 @@ Enter global state. Global state is lifting your state variables outside of your
 
 ## Motivation
 
-I created Neuron because I wanted a light weight and unopinionated state management solution, that could be configured to work with any javascript framework. I also realized that many state management solutions in the wild currently were convoluted, had lots of boilerplate, and missing some key features that can make complicated UI components easier to make.
+I created Neuron because I wanted a light weight and unopinionated state management solution, that could be configured to work with any javascript framework. I also realized that many state management solutions in the wild were convoluted, had lots of boilerplate, and missing some key features that can make complicated UI components easier to develop.
 
-I decided to create my own solution for managing client state, and thus Neuron was born. It has module support for easily extending functionality, and handy devtools for state transparency. I also created a React specific version using vanilla Neuron as it's foundation. See [React](/react/about).
+I decided to create my own solution for managing client state, and thus Neuron was born. It has module support for easily extending functionality, and handy devtools for state transparency. I also created a React specific version using Core Neuron as it's foundation. See [React](/react/about).
 
 ![Neuron Global State Manager - Vanilla](https://sandstack.dev/neuron-vanilla-banner.png "a title")
 
-## Vanilla Neuron Example
+## Core Neuron Example
 
-The vanilla package is just pure javascript. You can use this by importing `@sandstack/neuron` into your file.
+The core package is just pure javascript. You can use this by importing `@sandstack/neuron` into your file.
 
 ```javascript
-import { createStore } from "@sandstack/neuron";
+import { Neuron } from "@sandstack/neuron";
 
-const Store = createStore();
+/* Instantiate state */
+const pokemon = new Neuron("Pikachu");
 
-//add state to store
-Store.add({
-  key: "pokemon",
-  state: "Pikachu",
-});
+/* Read state */
+pokemon.getRef(); //Pikachu
 
-//Read and Update state
-Store.get("pokemon");
-//output: Pikachu
+/* Update state */
+pokemon.set("Mewtwo");
+pokemon.getRef(); //Mewtwo
 
-Store.set("pokemon", "Mewtwo");
-Store.get("pokemon");
-//output: Mewtwo
-
-//Listen for store updates
-onDispatch((payload) => {
-  if (payload.key === "pokemon") {
-    //do something
-  }
+/* Listen for store updates */
+pokemon.effect(() => {
+  //When this state changes do something
 });
 ```
 
@@ -70,24 +62,19 @@ onDispatch((payload) => {
 Neuron has first class support for React. You can use the React specific package by importing `@sandstack/neuron/react` into your file.
 
 ```jsx
-import {createStore} from '@sandstack/neuron/react'
+import {neuron} from '@sandstack/neuron/react'
 
-const {State, useNeuron} = createStore();
+/* Instantiate React hook */
+const usePokemon = neuron("Pikachu");
 
-function Store(){
-  return(
-    <>
-     <State name={'pokemon'} state={'Pikachu'}/>
-    </>
-  )
-}
+/* Get and update state inside component with React hook */
 function Comp(){
-  const [pokemon, setPokemon] = useNeuron('pokemon')
+  const [pokemon, pokemonActions] = usePokemon();
 
   return(
     <>
     <p>My favorite Pokemon is: {pokemon}</p>
-    <button onClick={() => setPokemon('Mewtwo')}>
+    <button onClick={() => pokemonActions.set("Mewtwo")}>
   </>
   )
 }

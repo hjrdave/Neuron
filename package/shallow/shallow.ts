@@ -1,13 +1,8 @@
-import { createModule } from "../vanilla";
-import type { Payload as TPayload } from "../vanilla";
-import { IPayload } from "../vanilla/Payload";
-export type Payload = TPayload<string, unknown>;
+import { Module } from "../core";
 
-export interface ShallowProps {
+export interface ShallowFeatures {
   shallow?: boolean;
 }
-
-const moduleName = `@sandstack/neuron-shallow`; //need a unique id that is passed by store
 
 export const shallowEqual = <T>(a: T, b: T) => {
   if (
@@ -46,21 +41,16 @@ export const shallowEqual = <T>(a: T, b: T) => {
   return false;
 };
 
-const runShallowCheck = (payload: IPayload<unknown, unknown, ShallowProps>) => {
-  const dispatchShouldCancel = shallowEqual(payload.prevState, payload.state);
-  if (dispatchShouldCancel) {
-    payload.cancelDispatch();
-  }
-};
-
-const Shallow = createModule({
-  name: moduleName,
-  onRun: (payload) => {
-    const features = payload.features as ShallowProps;
-    const isEnabled = features?.shallow;
-    if (isEnabled) {
-      runShallowCheck(payload);
-    }
-  },
-});
-export default Shallow;
+export const Shallow = () =>
+  new Module({
+    name: "@sandstack/neuron-shallow",
+    onDispatch: (payload) => {
+      const dispatchShouldCancel = shallowEqual(
+        payload.prevState,
+        payload.state
+      );
+      if (dispatchShouldCancel) {
+        payload.cancelDispatch();
+      }
+    },
+  });

@@ -1,6 +1,6 @@
-# Neuron React
+# React Neuron
 
-Neuron React is a React only global state management library that is a wrapper around Neuron VanillaJS. It is set up to create stores declaratively through components and uses React hooks to manage state. It also includes other features like state slices and private stores.
+React Neuron is a React only global state management library that wraps Neuron Core with a React specific API. It is setup to use React hooks to manage state within React components. It also includes other features like state slices and private stores.
 
 ## Setup
 
@@ -14,12 +14,12 @@ yarn add @sandstack/neuron
 
 ## Import into App
 
-You will import the React configuration into your app instead of the base configuration.
+You will import the React configuration into your app instead of the base configuration whenever you need to use React Neuron features.
 
 ```javascript
-import { createStore } from "@sandstack/neuron/react";
+import { neuron } from "@sandstack/neuron/react";
 
-const Store = createStore();
+const useTrainer = neuron("Ash");
 ```
 
-Note - Neuron React does not use React Context to manage state. The exception to this is private stores, which does use React Context under the hood.
+Note - React Neuron does not use React Context to manage state. The exception to this is private stores, which use React Context under the hood.

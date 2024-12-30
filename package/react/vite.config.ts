@@ -1,10 +1,8 @@
 /// <reference types="vitest" />
 import { defineConfig } from "vite";
-//import tsconfigPaths from "vite-tsconfig-paths";
 import dts from "vite-plugin-dts";
 import react from "@vitejs/plugin-react";
 
-// https://vitejs.dev/config/
 export default defineConfig({
   define: {
     "process.env.NODE_ENV": '"production"',
@@ -16,16 +14,11 @@ export default defineConfig({
     emptyOutDir: false,
     lib: {
       entry: "./package/react/index.ts",
-      name: "Neuron",
+      name: "ReactNeuron",
       fileName: "index",
     },
     rollupOptions: {
-      external: [
-        "react",
-        "react/jsx-runtime",
-        "../vanilla",
-        "../vanilla/Store",
-      ],
+      external: ["react", "react/jsx-runtime", "../core"],
       output: [
         {
           dir: "./dist",

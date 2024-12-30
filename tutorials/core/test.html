@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Test</title>
+    <meta charset="UTF-8" />
+
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="counter">
+            <p data-n>Bro is ${age} years old. His name is ${name}.</p>
+            <small data-n="loop">Bro is ${age} years old. His name is ${name}.</small>
+            <div class="btn-group">
+                <button
+                    onclick="document.querySelectorAll('[data-neuron]')[0].innerHTML = 'This rerendered'">Rerender</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        window.onload = (event) => {
+            const elements = document.querySelectorAll('[data-n]');
+            elements[0].innerHTML = "This rerendered";
+            console.log(elements)
+        };
+
+    </script>
+</body>
+
+</html>

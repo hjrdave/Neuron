@@ -1,3 +1,4 @@
-import Shallow from "./shallow";
+import { Shallow, ShallowFeatures, shallowEqual } from "./shallow";
 
-export default Shallow;
+export type { ShallowFeatures };
+export { Shallow, shallowEqual };

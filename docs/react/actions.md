@@ -1,45 +1,57 @@
 # Actions
 
-Actions are custom dedicated methods to manipulate state in the store. They target the state that they are passed to.
+Actions are methods are used to manipulate their respective Neuron state.
 
-The action prop on the `State` component takes a function that returns an object. The object properties are the state methods used to manipulate store state.
+## Set
 
-The function exposes a `dispatch` method that allows you to manipulate the `payload` within the action method. Payload `state` and `data` methods can be updated mutably. Example below.
-
-```jsx
-<State
-  name={"count"}
-  state={0}
-  actions={(dispatch) => ({
-    increment: () => {
-      dispatch((payload) => {
-        const current = payload.prevState;
-        payload.state = current + 1;
-      });
-    },
-    decrement: () => {
-      dispatch((payload) => {
-        const current = payload.prevState;
-        payload.state = current - 1;
-      });
-    },
-  })}
-/>
-```
-
-The `useNeuron` hook returns a third parameter that gives you access to the action methods in the component it is called in. Example Below.
+The `set` method is an action that by default is returned by the Neuron hook. It is the most common way to update state.
 
 ```jsx
+const usePokemon = neuron("Magikarp");
+
 function Comp(){
 
-    const [count, setCount, { increment, decrement }] = useNeuron('count');
+  const [pokemon, pokemonActions] = usePokemon();
 
-    return(
-        <p>count: {count}</p>
+  return(
+    <p>{pokemon}</p>
+    <button onClick={() => pokemonActions.set("Gyarados")}>Update</button>
+  )
+}
+```
 
-        <button onClick={() => increment()}>Increment</button>
-        <button onClick={() => decrement()}>decrement</button>
-        <button onClick={() => setCount(100)}>100</button>
-    );
+The `set` method also takes a predicate function that returns the _previous_ state.
+
+```jsx
+<button onClick={() => pokemonActions.set((prev) => `Shiny ${prev}`)}>
+```
+
+## Custom Actions
+
+New actions can also be added to a Neuron. These actions have direct access to the Neuron `dispatch` method and help keep state updates DRY.
+
+The Payload `state` property is mutable, which helps simplify state updates.
+
+```jsx
+const useCount = neuron(0, {
+  actions: (dispatch) => {
+    increment: () => dispatch((payload) => {
+        payload.state = payload.prevState + 1
+      }),
+    decrement: () => dispatch((payload) => {
+        payload.state = payload.prevState - 1
+      })
+  }
+});
+
+function Comp(){
+
+  const [count, countActions] = useCount();
+
+  return(
+    <p>Pokedex: {Count}</p>
+    <button onClick={() => countActions.increment()}>Increment</button>
+    <button onClick={() => countActions.decrement()}>Decrement</button>
+  )
 }
 ```
