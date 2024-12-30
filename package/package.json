@@ -11,7 +11,7 @@
   "type": "module",
   "sideEffects": false,
   "main": "./index.js",
-  "types": "./vanilla/index.d.ts",
+  "types": "./core/index.d.ts",
   "browserslist": [
     ">0.2%",
     "not dead"
@@ -33,6 +33,6 @@
     "@sandstack",
     "@neuron",
     "sandstack",
-    "vanilla-neuron"
+    "neuron-core"
   ]
 }
