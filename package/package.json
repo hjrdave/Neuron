@@ -13,7 +13,7 @@
   "main": "./core/index.js",
   "types": "./index.d.ts",
   "exports": {
-    ".": "./index.js",
+    ".": "./core/index.js",
     "./react": "./react/index.js",
     "./persist": "./persist/index.js",
     "./shallow": "./shallow/index.js"
