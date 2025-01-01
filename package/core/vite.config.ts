@@ -20,23 +20,23 @@ export default defineConfig({
     rollupOptions: {
       output: [
         {
-          dir: "./dist",
+          dir: "./dist/core",
           name: "core",
           entryFileNames: "index.js",
         },
         {
-          dir: "./dist",
+          dir: "./dist/core",
           name: "core",
           format: "cjs",
           entryFileNames: "index.cjs",
         },
         {
-          dir: "./dist",
+          dir: "./dist/core",
           name: "core",
           entryFileNames: "core.js",
         },
         {
-          dir: "./dist",
+          dir: "./dist/core",
           name: "core",
           format: "cjs",
           entryFileNames: "core.cjs",

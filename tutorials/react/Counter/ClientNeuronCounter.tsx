@@ -1,5 +1,6 @@
 import React from "react";
-import { NeuronClient } from "../../../package/react/NeuronClient";
+// import { NeuronClient } from "../../../package/react/NeuronClient";
+import { NeuronClient } from "@sandstack/neuron/react";
 
 const { neuron } = new NeuronClient();
 const useCount = neuron(0, {

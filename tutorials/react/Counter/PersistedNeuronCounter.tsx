@@ -1,6 +1,8 @@
 import React from "react";
-import { neuron } from "../../../package/react/neuron";
-import { Persist } from "../../../package/persist";
+//import { neuron } from "../../../package/react/neuron";
+//import { Persist } from "../../../package/persist";
+import { neuron } from "@sandstack/neuron/react";
+import { Persist } from "@sandstack/neuron/persist";
 
 const useCountLocal = neuron(0, {
   actions: (dispatch) => ({

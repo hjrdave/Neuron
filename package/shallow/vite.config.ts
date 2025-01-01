@@ -19,15 +19,15 @@ export default defineConfig({
       external: ["../core"],
       output: [
         {
-          dir: "./dist",
+          dir: "./dist/shallow/",
           name: "shallow",
-          entryFileNames: "shallow.js",
+          entryFileNames: "index.js",
         },
         {
-          dir: "./dist",
+          dir: "./dist/shallow/",
           name: "shallow",
           format: "cjs",
-          entryFileNames: "shallow.cjs",
+          entryFileNames: "index.cjs",
         },
         {
           dir: "./dist/umd/",
