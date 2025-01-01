@@ -76,7 +76,10 @@ export class NeuronClient implements INeuronClient {
     });
     neuronData?.onCallback?.(payload);
   };
-  readonly neuron = <T, A>(initialState: T, options?: NeuronOptions<T, A>) => {
+  readonly neuron = <T, A = unknown>(
+    initialState: T,
+    options?: NeuronOptions<T, A>
+  ) => {
     return new Neuron<T, A>(
       initialState,
       { modules: this.clientModules, ...options },
@@ -84,13 +87,13 @@ export class NeuronClient implements INeuronClient {
       this.clientDispatcher as IDispatcher<T>
     );
   };
-  readonly connect: ConnectToClient;
+  readonly client: ClientMethods;
   constructor(options?: ClientOptions) {
     this.name = options?.name ?? crypto.randomUUID();
     this.clientStore = new Map<NeuronKey, NeuronData<unknown, unknown>>();
     this.clientDispatcher = new Dispatcher();
     this.clientModules = options?.modules ?? [];
-    this.connect = {
+    this.client = {
       name: this.name,
       has: this.has,
       remove: this.remove,
@@ -197,7 +200,7 @@ export interface INeuronClient {
   /**
    * Provides access to the NeuronClient without the `connect` method.
    */
-  readonly connect: ConnectToClient;
+  readonly client: ClientMethods;
 }
 
 /**
@@ -221,11 +224,11 @@ export interface ClientOptions {
 export type ClientName = string | number;
 
 /**
- * Represents a connected NeuronClient with all its methods except `connect`.
+ * This object has all Core methods for managing state.
  *
  * @template F - The type of additional features or metadata associated with the client.
  */
-export type ConnectToClient = Omit<INeuronClient, "connect">;
+export type ClientMethods = Omit<INeuronClient, "client">;
 
 /**
  * Represents the client store as a map of keys to NeuronData objects.
