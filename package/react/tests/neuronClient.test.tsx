@@ -6,7 +6,7 @@ describe("NeuronClient", () => {
   it("should create a NeuronClient instance with default options", () => {
     const client = new NeuronClient();
     expect(client.name).toBeUndefined();
-    expect(client.connect).toBeDefined();
+    expect(client.client).toBeDefined();
     expect(client.neuron).toBeDefined();
     expect(client.useNeuron).toBeDefined();
   });
@@ -45,7 +45,7 @@ describe("NeuronClient", () => {
     const { result } = renderHook(() => useNeuron());
 
     act(() => {
-      client.connect.dispatch("testNeuronClient", (payload) => {
+      client.client.dispatch("testNeuronClient", (payload) => {
         payload.state = { value: 42 };
       });
     });
@@ -59,7 +59,7 @@ describe("NeuronClient", () => {
     client.neuron({ value: 0 }, { key: "testNeuronClient" });
 
     // Retrieve the snapshot for the specific neuron
-    const snapshot = client.connect.getSnapshot();
+    const snapshot = client.client.getSnapshot();
 
     // Ensure the snapshot correctly reflects the state
     expect(snapshot[0].state).toEqual({ value: 0 });
@@ -71,9 +71,9 @@ describe("NeuronClient", () => {
 
     client.neuron({ value: 0 }, { key: "testNeuronClient" });
 
-    client.connect.listen(mockListener);
+    client.client.listen(mockListener);
     act(() => {
-      client.connect.dispatch("testNeuronClient", (payload) => {
+      client.client.dispatch("testNeuronClient", (payload) => {
         payload.state = { value: 42 };
       });
     });

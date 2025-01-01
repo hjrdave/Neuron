@@ -9,7 +9,7 @@ import { IModule } from "./Module";
 import { ClientStore } from "./NeuronClient";
 import { IPayload, Payload } from "./Payload";
 
-export class Neuron<T, A> implements INeuron<T, A> {
+export class Neuron<T, A = unknown> implements INeuron<T, A> {
   private store: ClientStore<unknown, unknown>;
   private modules: IModule[];
   private dispatcher: IDispatcher<T>;

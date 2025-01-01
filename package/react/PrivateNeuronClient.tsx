@@ -15,7 +15,7 @@ import {
 export class PrivateNeuronClient implements IPrivateNeuronClient {
   private clientContext: React.Context<INeuronClient>;
   private modules: IModule[];
-  readonly privateNeuron = <T, A>(
+  readonly privateNeuron = <T, A = unknown>(
     initialState: T,
     options?: NeuronOptions<T, A>
   ) => {

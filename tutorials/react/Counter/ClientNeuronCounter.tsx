@@ -2,7 +2,6 @@ import React from "react";
 import { NeuronClient } from "../../../package/react/NeuronClient";
 
 const { neuron } = new NeuronClient();
-
 const useCount = neuron(0, {
   actions: (dispatch) => ({
     increment: () =>

@@ -8,8 +8,9 @@ export function useSubscriber<T, A, S>(
   const [state, setState] = useState(
     slice ? slice(neuron.getRef()) : neuron.getRef()
   );
-  const set: SetState<T> = (state: T | ((prev: T) => T)) => neuron.set(state);
-  const setSlice: SetState<S> = (state: S | ((prevSlice: S) => S)) => {
+  const set = ((state: T | ((prev: T) => T)) =>
+    neuron.set(state)) as SetState<S>;
+  const setSlice = ((state: S | ((prevSlice: S) => S)) => {
     if (slice) {
       const funcToSelectorString = slice
         ?.toString()
@@ -48,7 +49,7 @@ export function useSubscriber<T, A, S>(
 
       neuron.set({ ...updatedState });
     }
-  };
+  }) as SetState<S>;
   const actions = slice
     ? {
         ...neuron.getActions(),
@@ -78,4 +79,6 @@ export type Actions<T, S, A> = unknown extends S
     ? { set: SetState<T> } & A
     : { set: SetState<T>; setSlice: SetState<S> } & A
   : { set: SetState<T>; setSlice: SetState<S> } & A;
-export type SetState<T> = (state: T | ((prev: T) => T)) => void;
+export type SetState<T> = T extends boolean
+  ? (state: boolean | ((prev: boolean) => boolean)) => void
+  : (state: T | ((prev: T) => T)) => void;

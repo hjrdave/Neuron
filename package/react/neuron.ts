@@ -1,6 +1,6 @@
 import { NeuronInstance, Neuron, NeuronOptions } from "../core";
 import { useSubscriber } from "./useSubscriber";
-export const neuron = <T, A>(
+export const neuron = <T, A = unknown>(
   initialState: T,
   options?: NeuronOptions<T, A>,
   clientNeuron?: NeuronInstance

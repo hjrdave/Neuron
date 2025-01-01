@@ -2,7 +2,7 @@ import {
   NeuronInstance,
   NeuronClient,
   ClientName,
-  ConnectToClient,
+  ClientMethods,
   INeuronClient,
   Neuron,
   INeuron,
@@ -21,7 +21,7 @@ export type {
   IModule,
   NeuronInstance,
   ClientName,
-  ConnectToClient,
+  ClientMethods,
   INeuronClient,
 };
 export { Neuron, NeuronClient, Module };
