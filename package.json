@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "devDependencies": {
-    "@sandstack/neuron": "^0.0.0-beta.0.88",
+    "@sandstack/neuron": "file:sandstack-neuron-0.0.0.tgz",
     "@storybook/addon-essentials": "^7.6.8",
     "@storybook/addon-interactions": "^7.6.8",
     "@storybook/addon-links": "^7.6.8",

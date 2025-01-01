@@ -21,15 +21,15 @@ export default defineConfig({
       external: ["react", "react/jsx-runtime", "../core"],
       output: [
         {
-          dir: "./dist",
+          dir: "./dist/react/",
           name: "react",
-          entryFileNames: "react.js",
+          entryFileNames: "index.js",
         },
         {
-          dir: "./dist",
+          dir: "./dist/react/",
           name: "react",
           format: "cjs",
-          entryFileNames: "react.cjs",
+          entryFileNames: "index.cjs",
         },
         {
           dir: "./dist/umd/",

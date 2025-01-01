@@ -11,7 +11,13 @@
   "type": "module",
   "sideEffects": false,
   "main": "./index.js",
-  "types": "./core/index.d.ts",
+  "types": "./index.d.ts",
+  "exports": {
+    ".": "./index.js",
+    "./react": "./react/index.js",
+    "./persist": "./persist/index.js",
+    "./shallow": "./shallow/index.js"
+  },
   "browserslist": [
     ">0.2%",
     "not dead"

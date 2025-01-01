@@ -1,5 +1,6 @@
 import React, { Fragment } from "react";
-import { PrivateNeuronClient } from "../../../package/react";
+//import { PrivateNeuronClient } from "../../../package/react";
+import { PrivateNeuronClient } from "@sandstack/neuron/react";
 
 const { privateNeuron, useNeuronClient } = new PrivateNeuronClient();
 

@@ -11,7 +11,7 @@ import {
   IPayload,
   Module,
   IModule,
-} from "./core/index";
+} from "./core";
 
 export type {
   IPayload,

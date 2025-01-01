@@ -1,5 +1,6 @@
 import React from "react";
-import { neuron } from "../../../package/react/neuron";
+//import { neuron } from "../../../package/react/neuron";
+import { neuron } from "@sandstack/neuron/react";
 
 //private neurons are default
 const useCount = neuron(0, {
