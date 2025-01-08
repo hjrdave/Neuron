@@ -16,9 +16,10 @@ export class Neuron<T, A = unknown> implements INeuron<T, A> {
   readonly key: NeuronKey;
   readonly set = (newState: T | ((prevState: T) => T)) => {
     const neuronData = this.store.get(this.key) as NeuronData<T, A>;
+    const prevState = neuronData.state;
     const payload = new Payload<T>({
       key: this.key,
-      prevState: neuronData?.prevState as T,
+      prevState: prevState,
       state:
         typeof newState === "function"
           ? (newState as (prevState: T) => T)(neuronData?.state as T)
@@ -37,7 +38,7 @@ export class Neuron<T, A = unknown> implements INeuron<T, A> {
         this.store.set(this.key, {
           ...neuronData,
           state: payload?.state,
-          prevState: neuronData.state,
+          prevState: prevState,
         } as NeuronData<unknown, A>);
         this.dispatcher.dispatch(payload);
         neuronData?.onCallback?.(payload);
