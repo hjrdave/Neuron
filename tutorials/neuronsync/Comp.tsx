@@ -7,12 +7,13 @@ const getTodo = new NeuronSync<Todo | null>({ fallback: null }).query<{
   const response = await fetch(
     `https://jsonplaceholder.typicode.com/todos/${params?.id}`
   );
-  const _todo = await response.json();
+  const _todo = (await response.json()) as Todo;
   return _todo;
 });
 
-export default function App() {
-  const { watch, sync } = getTodo.query({ id: 2 });
+export default async function App() {
+  //const todo = await getTodo.queryAsync({id: 2});
+  const { watch, sync } = getTodo.query([2], { id: 2 });
   useEffect(() => {
     watch((syncState) => {
       console.log("syncState", syncState);
