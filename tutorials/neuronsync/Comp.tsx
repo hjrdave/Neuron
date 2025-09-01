@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { NeuronSync } from "../../package/sync";
 
 const getTodo = new NeuronSync<Todo | null>({ fallback: null }).query<{
@@ -11,9 +11,15 @@ const getTodo = new NeuronSync<Todo | null>({ fallback: null }).query<{
   return _todo;
 });
 
-export default async function App() {
+export default function App() {
   //const todo = await getTodo.queryAsync({id: 2});
-  const { watch, sync } = getTodo.query([2], { id: 2 });
+  // const todoAsync = async () => {
+  //   const todo = await getTodo.queryAsync({ id: 2 });
+  //   console.log(todo);
+  // };
+
+  const [id, setId] = useState(1);
+  const { watch, sync } = getTodo.query([id], { id: id });
   useEffect(() => {
     watch((syncState) => {
       console.log("syncState", syncState);
@@ -22,7 +28,15 @@ export default async function App() {
   return (
     <>
       <p>Neuron Sync</p>
-      <button onClick={() => sync()}>Click</button>
+      <button
+        onClick={() => {
+          setId((prev) => prev + 1);
+          sync();
+          // foo();
+        }}
+      >
+        Click
+      </button>
     </>
   );
 }
