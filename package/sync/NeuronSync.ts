@@ -6,38 +6,37 @@ import {
   SyncState,
   Actions,
   MutationAsyncAction,
-  SyncCache,
+  CachedData,
 } from "./INeuronSync";
 
 export class NeuronSync<T> implements INeuronSync<T> {
   private readonly fallback: T;
   private readonly key: NeuronKey;
   private readonly actions: Actions<T>;
-  private staleTime: number;
   private readonly watch: (callBack: (syncState: SyncState<T>) => void) => void;
-  private cache: SyncCache<T> = {};
-  private isCacheStale = (cacheKey: string) => {
-    const _cachedData = this.cache[cacheKey];
-    if (!_cachedData) {
-      return true;
-    }
-    return Date.now() - _cachedData.timeStamp > this.staleTime;
+  private cache: CachedData<T> | null = null;
+  private shouldCacheBreak = (cacheKey: string) =>
+    this.cache?.cacheKey !== cacheKey;
+  private getCachedData = () => this.cache?.data;
+  private setCachedData = (cacheKey: string, data: T) => {
+    this.cache = {
+      cacheKey: cacheKey,
+      timeStamp: new Date(),
+      data: data,
+    };
   };
 
-  private getCachedData = (cacheKey: string) => {
-    const _cachedData = this.cache[cacheKey];
-    return _cachedData.cacheData;
-  };
-
-  public query: QueryAsyncAction<T> = <P>(fn: (params?: P) => Promise<T>) => {
-    const queryAction = async (params?: P) => {
+  public query: QueryAsyncAction<T> = <P>(fn: (params: P) => Promise<T>) => {
+    const action = async (params: P, cacheKey: string) => {
       try {
         this.actions.setLoading(true);
         const res = await fn(params);
         this.actions.setData(res);
+        this.setCachedData(cacheKey, res);
         this.actions.setLoading(false);
       } catch (error) {
         this.actions.setData(this.fallback);
+        this.setCachedData(cacheKey, this.fallback);
         this.actions.setLoading(false);
         if (error instanceof Error) {
           this.actions.setError(error);
@@ -46,7 +45,7 @@ export class NeuronSync<T> implements INeuronSync<T> {
         }
       }
     };
-    const queryAsyncAction = async (params?: P) => {
+    const asyncAction = async (params: P) => {
       try {
         const res = await fn(params);
         return res;
@@ -56,23 +55,25 @@ export class NeuronSync<T> implements INeuronSync<T> {
       }
     };
     return {
-      query: (cacheKey: (string | number)[], params?: P) => {
+      query: (cacheKey: (string | number)[], params: P) => {
         const _cacheKey = `${this.key}-${cacheKey.join("-")}`;
-        const syncQueryAction = (params?: P) => {
-          if (!this.isCacheStale(_cacheKey)) {
-            const cachedData = this.getCachedData(_cacheKey);
-            this.actions.setData(cachedData);
+        const syncAction = (params: P) => {
+          if (!this.shouldCacheBreak(_cacheKey)) {
+            const cachedData = this.getCachedData();
+            if (cachedData) {
+              this.actions.setData(cachedData);
+            }
           } else {
-            queryAction(params);
+            action(params, _cacheKey);
           }
         };
-        syncQueryAction(params);
+        syncAction(params);
         return {
           watch: this.watch,
-          sync: () => syncQueryAction(params),
+          sync: () => syncAction(params),
         };
       },
-      queryAsync: async (params?: P) => queryAsyncAction(params),
+      queryAsync: async (params: P) => asyncAction(params),
     };
   };
 
@@ -140,7 +141,6 @@ export class NeuronSync<T> implements INeuronSync<T> {
       }
     );
     this.key = key;
-    this.staleTime = options.staleTime ?? 0;
     this.watch = (callBack: (syncState: SyncState<T>) => void) =>
       neuron.effect((mutator) => {
         const syncState: SyncState<T> = {
