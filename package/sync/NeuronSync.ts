@@ -10,7 +10,6 @@ import {
 } from "./INeuronSync";
 
 export class NeuronSync<T> implements INeuronSync<T> {
-  private readonly fallback: T;
   private readonly key: NeuronKey;
   private readonly actions: Actions<T>;
   private readonly watch: (callBack: (syncState: SyncState<T>) => void) => void;
@@ -55,7 +54,7 @@ export class NeuronSync<T> implements INeuronSync<T> {
       }
     };
     return {
-      query: (cacheKey: (string | number)[], params: P) => {
+      query: (cacheKey, params, options) => {
         const _cacheKey = `${this.key}-${cacheKey.join("-")}`;
         const syncAction = (params: P) => {
           if (!this.shouldCacheBreak(_cacheKey)) {
@@ -118,7 +117,7 @@ export class NeuronSync<T> implements INeuronSync<T> {
     const key = options.key ?? crypto.randomUUID();
     const neuron = new Neuron<SyncState<T>, Actions<T>>(
       {
-        data: options.fallback,
+        data: null,
         loading: false,
         error: null,
       },
@@ -151,6 +150,5 @@ export class NeuronSync<T> implements INeuronSync<T> {
         callBack(syncState);
       });
     this.actions = neuron.getActions();
-    this.fallback = options?.fallback;
   }
 }

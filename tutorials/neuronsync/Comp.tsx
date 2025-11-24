@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { NeuronSync } from "../../package/sync";
 
-const getTodo = new NeuronSync<Todo | null>({ fallback: null }).query<{
+const getTodo = new NeuronSync<Todo | null>().query<{
   id: number;
 }>(async (params) => {
   const response = await fetch(
